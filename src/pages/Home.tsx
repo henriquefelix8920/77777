@@ -47,7 +47,7 @@ export default function HomePage() {
             {SITE.role}
           </p>
 
-          <h1 className="leading-none">
+          <h1 className="mt-14 leading-none sm:mt-20">
             <span className="neon-title anim-letter-drop block text-[clamp(2.9rem,11vw,4.6rem)] font-black tracking-[0.04em] [animation-delay:380ms]">
               VALKYRJA
             </span>
