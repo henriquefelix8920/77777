@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ArrowUpRight, Compass, FileText, MessagesSquare, Music2, Radio, Video } from "lucide-react";
 import VideoBackground from "../components/VideoBackground";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { waLink } from "../config";
@@ -23,19 +24,32 @@ function PageShell({ children, video }: { children: React.ReactNode; video: stri
 }
 
 function Action({ href, children, external = true }: { href: string; children: React.ReactNode; external?: boolean }) {
-  return <a href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="group relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-xl border border-neon-cyan/60 bg-black/65 px-6 py-4 text-center text-sm font-extrabold uppercase tracking-wider text-white shadow-[0_0_22px_rgba(0,240,255,.12)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-neon-magenta hover:text-neon-cyan hover:shadow-[0_0_30px_rgba(0,240,255,.32),0_0_45px_rgba(255,0,127,.18)] active:translate-y-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-neon-cyan"><span className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover:translate-x-full" aria-hidden="true" /><span className="relative">{children}</span><span className="relative text-neon-magenta transition-transform duration-300 group-hover:translate-x-1 group-hover:text-neon-cyan" aria-hidden="true">↗</span></a>;
+  const trackPointer = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty("--pointer-x", `${event.clientX - rect.left}px`);
+    event.currentTarget.style.setProperty("--pointer-y", `${event.clientY - rect.top}px`);
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    event.currentTarget.style.setProperty("--tilt-x", `${-y * 7}deg`);
+    event.currentTarget.style.setProperty("--tilt-y", `${x * 9}deg`);
+  };
+  const resetPointer = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.currentTarget.style.setProperty("--tilt-x", "0deg");
+    event.currentTarget.style.setProperty("--tilt-y", "0deg");
+  };
+  return <a href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})} onMouseMove={trackPointer} onMouseLeave={resetPointer} className="cinema-action group relative inline-flex items-center justify-center gap-3 text-center text-sm font-bold uppercase tracking-[0.12em] text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-neon-cyan"><span className="cinema-action__label relative">{children}</span><ArrowUpRight className="cinema-action__arrow relative h-5 w-5 shrink-0" strokeWidth={1.7} aria-hidden="true" /></a>;
 }
 
 function CyberIcon({ type }: { type: "live" | "video" | "materials" | "direction" | "community" | "guitar" }) {
-  const paths: Record<string, string> = {
-    live: "M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1m0-12.8-2.1 2.1m-8.6 8.6-2.1 2.1 M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z",
-    video: "M4 6.5A2.5 2.5 0 0 1 6.5 4h7A2.5 2.5 0 0 1 16 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 4 17.5Zm12-7 5 3v9l-5 3Z",
-    materials: "M5 3.5h10l4 4V21H5a2 2 0 0 1-2-2V5.5a2 2 0 0 1 2-2Zm10 0v5h4M7 13h8M7 17h8",
-    direction: "M12 3 20 7v5c0 5-3.5 7.8-8 9-4.5-1.2-8-4-8-9V7Zm-3 9 2 2 4-4",
-    community: "M16 20v-1.5a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V20Zm-6.5-9a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm6.5-6.5a3.5 3.5 0 0 1 0 6.8m1 3.2a4 4 0 0 1 4 4V20",
-    guitar: "M14 4 20 10l-2 2-2-2-3 3 2 2-2 2-6-6 2-2 2 2 3-3-2-2Zm-7 8-3 3a2.8 2.8 0 0 0 4 4l3-3"
-  };
-  return <span className="group/icon inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-neon-cyan/30 bg-black/55 text-neon-cyan shadow-[0_0_18px_rgba(0,240,255,.08)] transition-all duration-300 group-hover:border-neon-magenta/70 group-hover:text-neon-magenta group-hover:shadow-[0_0_24px_rgba(255,0,127,.25)]" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" className="h-7 w-7 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d={paths[type]} /></svg></span>;
+  const Icon = {
+    live: Radio,
+    video: Video,
+    materials: FileText,
+    direction: Compass,
+    community: MessagesSquare,
+    guitar: Music2,
+  }[type];
+  return <span className="cinema-icon" aria-hidden="true"><span className="cinema-icon__orbit" /><span className="cinema-icon__core"><Icon className="cinema-icon__glyph" strokeWidth={1.45} /></span><span className="cinema-icon__spark">✦</span></span>;
 }
 
 export function GuitarLessonsPage() {
