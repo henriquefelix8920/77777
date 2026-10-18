@@ -580,3 +580,26 @@ article.group:hover .cinema-icon__spark { transform: translate(2px,-3px) rotate(
   .rainbow-button { animation: none; }
   .rainbow-button, .rainbow-button::before, .rainbow-button__arrow { transition: none; }
 }
+
+
+/* Ajustes exclusivos das landing pages: leitura mais leve e ícones centralizados/interativos */
+.landing-page p.text-base { font-size: .9rem; }
+.landing-page p.text-lg { font-size: 1rem; }
+.landing-page p.text-sm { font-size: .825rem; }
+.landing-page ol.text-sm { font-size: .825rem; }
+.cinema-icon:hover {
+  transform: translateY(-3px) rotateX(8deg) rotateY(-8deg);
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,.55));
+}
+.cinema-icon:hover .cinema-icon__core {
+  transform: translateZ(22px) scale(1.04);
+  border-color: var(--color-neon-cyan);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 5px 0 #030409, 0 12px 22px rgba(0,0,0,.65), 0 0 16px rgba(0,240,255,.16);
+}
+.cinema-icon:hover .cinema-icon__orbit {
+  transform: rotate(25deg) scaleX(1);
+  border-color: rgba(0,240,255,.8);
+}
+.cinema-icon:hover .cinema-icon__spark {
+  transform: translate(2px,-3px) rotate(30deg) scale(1.15);
+}
