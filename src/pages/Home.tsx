@@ -15,7 +15,7 @@ export default function HomePage() {
 
   return (
     <main className="relative min-h-dvh">
-      <VideoBackground />
+      <VideoBackground src="/video2.mp4" />
 
       {/* ---------- Moldura editorial do "cartaz" ---------- */}
       <div className="relative z-10 mx-auto flex min-h-dvh w-full max-w-[560px] flex-col px-5 pb-28 pt-6 sm:px-8">
@@ -108,7 +108,7 @@ export default function HomePage() {
           </a>
 
           <p className="mt-4 text-center text-[11px] uppercase tracking-[0.28em] text-slate-500">
-            Atendimento pessoal · Sem compromisso
+            Atendimento pessoal · Aulas exclusivas para a sua trajetória musical
           </p>
         </div>
 
