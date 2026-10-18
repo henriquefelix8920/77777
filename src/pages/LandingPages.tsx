@@ -12,7 +12,7 @@ function BackLink() {
 }
 
 function PageShell({ children, video }: { children: React.ReactNode; video: string }) {
-  return <main className="relative min-h-dvh overflow-hidden bg-void text-slate-100 [font-family:inherit]">
+  return <main className="landing-page relative min-h-dvh overflow-hidden bg-void text-slate-100 [font-family:inherit]">
     <VideoBackground src={video} />
     <div className="film-grain scanlines pointer-events-none fixed inset-0 z-[60]" aria-hidden="true" />
     <div className="relative z-10 mx-auto flex min-h-dvh w-full max-w-[900px] flex-col px-5 pb-24 pt-7 sm:px-8">
@@ -25,7 +25,7 @@ function PageShell({ children, video }: { children: React.ReactNode; video: stri
 }
 
 function Action({ href, children, external = true }: { href: string; children: React.ReactNode; external?: boolean }) {
-  return <RainbowButton href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="group inline-flex items-center justify-center gap-3 text-center text-sm font-bold uppercase tracking-[0.1em] text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-neon-cyan"><span>{children}</span><ArrowUpRight className="rainbow-button__arrow h-5 w-5 shrink-0" strokeWidth={1.7} aria-hidden="true" /></RainbowButton>;
+  return <RainbowButton href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="group inline-flex items-center justify-center gap-3 text-center text-xs font-bold uppercase tracking-[0.1em] text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-neon-cyan"><span>{children}</span><ArrowUpRight className="rainbow-button__arrow h-5 w-5 shrink-0" strokeWidth={1.7} aria-hidden="true" /></RainbowButton>;
 }
 
 function CyberIcon({ type }: { type: "live" | "video" | "materials" | "direction" | "community" | "guitar" }) {
@@ -37,7 +37,7 @@ function CyberIcon({ type }: { type: "live" | "video" | "materials" | "direction
     community: MessagesSquare,
     guitar: Music2,
   }[type];
-  return <span className="cinema-icon" data-icon={type} aria-hidden="true"><span className="cinema-icon__orbit" /><span className="cinema-icon__core"><Icon className="cinema-icon__glyph" strokeWidth={1.45} /></span><span className="cinema-icon__spark">✦</span></span>;
+  return <span className="cinema-icon mx-auto" data-icon={type} aria-hidden="true"><span className="cinema-icon__orbit" /><span className="cinema-icon__core"><Icon className="cinema-icon__glyph" strokeWidth={1.45} /></span><span className="cinema-icon__spark">✦</span></span>;
 }
 
 export function GuitarLessonsPage() {
