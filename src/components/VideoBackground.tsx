@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Fundo cinematográfico: video01.mp4 (colocado na pasta /public pelo cliente).
+ * Fundo cinematográfico: vídeo definido pela página (colocado na pasta /public).
  * - Fallback gráfico neon enquanto o vídeo não existe/carrega;
  * - Zoom lento contínuo (Ken Burns) sobre o vídeo;
  * - Pausa a decodificação quando a aba está oculta (performance/bateria);
  * - prefers-reduced-motion: primeiro frame estático, sem zoom.
  */
-export default function VideoBackground() {
+export default function VideoBackground({ src = "/video2.mp4" }: { src?: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoReady, setVideoReady] = useState(false);
   const reducedMotion =
@@ -103,7 +103,7 @@ export default function VideoBackground() {
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1600ms] ${
           videoReady ? "opacity-100" : "opacity-0"
         } ${reducedMotion ? "" : "hero-zoom"}`}
-        src="/video01.mp4"
+        src={src}
         muted
         loop
         playsInline
