@@ -38,8 +38,8 @@ export const LINKS: LinkItem[] = [
   },
   {
     id: "curso-pentatonica",
-    label: "Curso Improviso na Pentatônica",
-    sub: "Do mapa ao solo — solte suas mãos",
+    label: "Comunidade A Arte Suave da Improvisação",
+    sub: "Improvisação, prática e encontros ao vivo",
     href: "/curso-improviso-na-pentatonica",
     icon: "course",
     accent: "magenta",
