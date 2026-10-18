@@ -510,3 +510,73 @@ article.group:hover .cinema-icon__spark { transform: translate(2px,-3px) rotate(
     transform: none !important;
   }
 }
+
+
+/* Rainbow Button — CTA das páginas de aulas e comunidade (não usado na home) */
+:root {
+  --color-1: 0 100% 63%;
+  --color-2: 270 100% 63%;
+  --color-3: 210 100% 63%;
+  --color-4: 195 100% 63%;
+  --color-5: 90 100% 63%;
+}
+@keyframes rainbow-border {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+.rainbow-button {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: .7rem;
+  overflow: visible;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: .9rem 1.25rem;
+  color: #fff;
+  text-decoration: none;
+  background:
+    linear-gradient(#101116, #101116) padding-box,
+    linear-gradient(90deg, hsl(var(--color-1)), hsl(var(--color-2)), hsl(var(--color-3)), hsl(var(--color-4)), hsl(var(--color-5)), hsl(var(--color-1))) border-box;
+  background-size: auto, 200% 100%;
+  animation: rainbow-border 3s linear infinite;
+  box-shadow: 0 8px 22px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.12);
+  transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.rainbow-button::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 18%;
+  right: 18%;
+  bottom: -7px;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, hsl(var(--color-1)), hsl(var(--color-2)), hsl(var(--color-3)), hsl(var(--color-4)), hsl(var(--color-5)));
+  background-size: 200% 100%;
+  filter: blur(11px);
+  opacity: .55;
+  transition: opacity 220ms ease, filter 220ms ease;
+}
+.rainbow-button:hover {
+  transform: translateY(-3px) scale(1.015);
+  box-shadow: 0 13px 30px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.2);
+  filter: saturate(1.18);
+}
+.rainbow-button:hover::before { opacity: .9; filter: blur(14px); }
+.rainbow-button:active {
+  transform: translateY(1px) scale(.99);
+  box-shadow: 0 3px 10px rgba(0,0,0,.45), inset 0 2px 5px rgba(0,0,0,.45);
+}
+.rainbow-button__arrow { transition: transform 220ms ease; color: hsl(var(--color-4)); }
+.rainbow-button:hover .rainbow-button__arrow { transform: translate(3px,-2px); color: #fff; }
+.rainbow-button:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  .rainbow-button { animation: none; }
+  .rainbow-button, .rainbow-button::before, .rainbow-button__arrow { transition: none; }
+}
