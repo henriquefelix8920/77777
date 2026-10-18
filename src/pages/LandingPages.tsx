@@ -3,6 +3,7 @@ import { ArrowUpRight, Compass, FileText, MessagesSquare, Music2, Radio, Video }
 import VideoBackground from "../components/VideoBackground";
 import WhatsAppButton from "../components/WhatsAppButton";
 import { waLink } from "../config";
+import { RainbowButton } from "../components/ui/rainbow-button";
 
 const whatsappMessage = "Olá, Valkyrja! Quero agendar minha aula inaugural grátis de guitarra online e conhecer a proposta das aulas individuais.";
 
@@ -24,20 +25,7 @@ function PageShell({ children, video }: { children: React.ReactNode; video: stri
 }
 
 function Action({ href, children, external = true }: { href: string; children: React.ReactNode; external?: boolean }) {
-  const trackPointer = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    event.currentTarget.style.setProperty("--pointer-x", `${event.clientX - rect.left}px`);
-    event.currentTarget.style.setProperty("--pointer-y", `${event.clientY - rect.top}px`);
-    const x = (event.clientX - rect.left) / rect.width - 0.5;
-    const y = (event.clientY - rect.top) / rect.height - 0.5;
-    event.currentTarget.style.setProperty("--tilt-x", `${-y * 7}deg`);
-    event.currentTarget.style.setProperty("--tilt-y", `${x * 9}deg`);
-  };
-  const resetPointer = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.currentTarget.style.setProperty("--tilt-x", "0deg");
-    event.currentTarget.style.setProperty("--tilt-y", "0deg");
-  };
-  return <a href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})} onMouseMove={trackPointer} onMouseLeave={resetPointer} className="cinema-action group relative inline-flex items-center justify-center gap-3 text-center text-sm font-bold uppercase tracking-[0.12em] text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-neon-cyan"><span className="cinema-action__label relative">{children}</span><ArrowUpRight className="cinema-action__arrow relative h-5 w-5 shrink-0" strokeWidth={1.7} aria-hidden="true" /></a>;
+  return <RainbowButton href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="group inline-flex items-center justify-center gap-3 text-center text-sm font-bold uppercase tracking-[0.1em] text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-neon-cyan"><span>{children}</span><ArrowUpRight className="rainbow-button__arrow h-5 w-5 shrink-0" strokeWidth={1.7} aria-hidden="true" /></RainbowButton>;
 }
 
 function CyberIcon({ type }: { type: "live" | "video" | "materials" | "direction" | "community" | "guitar" }) {
