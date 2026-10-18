@@ -49,7 +49,7 @@ function CyberIcon({ type }: { type: "live" | "video" | "materials" | "direction
     community: MessagesSquare,
     guitar: Music2,
   }[type];
-  return <span className="cinema-icon" aria-hidden="true"><span className="cinema-icon__orbit" /><span className="cinema-icon__core"><Icon className="cinema-icon__glyph" strokeWidth={1.45} /></span><span className="cinema-icon__spark">✦</span></span>;
+  return <span className="cinema-icon" data-icon={type} aria-hidden="true"><span className="cinema-icon__orbit" /><span className="cinema-icon__core"><Icon className="cinema-icon__glyph" strokeWidth={1.45} /></span><span className="cinema-icon__spark">✦</span></span>;
 }
 
 export function GuitarLessonsPage() {
@@ -59,7 +59,7 @@ export function GuitarLessonsPage() {
         <p className="inline-block rounded-full border border-neon-cyan/40 bg-black/40 px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-neon-cyan">Acompanhamento individual · 100% online</p>
         <h1 className="neon-title mt-6 text-4xl font-black leading-tight sm:text-6xl">Sua guitarra.<br/><span className="text-neon-cyan">Sua música.</span><br/>Seu caminho.</h1>
         <p className="mt-6 max-w-[48ch] text-base leading-relaxed text-slate-200">Chega de seguir um roteiro genérico. Tenha aulas de guitarra feitas em torno do que <strong>você quer tocar, entender e desenvolver</strong> — com orientação individual e acompanhamento entre os encontros.</p>
-        <div className="mt-7 flex flex-col gap-3 sm:flex-row"><Action href={waLink(whatsappMessage)}>Quero agendar minha aula inaugural grátis</Action><a href="#como-funciona" className="group inline-flex items-center justify-center rounded-xl border border-white/25 bg-black/45 px-6 py-4 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:border-neon-cyan hover:text-neon-cyan hover:shadow-[0_0_24px_rgba(0,240,255,.2)] active:translate-y-0">Ver como funciona ↓</a></div>
+        <div className="mt-7 flex flex-col gap-3 sm:flex-row"><Action href={waLink(whatsappMessage)}>Quero agendar minha aula inaugural grátis</Action><Action href="#como-funciona" external={false}>Ver como funciona</Action></div>
         <p className="mt-4 text-xs text-slate-400">Acompanhamento individual por R$ 200/mês · Converse comigo pelo WhatsApp</p>
       </div>
       <div className="overflow-hidden rounded-2xl border border-white/15 bg-black/35 shadow-2xl">
