@@ -12,8 +12,8 @@
   --color-neon-magenta: #ff007f;
   --color-neon-violet: #7000ff;
   --color-neon-yellow: #ffee00;
-  --font-display: "Cinzel", "Times New Roman", serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  --font-display: "Bodoni Moda", "Bodoni MT", "Didot", serif;
+  --font-body: "Bodoni Moda", "Bodoni MT", "Didot", serif;
 }
 
 :root {
@@ -398,3 +398,150 @@ body {
   opacity: 0;
 }
 .animate-string-vibe { animation: stringVibe 3.4s ease-in-out infinite; }
+
+
+/* ============================================================
+   CINE UI — depth, lens light, tactile 3D and neon glass
+   Inspirado em padrões de spotlight/glow e botões 3D do 21st.dev.
+   ============================================================ */
+.cinema-action {
+  isolation: isolate;
+  perspective: 900px;
+  transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(0);
+  transform-style: preserve-3d;
+  min-height: 58px;
+  padding: 1.05rem 1.45rem;
+  border: 1px solid rgba(125, 249, 255, 0.58);
+  border-radius: 15px;
+  background:
+    linear-gradient(135deg, rgba(20, 27, 47, 0.98), rgba(6, 8, 19, 0.98)) padding-box,
+    conic-gradient(from var(--edge-angle, 0deg), #00f0ff, #7000ff 28%, #ff007f 58%, #ffef70 76%, #00f0ff) border-box;
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.16) inset,
+    0 -3px 0 rgba(0,0,0,.65) inset,
+    0 7px 0 #070811,
+    0 12px 26px rgba(0,0,0,.5),
+    0 0 22px rgba(0,240,255,.16);
+  transform-origin: center;
+  transition: transform 220ms ease, box-shadow 260ms ease, border-color 260ms ease, color 260ms ease;
+  overflow: hidden;
+  text-shadow: 0 1px 0 rgba(0,0,0,.7);
+  -webkit-tap-highlight-color: transparent;
+}
+.cinema-action::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 1px;
+  border-radius: 13px;
+  background: radial-gradient(230px circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(0,240,255,.28), transparent 62%);
+  opacity: .75;
+  transition: opacity 250ms ease;
+}
+.cinema-action::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -80%;
+  bottom: -80%;
+  left: -40%;
+  width: 26%;
+  pointer-events: none;
+  transform: rotate(22deg) translateX(-220%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.36), rgba(255,255,255,.04), transparent);
+  filter: blur(2px);
+  transition: transform 800ms cubic-bezier(.2,.8,.2,1);
+}
+.cinema-action:hover {
+  transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-5px) scale(1.015);
+  color: #fff;
+  border-color: rgba(255,255,255,.75);
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.24) inset,
+    0 -3px 0 rgba(0,0,0,.65) inset,
+    0 10px 0 #070811,
+    0 20px 40px rgba(0,0,0,.56),
+    0 0 30px rgba(0,240,255,.32),
+    0 0 45px rgba(255,0,127,.17);
+}
+.cinema-action:hover::after { transform: rotate(22deg) translateX(750%); }
+.cinema-action:active {
+  transform: perspective(900px) rotateX(0) rotateY(0) translateY(5px) scale(.99);
+  box-shadow: 0 1px 0 rgba(255,255,255,.14) inset, 0 2px 0 #070811, 0 5px 15px rgba(0,0,0,.5);
+}
+.cinema-action__label, .cinema-action__arrow { transform: translateZ(13px); }
+.cinema-action__arrow {
+  color: #ff55b2;
+  transition: transform 250ms ease, color 250ms ease;
+}
+.cinema-action:hover .cinema-action__arrow { transform: translate3d(4px,-3px,18px) rotate(7deg); color: #00f0ff; }
+
+.cinema-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  isolation: isolate;
+  perspective: 500px;
+  color: #7df9ff;
+  filter: drop-shadow(0 0 12px rgba(0,240,255,.15));
+  transition: transform 360ms cubic-bezier(.2,.8,.2,1), filter 360ms ease;
+}
+.cinema-icon__core {
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 47px;
+  height: 47px;
+  border-radius: 14px;
+  border: 1px solid rgba(125,249,255,.65);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.13), transparent 42%),
+    linear-gradient(145deg, rgba(18,32,55,.96), rgba(5,7,17,.98));
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.28) inset,
+    0 -3px 0 rgba(0,0,0,.5) inset,
+    0 5px 0 #03040a,
+    0 9px 18px rgba(0,0,0,.55),
+    0 0 18px rgba(0,240,255,.18);
+  transform: translateZ(14px) rotateX(7deg) rotateY(-8deg);
+  transition: transform 350ms ease, border-color 350ms ease, box-shadow 350ms ease;
+}
+.cinema-icon__glyph { width: 25px; height: 25px; filter: drop-shadow(0 0 5px currentColor); }
+.cinema-icon__orbit {
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(255,0,127,.5);
+  border-radius: 17px;
+  transform: rotate(45deg) scale(.82);
+  transition: transform 450ms cubic-bezier(.2,.8,.2,1), border-color 350ms ease;
+}
+.cinema-icon__spark {
+  position: absolute;
+  z-index: 3;
+  top: -3px;
+  right: -2px;
+  color: #ff55b2;
+  font-size: 13px;
+  text-shadow: 0 0 12px currentColor;
+  transition: transform 350ms ease, color 350ms ease;
+}
+article.group:hover .cinema-icon {
+  transform: translateY(-3px) rotateX(8deg) rotateY(-12deg) scale(1.06);
+  filter: drop-shadow(0 0 16px rgba(0,240,255,.38));
+}
+article.group:hover .cinema-icon__core {
+  transform: translateZ(24px) rotateX(0) rotateY(0);
+  border-color: rgba(255,255,255,.9);
+  box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 -3px 0 rgba(0,0,0,.5) inset, 0 7px 0 #03040a, 0 14px 25px rgba(0,0,0,.6), 0 0 26px rgba(0,240,255,.36);
+}
+article.group:hover .cinema-icon__orbit { transform: rotate(135deg) scale(1.04); border-color: rgba(0,240,255,.8); }
+article.group:hover .cinema-icon__spark { transform: translate(3px,-3px) rotate(45deg) scale(1.25); color: #ffee00; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cinema-action, .cinema-action::after, .cinema-icon, .cinema-icon__core, .cinema-icon__orbit, .cinema-icon__spark {
+    transition: none !important;
+    transform: none !important;
+  }
+}
