@@ -48,7 +48,7 @@ export const LINKS: LinkItem[] = [
     id: "tiktok",
     label: "TikTok",
     sub: "Ver no TikTok",
-    href: "https://www.tiktok.com/@valkyrjareis1", // [DEPOIS] confirme o @ completo do perfil
+    href: "https://www.tiktok.com/@valkyrja.reis",
     external: true,
     icon: "tiktok",
     accent: "violet",
