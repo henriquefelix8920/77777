@@ -625,9 +625,14 @@ article.group:hover .cinema-icon__spark { transform: translate(2px,-3px) rotate(
   transform-style: preserve-3d;
 }
 .landing-page .cinema-icon {
+  --icon-rotate-x: 0deg;
+  --icon-rotate-y: 0deg;
+  transform: perspective(500px) rotateX(var(--icon-rotate-x)) rotateY(var(--icon-rotate-y));
   transform-style: preserve-3d;
   animation: cyber-icon-float 3.6s ease-in-out infinite;
+  transition: transform 120ms ease-out, filter 320ms ease;
   will-change: transform, filter;
+  touch-action: pan-y;
 }
 .landing-page .cinema-icon__core {
   transform-style: preserve-3d;
@@ -656,7 +661,7 @@ article.group:hover .cinema-icon__spark { transform: translate(2px,-3px) rotate(
 .landing-page article.group:hover .cinema-icon,
 .landing-page .cinema-icon:hover {
   animation: none;
-  transform: translateY(-7px) rotateX(20deg) rotateY(-20deg) scale(1.08);
+  transform: perspective(500px) rotateX(var(--icon-rotate-x)) rotateY(var(--icon-rotate-y)) translateY(-7px) scale(1.08);
   filter: drop-shadow(0 12px 18px rgba(0,0,0,.6)) drop-shadow(0 0 12px rgba(0,240,255,.3));
 }
 .landing-page article.group:hover .cinema-icon__core,
