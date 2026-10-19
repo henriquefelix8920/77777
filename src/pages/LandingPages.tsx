@@ -37,7 +37,22 @@ function CyberIcon({ type }: { type: "live" | "video" | "materials" | "direction
     community: MessagesSquare,
     guitar: Music2,
   }[type];
-  return <span className="cinema-icon mx-auto" data-icon={type} aria-hidden="true"><span className="cinema-icon__orbit" /><span className="cinema-icon__core"><Icon className="cinema-icon__glyph" strokeWidth={1.45} /></span><span className="cinema-icon__spark">✦</span></span>;
+  return <span
+    className="cinema-icon mx-auto"
+    data-icon={type}
+    aria-hidden="true"
+    onPointerMove={(event) => {
+      const bounds = event.currentTarget.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width;
+      const y = (event.clientY - bounds.top) / bounds.height;
+      event.currentTarget.style.setProperty("--icon-rotate-x", `${(0.5 - y) * 38}deg`);
+      event.currentTarget.style.setProperty("--icon-rotate-y", `${(x - 0.5) * 38}deg`);
+    }}
+    onPointerLeave={(event) => {
+      event.currentTarget.style.setProperty("--icon-rotate-x", "0deg");
+      event.currentTarget.style.setProperty("--icon-rotate-y", "0deg");
+    }}
+  ><span className="cinema-icon__orbit" /><span className="cinema-icon__core"><Icon className="cinema-icon__glyph" strokeWidth={1.45} /></span><span className="cinema-icon__spark">✦</span></span>;
 }
 
 export function GuitarLessonsPage() {
