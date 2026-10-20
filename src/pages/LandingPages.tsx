@@ -56,7 +56,7 @@ function CyberIcon({ type }: { type: "live" | "video" | "materials" | "direction
 }
 
 export function GuitarLessonsPage() {
-  return <PageShell video="/video01.mp4">
+  return <PageShell video="/video1.mp4">
     <section className="mt-14 grid items-center gap-8 md:grid-cols-[1.1fr_.9fr] md:mt-20">
       <div>
         <p className="inline-block rounded-full border border-neon-cyan/40 bg-black/40 px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-neon-cyan">Acompanhamento individual · 100% online</p>
@@ -97,7 +97,7 @@ export function GuitarLessonsPage() {
 
 export function ImprovisationCommunityPage() {
   const groupUrl = "https://chat.whatsapp.com/KwVqvaK5EAcBwuQr7cXGPD";
-  return <PageShell video="/video01.mp4">
+  return <PageShell video="/video3.mp4">
     <section className="mt-16 text-center sm:mt-24">
       <p className="inline-block rounded-full border border-neon-magenta/40 bg-black/45 px-4 py-2 text-[10px] uppercase tracking-[0.25em] text-neon-magenta">Comunidade gratuita · WhatsApp</p>
       <h1 className="neon-title mx-auto mt-7 max-w-4xl text-4xl font-black leading-tight sm:text-6xl">A Arte Suave da <span className="text-neon-magenta">Improvisação</span></h1>
