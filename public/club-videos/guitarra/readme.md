@@ -1,1 +1,0 @@
-Quadros WebP 001–040 usados pela sequência de guitarra controlada pelo scroll na home. Mantêm a ordem numérica e a proporção 9:16. As fontes PNG originais estão arquivadas em `source-media/guitarra-original/` e não são servidas ao visitante.
