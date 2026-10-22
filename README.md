@@ -20,7 +20,7 @@ npm run build
 
 ## Fundo em flashes
 
-A home usa os seis vídeos (`video1.mp4` a `video6.mp4`) em flashes aleatórios de tela cheia, cada um por 3 segundos. Cada flash escolhe um trecho e enquadramento ao acaso; somente um decoder fica ativo por vez. As cópias leves são servidas de `public/club-videos/`, em 960×540, 20 fps e sem áudio; os originais permanecem em `public/`.
+A home usa os seis vídeos (`video1.mp4` a `video6.mp4`) em flashes aleatórios de tela cheia, cada um por 3 segundos. Cada flash escolhe um trecho e enquadramento ao acaso. Dois players alternados deixam o próximo clipe pronto antes de trocar, sem pausa preta entre cenas. As cópias leves são servidas de `public/club-videos/`, em 960×540, 20 fps e sem áudio; os originais permanecem em `public/`.
 
 Hero, chamadas, cartões e manifesto têm parallax ligado à rolagem da página; os reveals aparecem conforme entram na viewport. As animações respeitam `prefers-reduced-motion`, pausam os vídeos quando a aba fica oculta e não iniciam o fundo em conexões que pedem economia de dados.
 
