@@ -592,11 +592,11 @@ body {
 }
 [data-kinetic="title"] {
   clip-path: inset(var(--title-clip, 0%) 0 0 0);
+  opacity: var(--title-opacity, 1);
   transform: perspective(820px) rotateX(var(--kinetic-tilt, 0deg))
     translate3d(0, var(--title-lift, 0px), 0) scale(var(--title-scale, 1));
   transform-origin: center 78%;
   backface-visibility: hidden;
-  will-change: clip-path, transform;
 }
 [data-kinetic="title"]:not(.neon-title) {
   text-shadow: 0 0 22px rgba(0, 240, 255, var(--title-glow, 0));

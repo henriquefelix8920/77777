@@ -24,7 +24,7 @@ A home e as páginas de aulas/improvisação compartilham o fundo cyberpunk em f
 
 As versões leves ficam em `public/club-videos/` (960×540, 20 fps, sem áudio) e são as únicas entregues pelo site. Os originais de 1080p foram preservados em `source-media/videos/`, fora do diretório público, para não serem copiados ao build. O retrato otimizado é servido como `public/foto2.webp`; os arquivos originais estão em `source-media/photos/`.
 
-Os títulos da hero e de todas as seções usam texto real e uma revelação vertical ligada ao scroll, com subida, leve perspectiva e brilho progressivo. O efeito responde à rolagem por toque e mouse; em movimento reduzido os títulos ficam imediatamente visíveis e estáticos.
+Os títulos da hero e de todas as seções usam texto real em um scrollmation ligado continuamente à posição na viewport: deslocamento vertical de parallax, escala, inclinação 3D, opacidade e revelação por recorte. O efeito responde à rolagem por toque e mouse; em movimento reduzido os títulos ficam imediatamente visíveis e estáticos. A promoção gráfica temporária só é ativada enquanto cada título atravessa a viewport.
 
 ## Desempenho e movimento
 

@@ -102,14 +102,19 @@ export function useScrollExperience(progressRef: RefObject<HTMLDivElement>) {
             ),
           );
           const motionGain = target.kinetic ? (mobileMotion ? 1 : 1.1) : 1;
-          const shift = (progress - 0.5) * maxShift * target.depth * motionGain;
+          const shift =
+            target.kinetic === "title"
+              ? (0.5 - progress) *
+                (mobileMotion ? 112 : 144) *
+                Math.max(0.75, Math.abs(target.depth))
+              : (progress - 0.5) * maxShift * target.depth * motionGain;
           target.element.style.setProperty(
             "--scroll-shift",
             `${shift.toFixed(1)}px`,
           );
           if (target.kinetic === "title") {
             if (progress > 0 && progress < 1)
-              target.element.style.willChange = "clip-path, transform";
+              target.element.style.willChange = "opacity, clip-path, transform";
             else target.element.style.removeProperty("will-change");
             const revealEdge = Math.max(
               0,
@@ -126,13 +131,17 @@ export function useScrollExperience(progressRef: RefObject<HTMLDivElement>) {
             );
             target.element.style.setProperty(
               "--title-scale",
-              (0.94 + reveal * 0.06).toFixed(3),
+              (0.86 + reveal * 0.14).toFixed(3),
+            );
+            target.element.style.setProperty(
+              "--title-opacity",
+              (0.68 + reveal * 0.32).toFixed(3),
             );
             target.element.style.setProperty(
               "--title-glow",
               (reveal * (mobileMotion ? 0.38 : 0.3)).toFixed(3),
             );
-            const maxTilt = mobileMotion ? 16 : 10;
+            const maxTilt = mobileMotion ? 28 : 20;
             target.element.style.setProperty(
               "--kinetic-tilt",
               `${((0.5 - progress) * maxTilt).toFixed(1)}deg`,
@@ -155,10 +164,15 @@ export function useScrollExperience(progressRef: RefObject<HTMLDivElement>) {
           Number.parseFloat(
             target.element.style.getPropertyValue("--scroll-shift"),
           ) || 0;
+        const currentLift =
+          Number.parseFloat(
+            target.element.style.getPropertyValue("--title-lift"),
+          ) || 0;
         target.top =
           target.element.getBoundingClientRect().top +
           window.scrollY -
-          currentShift;
+          currentShift -
+          currentLift;
         target.height = target.element.offsetHeight;
       }
       update();
@@ -174,6 +188,7 @@ export function useScrollExperience(progressRef: RefObject<HTMLDivElement>) {
             "--title-clip",
             "--title-lift",
             "--title-scale",
+            "--title-opacity",
             "--title-glow",
           ].forEach((property) => element.style.removeProperty(property));
           element.style.removeProperty("will-change");
@@ -200,6 +215,7 @@ export function useScrollExperience(progressRef: RefObject<HTMLDivElement>) {
           "--title-clip",
           "--title-lift",
           "--title-scale",
+          "--title-opacity",
           "--title-glow",
         ].forEach((property) => element.style.removeProperty(property));
         element.style.removeProperty("will-change");
