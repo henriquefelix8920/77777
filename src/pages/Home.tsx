@@ -1,44 +1,31 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowDown,
-  ArrowRight,
-  Code2,
-  Guitar,
-  Radio,
-  Sparkles,
-} from "lucide-react";
+import { ArrowDown, ArrowRight, Sparkles } from "lucide-react";
 import { SITE, waLink } from "../config";
 import VideoFlashBackground from "../components/VideoFlashBackground";
 import WhatsAppButton from "../components/WhatsAppButton";
 
 const services = [
   {
-    number: "01",
     eyebrow: "APRENDER · 1:1 · ONLINE",
     title: "Guitarra com direção. Música com intenção.",
     text: "Aulas individuais de guitarra e violão, construídas ao redor do que você quer tocar. Técnica, ritmo, harmonia e repertório entram no plano para fazer sentido na sua música — não numa fórmula pronta.",
-    icon: Guitar,
     color: "cyan",
     label: "Conhecer as aulas",
     href: "/aulas-ao-vivo",
   },
   {
-    number: "02",
     eyebrow: "ESTUDAR · IMPROVISAÇÃO · COMUNIDADE",
     title: "Menos decorar. Mais ouvir, escolher e criar.",
     text: "A Arte Suave da Improvisação aproxima conceitos musicais do instrumento. Um espaço para explorar ideias, experimentar frases e transformar escalas em linguagem própria — no seu tempo e junto com outros guitarristas.",
-    icon: Radio,
     color: "magenta",
     label: "Explorar o curso",
     href: "/curso-improviso-na-pentatonica",
   },
   {
-    number: "03",
     eyebrow: "CRIAR · PRESENÇA DIGITAL · WEB",
     title: "Uma ideia boa merece um site à altura.",
     text: "Crio sites autorais para artistas, profissionais e projetos com algo a dizer: identidade visual, mensagem clara e uma experiência que funciona de verdade no celular. Tecnologia a serviço da sua ideia — sem cara de template genérico.",
-    icon: Code2,
     color: "violet",
     label: "Conversar sobre meu site",
     href: waLink(
@@ -76,18 +63,6 @@ function useScrollExperience(
   useEffect(() => {
     const bar = progressRef.current;
     if (!bar) return;
-    const hero = document.querySelector<HTMLElement>(".hero-section");
-    const resonanceScene = hero?.querySelector<HTMLElement>(
-      "[data-resonance-scene]",
-    );
-    const resonanceWaves = Array.from(
-      resonanceScene?.querySelectorAll<SVGPathElement>(
-        ".hero-resonance__wave",
-      ) ?? [],
-    );
-    const plectrum = resonanceScene?.querySelector<HTMLElement>(
-      ".hero-resonance__plectrum",
-    );
     const flow = document.querySelector<HTMLElement>(".service-flow");
     const route = flow?.querySelector<SVGPathElement>(
       ".signal-route__progress",
@@ -97,8 +72,6 @@ function useScrollExperience(
     const traveler = flow?.querySelector<HTMLElement>(
       ".signal-route__traveler",
     );
-    const focusScene =
-      document.querySelector<HTMLElement>("[data-focus-scene]");
     const routeLength = track?.getTotalLength() ?? 0;
     const targets = Array.from(
       document.querySelectorAll<HTMLElement>("[data-parallax]"),
@@ -107,6 +80,7 @@ function useScrollExperience(
       top: element.getBoundingClientRect().top + window.scrollY,
       height: element.offsetHeight,
       depth: Number(element.dataset.parallax) || 1,
+      kinetic: element.dataset.kinetic ?? "",
     }));
     let frame = 0;
     const update = () => {
@@ -117,40 +91,6 @@ function useScrollExperience(
         bar.style.transform = `scaleX(${range > 0 ? window.scrollY / range : 0})`;
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
           return;
-        if (hero && resonanceScene) {
-          const heroBounds = hero.getBoundingClientRect();
-          const resonanceProgress = Math.max(
-            0,
-            Math.min(1, -heroBounds.top / Math.max(heroBounds.height, 1)),
-          );
-          resonanceScene.style.setProperty(
-            "--resonance-progress",
-            resonanceProgress.toFixed(3),
-          );
-          resonanceScene.style.setProperty(
-            "--resonance-tilt",
-            `${(12 - 24 * resonanceProgress).toFixed(1)}deg`,
-          );
-          resonanceScene.style.setProperty(
-            "--resonance-scale",
-            `${(0.94 + 0.08 * resonanceProgress).toFixed(3)}`,
-          );
-          resonanceScene.style.setProperty(
-            "--resonance-energy",
-            `${(0.46 + 0.4 * resonanceProgress).toFixed(3)}`,
-          );
-          resonanceWaves.forEach((wave, index) => {
-            const phase = resonanceProgress * Math.PI * 2.15 + index * 0.88;
-            const amplitude = 5 + index * 2.5;
-            const x = Math.cos(phase) * amplitude * 0.6;
-            const y = Math.sin(phase) * amplitude;
-            const twist = Math.sin(phase * 0.5) * 2.2;
-            wave.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) rotate(${twist.toFixed(1)}deg)`;
-          });
-          if (plectrum) {
-            plectrum.style.transform = `translate3d(0, ${(Math.sin(resonanceProgress * Math.PI * 2) * 12).toFixed(1)}px, 0) rotateX(${(-14 + 30 * resonanceProgress).toFixed(1)}deg) rotateY(${(26 - 52 * resonanceProgress).toFixed(1)}deg) rotateZ(${(-22 + 44 * resonanceProgress).toFixed(1)}deg)`;
-          }
-        }
         if (flow && route && track && routeSvg && traveler && routeLength > 0) {
           const bounds = flow.getBoundingClientRect();
           const routeProgress = Math.max(
@@ -169,49 +109,6 @@ function useScrollExperience(
           traveler.style.opacity =
             routeProgress > 0 && routeProgress < 1 ? "1" : "0";
         }
-        if (focusScene) {
-          const bounds = focusScene.getBoundingClientRect();
-          const distance = Math.max(
-            bounds.height + window.innerHeight * 0.48,
-            1,
-          );
-          const focusProgress = Math.max(
-            0,
-            Math.min(1, (window.innerHeight * 0.88 - bounds.top) / distance),
-          );
-          focusScene.style.setProperty(
-            "--focus-progress",
-            focusProgress.toFixed(3),
-          );
-          focusScene.style.setProperty(
-            "--focus-rotation",
-            `${(-56 + 112 * focusProgress).toFixed(1)}deg`,
-          );
-          focusScene.style.setProperty(
-            "--focus-counter-rotation",
-            `${(56 - 112 * focusProgress).toFixed(1)}deg`,
-          );
-          focusScene.style.setProperty(
-            "--focus-tilt-x",
-            `${(16 - 32 * focusProgress).toFixed(1)}deg`,
-          );
-          focusScene.style.setProperty(
-            "--focus-tilt-y",
-            `${(-11 + 22 * focusProgress).toFixed(1)}deg`,
-          );
-          focusScene.style.setProperty(
-            "--focus-scale",
-            `${(0.76 + 0.22 * focusProgress).toFixed(3)}`,
-          );
-          focusScene.style.setProperty(
-            "--focus-aperture",
-            `${(0.3 + 0.6 * focusProgress).toFixed(3)}`,
-          );
-          focusScene.style.setProperty(
-            "--focus-glow",
-            `${(0.25 + 0.55 * focusProgress).toFixed(3)}`,
-          );
-        }
         const maxShift = window.matchMedia("(max-width: 760px)").matches
           ? 34
           : 64;
@@ -229,6 +126,18 @@ function useScrollExperience(
             "--scroll-shift",
             `${shift.toFixed(1)}px`,
           );
+          const focus = Math.max(0, 1 - Math.abs(progress - 0.5) * 2);
+          if (target.kinetic === "title") {
+            target.element.style.setProperty(
+              "--kinetic-glow",
+              `${(16 + 24 * focus).toFixed(1)}px`,
+            );
+          } else if (target.kinetic === "cta") {
+            target.element.style.setProperty(
+              "--kinetic-brightness",
+              `${(1 + 0.16 * focus).toFixed(2)}`,
+            );
+          }
         }
       });
     };
@@ -253,27 +162,11 @@ function useScrollExperience(
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", refreshTargets);
-      targets.forEach((target) =>
-        target.element.style.removeProperty("--scroll-shift"),
-      );
-      [
-        "--focus-progress",
-        "--focus-rotation",
-        "--focus-counter-rotation",
-        "--focus-tilt-x",
-        "--focus-tilt-y",
-        "--focus-scale",
-        "--focus-aperture",
-        "--focus-glow",
-      ].forEach((property) => focusScene?.style.removeProperty(property));
-      [
-        "--resonance-progress",
-        "--resonance-tilt",
-        "--resonance-scale",
-        "--resonance-energy",
-      ].forEach((property) => resonanceScene?.style.removeProperty(property));
-      resonanceWaves.forEach((wave) => wave.style.removeProperty("transform"));
-      plectrum?.style.removeProperty("transform");
+      targets.forEach((target) => {
+        ["--scroll-shift", "--kinetic-glow", "--kinetic-brightness"].forEach(
+          (property) => target.element.style.removeProperty(property),
+        );
+      });
     };
   }, [progressRef]);
 }
@@ -306,12 +199,16 @@ export default function HomePage() {
         id="inicio"
         className="hero-section relative z-10 mx-auto flex min-h-[82svh] w-full max-w-6xl flex-col justify-center px-5 pb-20 pt-12 sm:min-h-[86svh] sm:px-8 sm:pt-16"
       >
-        <div className="hero-copy" data-reveal data-parallax="1">
+        <div className="hero-copy" data-reveal>
           <p className="eyebrow">
             <span className="live-dot" aria-hidden="true" /> Valkyrja Reis{" "}
             <span className="eyebrow-separator">/</span> {SITE.tagline}
           </p>
-          <h1 className="hero-title neon-title">
+          <h1
+            className="hero-title neon-title"
+            data-parallax="0.78"
+            data-kinetic="title"
+          >
             Música, tecnologia
             <br />
             <span className="hero-title-accent">e ideias em movimento.</span>
@@ -322,7 +219,12 @@ export default function HomePage() {
             boas ideias.
           </p>
           <div className="hero-actions">
-            <a href="#universos" className="primary-cta">
+            <a
+              href="#universos"
+              className="primary-cta"
+              data-parallax="0.38"
+              data-kinetic="cta"
+            >
               Encontre seu próximo passo <ArrowDown size={17} />
             </a>
             <a
@@ -332,6 +234,8 @@ export default function HomePage() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-cta"
+              data-parallax="-0.28"
+              data-kinetic="cta"
             >
               Vamos conversar <ArrowRight size={16} />
             </a>
@@ -340,91 +244,6 @@ export default function HomePage() {
             <Sparkles size={14} /> Música, tecnologia e ideias — conectadas pela
             vontade de criar.
           </p>
-        </div>
-        <div className="hero-resonance" data-resonance-scene aria-hidden="true">
-          <div className="hero-resonance__aura" />
-          <svg
-            className="hero-resonance__field"
-            viewBox="0 0 720 500"
-            fill="none"
-            aria-hidden="true"
-          >
-            <defs>
-              <linearGradient
-                id="hero-resonance-gradient"
-                x1="0"
-                y1="0"
-                x2="1"
-                y2="0"
-              >
-                <stop offset="0%" stopColor="#00f0ff" stopOpacity="0.12" />
-                <stop offset="42%" stopColor="#39ff88" />
-                <stop offset="76%" stopColor="#00f0ff" />
-                <stop offset="100%" stopColor="#ff4da6" stopOpacity="0.28" />
-              </linearGradient>
-            </defs>
-            <path
-              className="hero-resonance__wave hero-resonance__wave--far"
-              d="M0 250 C90 95 180 95 270 250 S450 405 540 250 S630 95 720 250"
-            />
-            <path
-              className="hero-resonance__wave hero-resonance__wave--upper"
-              d="M0 112 C82 182 165 182 248 112 S414 42 497 112 S638 182 720 112"
-            />
-            <path
-              className="hero-resonance__wave hero-resonance__wave--middle"
-              d="M0 202 C92 332 176 332 268 202 S452 72 544 202 S628 332 720 202"
-            />
-            <path
-              className="hero-resonance__wave hero-resonance__wave--lower"
-              d="M0 338 C78 258 156 258 234 338 S390 418 468 338 S624 258 720 338"
-            />
-            <path
-              className="hero-resonance__wave hero-resonance__wave--near"
-              d="M0 430 C92 300 184 300 276 430 S460 560 552 430 S644 300 720 430"
-            />
-          </svg>
-          <div className="hero-resonance__plectrum">
-            <svg viewBox="0 0 120 150" fill="none" aria-hidden="true">
-              <defs>
-                <linearGradient
-                  id="hero-plectrum-gradient"
-                  x1="12"
-                  y1="8"
-                  x2="108"
-                  y2="140"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#E8FFFF" stopOpacity="0.82" />
-                  <stop offset="0.42" stopColor="#00F0FF" stopOpacity="0.28" />
-                  <stop offset="1" stopColor="#39FF88" stopOpacity="0.16" />
-                </linearGradient>
-              </defs>
-              <path
-                className="hero-resonance__plectrum-face"
-                d="M60 6C82 12 111 26 108 51C104 83 78 129 60 144C42 129 16 83 12 51C9 26 38 12 60 6Z"
-                fill="url(#hero-plectrum-gradient)"
-                stroke="#C9FFFF"
-                strokeOpacity="0.86"
-                strokeWidth="1.5"
-              />
-              <path
-                d="M35 30C46 21 70 20 84 31"
-                stroke="#F2FFFF"
-                strokeOpacity="0.72"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-              <path
-                d="M60 48V101M44 74L60 91L77 66"
-                stroke="#E9FFFF"
-                strokeOpacity="0.9"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
         </div>
         <a
           href="#universos"
@@ -476,24 +295,12 @@ export default function HomePage() {
             />
           </svg>
           <span className="signal-route__traveler" aria-hidden="true" />
-          {services.map((service) => {
-            const Icon = service.icon;
-            const parallax = service.number === "02" ? "-0.8" : "0.8";
-            const LinkIcon = (
-              <ArrowRight className="service-link__arrow" size={16} />
-            );
+          {services.map((service, index) => {
+            const parallax = index === 1 ? "-0.8" : "0.8";
             return (
-              <article
-                key={service.number}
-                className={`service-stop service-stop--${service.color}`}
-                data-reveal
-              >
-                <span className="service-stop__node" aria-hidden="true">
-                  <Icon size={25} strokeWidth={1.45} />
-                </span>
+              <article key={service.title} className="service-stop" data-reveal>
                 <div className="service-stop__copy" data-parallax={parallax}>
                   <p className={`service-eyebrow accent-${service.color}`}>
-                    <span className="service-number">{service.number}</span>
                     <span>{service.eyebrow}</span>
                   </p>
                   <h3>{service.title}</h3>
@@ -505,14 +312,14 @@ export default function HomePage() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {service.label} {LinkIcon}
+                      {service.label}
                     </a>
                   ) : (
                     <Link
                       className={`service-link accent-${service.color}`}
                       to={service.href}
                     >
-                      {service.label} {LinkIcon}
+                      {service.label}
                     </Link>
                   )}
                 </div>
@@ -524,9 +331,9 @@ export default function HomePage() {
 
       <section className="manifesto-section relative z-10" data-reveal>
         <div className="manifesto-inner mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-          <div className="manifesto-copy" data-parallax="0.65">
+          <div className="manifesto-copy">
             <p className="section-kicker">MÚSICA · TECNOLOGIA · IDEIAS</p>
-            <h2>
+            <h2 data-parallax="0.55" data-kinetic="title">
               <span className="manifesto-word--curiosity">Curiosidade</span>{" "}
               para começar.
               <br />
@@ -546,26 +353,11 @@ export default function HomePage() {
               target="_blank"
               rel="noopener noreferrer"
               className="primary-cta"
+              data-parallax="-0.32"
+              data-kinetic="cta"
             >
               Me conta o que você quer criar <ArrowRight size={17} />
             </a>
-          </div>
-          <div className="focus-stage" data-focus-scene aria-hidden="true">
-            <div className="focus-stage__aura" />
-            <div className="focus-lens">
-              <span className="focus-lens__orbit focus-lens__orbit--outer" />
-              <span className="focus-lens__orbit focus-lens__orbit--polar" />
-              <span className="focus-lens__orbit focus-lens__orbit--inner" />
-              <span className="focus-lens__body" />
-              <span className="focus-lens__iris" />
-              <span className="focus-lens__core" />
-              <span className="focus-lens__glint" />
-            </div>
-            <div className="focus-stage__caption">
-              <span>IDEIA</span>
-              <i className="focus-stage__signal" />
-              <span>EM FOCO</span>
-            </div>
           </div>
         </div>
       </section>
