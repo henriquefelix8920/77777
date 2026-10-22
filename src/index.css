@@ -1073,6 +1073,10 @@ article.group:hover .cinema-icon__spark { transform: translate(2px,-3px) rotate(
     opacity 0.72s ease,
     transform 0.72s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+[data-parallax] {
+  translate: 0 var(--scroll-shift, 0px);
+  will-change: translate;
+}
 [data-reveal].is-visible {
   opacity: 1;
   transform: translate3d(0, 0, 0);
@@ -1103,9 +1107,11 @@ article.group:hover .cinema-icon__spark { transform: translate(2px,-3px) rotate(
 }
 .club-video {
   position: absolute;
-  width: 0;
-  height: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  object-position: center;
   opacity: 0;
 }
 .club-video.is-flashing {
@@ -1115,6 +1121,7 @@ article.group:hover .cinema-icon__spark { transform: translate(2px,-3px) rotate(
 .club-flash {
   position: absolute;
   z-index: 2;
+  inset: 0;
   overflow: hidden;
   opacity: 0;
   background: var(--flash-tint);
@@ -1123,10 +1130,6 @@ article.group:hover .cinema-icon__spark { transform: translate(2px,-3px) rotate(
 }
 .club-flash.is-flashing {
   opacity: 0.62;
-}
-.club-flash video,
-.club-video {
-  object-fit: cover;
 }
 .club-flash span {
   position: absolute;
@@ -1216,10 +1219,6 @@ article.group:hover .cinema-icon__spark { transform: translate(2px,-3px) rotate(
   .home-footer {
     padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
   }
-  .club-flash {
-    max-width: 78vw;
-    max-height: 34svh;
-  }
 }
 @media (max-width: 380px) {
   .hero-title {
@@ -1257,5 +1256,9 @@ article.group:hover .cinema-icon__spark { transform: translate(2px,-3px) rotate(
   [data-reveal] {
     opacity: 1;
     transform: none;
+  }
+  [data-parallax] {
+    translate: none !important;
+    will-change: auto;
   }
 }

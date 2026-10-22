@@ -58,25 +58,13 @@ export default function VideoFlashBackground() {
       video.onloadedmetadata = () => {
         if (cancelled || !visible) return;
         const duration = Number.isFinite(video.duration) ? video.duration : 0;
-        const segmentLength = randomBetween(0.45, 1.2);
-        const maxStart = Math.max(0, duration - segmentLength - 0.1);
+        const maxStart = Math.max(0, duration - 3);
         try {
           video.currentTime = randomBetween(0, maxStart);
         } catch {
           /* metadata/seek not ready */
         }
-        const left = randomBetween(4, 70);
-        const top = randomBetween(5, 72);
-        const width = randomBetween(28, 58);
-        const height = randomBetween(20, 42);
-        flash.style.left = `${left}%`;
-        flash.style.top = `${top}%`;
-        flash.style.width = `${width}%`;
-        flash.style.height = `${height}%`;
-        video.style.left = `${left}%`;
-        video.style.top = `${top}%`;
-        video.style.width = `${width}%`;
-        video.style.height = `${height}%`;
+        video.style.objectPosition = `${randomBetween(0, 100)}% ${randomBetween(0, 100)}%`;
         flash.style.setProperty(
           "--flash-tint",
           Math.random() > 0.5 ? "rgba(0,240,255,.22)" : "rgba(255,0,127,.2)",
@@ -86,8 +74,10 @@ export default function VideoFlashBackground() {
           .then(() => {
             flash.classList.add("is-flashing");
             video.classList.add("is-flashing");
-            flashTimer = window.setTimeout(hideFlash, randomBetween(180, 430));
-            schedule(randomBetween(380, 1450));
+            flashTimer = window.setTimeout(() => {
+              hideFlash();
+              if (visible && !cancelled) schedule(randomBetween(350, 1100));
+            }, 3000);
           })
           .catch(() => schedule(1800));
       };

@@ -76,6 +76,14 @@ function useScrollExperience(
   useEffect(() => {
     const bar = progressRef.current;
     if (!bar) return;
+    const targets = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-parallax]"),
+    ).map((element) => ({
+      element,
+      top: element.getBoundingClientRect().top + window.scrollY,
+      height: element.offsetHeight,
+      depth: Number(element.dataset.parallax) || 1,
+    }));
     let frame = 0;
     const update = () => {
       cancelAnimationFrame(frame);
@@ -83,15 +91,52 @@ function useScrollExperience(
         const range =
           document.documentElement.scrollHeight - window.innerHeight;
         bar.style.transform = `scaleX(${range > 0 ? window.scrollY / range : 0})`;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+          return;
+        const maxShift = window.matchMedia("(max-width: 760px)").matches
+          ? 34
+          : 64;
+        for (const target of targets) {
+          const top = target.top - window.scrollY;
+          const progress = Math.max(
+            0,
+            Math.min(
+              1,
+              (window.innerHeight - top) / (window.innerHeight + target.height),
+            ),
+          );
+          const shift = (progress - 0.5) * maxShift * target.depth;
+          target.element.style.setProperty(
+            "--scroll-shift",
+            `${shift.toFixed(1)}px`,
+          );
+        }
       });
+    };
+    const refreshTargets = () => {
+      for (const target of targets) {
+        const currentShift =
+          Number.parseFloat(
+            target.element.style.getPropertyValue("--scroll-shift"),
+          ) || 0;
+        target.top =
+          target.element.getBoundingClientRect().top +
+          window.scrollY -
+          currentShift;
+        target.height = target.element.offsetHeight;
+      }
+      update();
     };
     update();
     window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update, { passive: true });
+    window.addEventListener("resize", refreshTargets, { passive: true });
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
+      window.removeEventListener("resize", refreshTargets);
+      targets.forEach((target) =>
+        target.element.style.removeProperty("--scroll-shift"),
+      );
     };
   }, [progressRef]);
 }
@@ -124,7 +169,7 @@ export default function HomePage() {
         id="inicio"
         className="hero-section relative z-10 mx-auto flex min-h-[82svh] w-full max-w-6xl flex-col justify-center px-5 pb-20 pt-12 sm:min-h-[86svh] sm:px-8 sm:pt-16"
       >
-        <div className="hero-copy" data-reveal>
+        <div className="hero-copy" data-reveal data-parallax="1">
           <p className="eyebrow">
             <span className="live-dot" aria-hidden="true" /> Valkyrja Reis{" "}
             <span className="eyebrow-separator">/</span> {SITE.tagline}
@@ -173,7 +218,7 @@ export default function HomePage() {
         id="universos"
         className="offerings-section relative z-10 mx-auto w-full max-w-6xl px-5 pb-24 pt-12 sm:px-8 sm:pb-36"
       >
-        <div className="section-intro" data-reveal>
+        <div className="section-intro" data-reveal data-parallax="-0.75">
           <p className="section-kicker">TRÊS FORMAS DE TIRAR IDEIAS DO PAPEL</p>
           <h2 className="section-title">
             Aprender. Criar. <span>Compartilhar.</span>
@@ -210,6 +255,7 @@ export default function HomePage() {
                 key={service.number}
                 className={`service-card accent-border-${service.color} reveal-up`}
                 data-reveal
+                data-parallax={service.number === "02" ? "-0.8" : "0.8"}
                 href={service.href}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -221,6 +267,7 @@ export default function HomePage() {
                 key={service.number}
                 className={`service-card accent-border-${service.color} reveal-up`}
                 data-reveal
+                data-parallax={service.number === "02" ? "-0.8" : "0.8"}
                 to={service.href}
               >
                 {CardContent}
@@ -231,7 +278,10 @@ export default function HomePage() {
       </section>
 
       <section className="manifesto-section relative z-10" data-reveal>
-        <div className="manifesto-inner mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+        <div
+          className="manifesto-inner mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28"
+          data-parallax="0.65"
+        >
           <p className="section-kicker">MÚSICA · TECNOLOGIA · IDEIAS</p>
           <h2>
             Curiosidade para começar.

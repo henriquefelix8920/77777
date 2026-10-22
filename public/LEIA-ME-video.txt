@@ -1,1 +1,1 @@
-A home usa os seis vídeos video1.mp4 a video6.mp4 como flashes aleatórios. As cópias leves para o efeito ficam em public/club-videos/; os arquivos originais permanecem em public/.
+A home usa os seis vídeos video1.mp4 a video6.mp4 como flashes aleatórios em tela cheia, com 3 segundos cada. As cópias leves ficam em public/club-videos/; os arquivos originais permanecem em public/.
