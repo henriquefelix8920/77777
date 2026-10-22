@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const FRAME_COUNT = 40;
+const FRAME_COUNT = 240;
 const FRAME_BASE = "/club-videos/guitarra/ezgif-frame-";
 const FRAME_PAD = (index: number) => String(index + 1).padStart(3, "0");
 const FRAME_URL = (index: number) => `${FRAME_BASE}${FRAME_PAD(index)}.webp`;

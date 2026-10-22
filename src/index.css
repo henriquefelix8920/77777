@@ -999,18 +999,7 @@ body {
 .club-atmosphere {
   position: absolute;
   inset: -20%;
-  background:
-    radial-gradient(
-      ellipse at 72% 30%,
-      rgba(0, 240, 255, 0.12),
-      transparent 38%
-    ),
-    radial-gradient(
-      ellipse at 18% 74%,
-      rgba(255, 0, 127, 0.13),
-      transparent 36%
-    ),
-    linear-gradient(140deg, #080c10, #05070b 55%, #100812);
+  background: linear-gradient(140deg, #090a0c, #05070b 55%, #0a0a0a);
 }
 .club-video {
   position: absolute;
@@ -1031,21 +1020,11 @@ body {
   inset: 0;
   overflow: hidden;
   opacity: 0;
-  background: var(--flash-tint);
+  background: rgba(255, 255, 255, 0.08);
   transition: opacity 55ms steps(2, end);
 }
 .club-flash.is-flashing {
   opacity: 0.62;
-}
-.club-flash span {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    145deg,
-    rgba(8, 10, 20, 0.08),
-    transparent 60%,
-    rgba(255, 0, 127, 0.14)
-  );
 }
 .club-vignette {
   position: absolute;
@@ -1062,24 +1041,6 @@ body {
       transparent 10%,
       rgba(2, 4, 7, 0.46) 100%
     );
-}
-.matrix-rain {
-  position: absolute;
-  inset: 0;
-  opacity: 0.16;
-  background: repeating-linear-gradient(
-    90deg,
-    transparent 0 8.1%,
-    rgba(34, 255, 125, 0.08) 8.13% 8.2%,
-    transparent 8.25% 16.2%
-  );
-  mask-image: linear-gradient(
-    180deg,
-    transparent,
-    black 14%,
-    black 74%,
-    transparent
-  );
 }
 @media (max-width: 760px) {
   .hero-section {

@@ -143,10 +143,6 @@ export default function VideoFlashBackground() {
         return false;
       }
       const outgoing = activePlayer >= 0 ? players[activePlayer] : null;
-      flash.style.setProperty(
-        "--flash-tint",
-        Math.random() > 0.5 ? "rgba(0,240,255,.16)" : "rgba(255,0,127,.16)",
-      );
       flash.classList.add("is-flashing");
       incoming.classList.add("is-flashing");
       activePlayer = prepared.player;
@@ -284,11 +280,8 @@ export default function VideoFlashBackground() {
         preload="none"
         tabIndex={-1}
       />
-      <div ref={flashRef} className="club-flash">
-        <span />
-      </div>
+      <div ref={flashRef} className="club-flash" />
       <div className="club-vignette" />
-      <div className="matrix-rain" />
     </div>
   );
 }
