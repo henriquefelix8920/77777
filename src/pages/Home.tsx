@@ -76,6 +76,16 @@ function useScrollExperience(
   useEffect(() => {
     const bar = progressRef.current;
     if (!bar) return;
+    const flow = document.querySelector<HTMLElement>(".service-flow");
+    const route = flow?.querySelector<SVGPathElement>(
+      ".signal-route__progress",
+    );
+    const track = flow?.querySelector<SVGPathElement>(".signal-route__track");
+    const routeSvg = flow?.querySelector<SVGSVGElement>(".signal-route");
+    const traveler = flow?.querySelector<HTMLElement>(
+      ".signal-route__traveler",
+    );
+    const routeLength = track?.getTotalLength() ?? 0;
     const targets = Array.from(
       document.querySelectorAll<HTMLElement>("[data-parallax]"),
     ).map((element) => ({
@@ -93,6 +103,24 @@ function useScrollExperience(
         bar.style.transform = `scaleX(${range > 0 ? window.scrollY / range : 0})`;
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
           return;
+        if (flow && route && track && routeSvg && traveler && routeLength > 0) {
+          const bounds = flow.getBoundingClientRect();
+          const routeProgress = Math.max(
+            0,
+            Math.min(
+              1,
+              (window.innerHeight * 0.8 - bounds.top) /
+                (bounds.height + window.innerHeight * 0.5),
+            ),
+          );
+          route.style.strokeDashoffset = `${1000 * (1 - routeProgress)}`;
+          const point = track.getPointAtLength(routeLength * routeProgress);
+          const svgBounds = routeSvg.getBoundingClientRect();
+          traveler.style.left = `${(point.x / 1000) * svgBounds.width}px`;
+          traveler.style.top = `${(point.y / 1000) * svgBounds.height}px`;
+          traveler.style.opacity =
+            routeProgress > 0 && routeProgress < 1 ? "1" : "0";
+        }
         const maxShift = window.matchMedia("(max-width: 760px)").matches
           ? 34
           : 64;
@@ -228,50 +256,73 @@ export default function HomePage() {
             na música e além dela.
           </p>
         </div>
-        <div className="service-list">
+        <div className="service-flow">
+          <svg
+            className="signal-route"
+            viewBox="0 0 1000 1000"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="signal-gradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#00f0ff" />
+                <stop offset="52%" stopColor="#39ff88" />
+                <stop offset="100%" stopColor="#b6a1ff" />
+              </linearGradient>
+            </defs>
+            <path
+              className="signal-route__track"
+              pathLength="1000"
+              d="M500 0 C340 72 340 125 500 167 C660 209 660 290 500 333 C340 376 340 457 500 500 C660 543 660 624 500 667 C340 710 340 791 500 833 C660 875 660 928 500 1000"
+            />
+            <path
+              className="signal-route__progress"
+              pathLength="1000"
+              d="M500 0 C340 72 340 125 500 167 C660 209 660 290 500 333 C340 376 340 457 500 500 C660 543 660 624 500 667 C340 710 340 791 500 833 C660 875 660 928 500 1000"
+            />
+          </svg>
+          <span className="signal-route__traveler" aria-hidden="true" />
           {services.map((service) => {
             const Icon = service.icon;
-            const CardContent = (
-              <>
-                <div className="service-topline">
-                  <span className="service-number">{service.number}</span>
-                  <span className="service-mark">
-                    <Icon size={20} strokeWidth={1.6} />
-                  </span>
-                </div>
-                <p className={`service-eyebrow accent-${service.color}`}>
-                  {service.eyebrow}
-                </p>
-                <h3>{service.title}</h3>
-                <p className="service-description">{service.text}</p>
-                <span className={`service-link accent-${service.color}`}>
-                  {service.label}
-                  <ArrowRight size={16} />
-                </span>
-              </>
+            const parallax = service.number === "02" ? "-0.8" : "0.8";
+            const LinkIcon = (
+              <ArrowRight className="service-link__arrow" size={16} />
             );
-            return service.external ? (
-              <a
+            return (
+              <article
                 key={service.number}
-                className={`service-card accent-border-${service.color} reveal-up`}
+                className={`service-stop service-stop--${service.color}`}
                 data-reveal
-                data-parallax={service.number === "02" ? "-0.8" : "0.8"}
-                href={service.href}
-                target="_blank"
-                rel="noopener noreferrer"
               >
-                {CardContent}
-              </a>
-            ) : (
-              <Link
-                key={service.number}
-                className={`service-card accent-border-${service.color} reveal-up`}
-                data-reveal
-                data-parallax={service.number === "02" ? "-0.8" : "0.8"}
-                to={service.href}
-              >
-                {CardContent}
-              </Link>
+                <span className="service-stop__node" aria-hidden="true">
+                  <Icon size={25} strokeWidth={1.45} />
+                </span>
+                <div className="service-stop__copy" data-parallax={parallax}>
+                  <p className={`service-eyebrow accent-${service.color}`}>
+                    <span className="service-number">{service.number}</span>
+                    <span>{service.eyebrow}</span>
+                  </p>
+                  <h3>{service.title}</h3>
+                  <p className="service-description">{service.text}</p>
+                  {service.external ? (
+                    <a
+                      className={`service-link accent-${service.color}`}
+                      href={service.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {service.label} {LinkIcon}
+                    </a>
+                  ) : (
+                    <Link
+                      className={`service-link accent-${service.color}`}
+                      to={service.href}
+                    >
+                      {service.label} {LinkIcon}
+                    </Link>
+                  )}
+                </div>
+              </article>
             );
           })}
         </div>
