@@ -1,1 +1,1 @@
-A home usa os seis vídeos video1.mp4 a video6.mp4 como flashes aleatórios em tela cheia, com 3 segundos cada. As cópias leves ficam em public/club-videos/; os arquivos originais permanecem em public/.
+As páginas usam seis clipes leves de public/club-videos/ em flashes full-screen de aproximadamente 3 segundos. Os vídeos originais de 1080p ficam em source-media/videos/, fora do build público.\n

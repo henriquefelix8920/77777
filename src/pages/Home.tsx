@@ -1,9 +1,7 @@
-import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowDown, ArrowRight, Sparkles } from "lucide-react";
 import { SITE, waLink } from "../config";
-import VideoFlashBackground from "../components/VideoFlashBackground";
-import WhatsAppButton from "../components/WhatsAppButton";
+import SiteFrame from "../components/SiteFrame";
 
 const services = [
   {
@@ -35,174 +33,9 @@ const services = [
   },
 ];
 
-function useScrollExperience(
-  progressRef: React.RefObject<HTMLDivElement | null>,
-) {
-  useEffect(() => {
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    const targets = document.querySelectorAll<HTMLElement>("[data-reveal]");
-    if (reduceMotion || !("IntersectionObserver" in window)) {
-      targets.forEach((target) => target.classList.add("is-visible"));
-    } else {
-      const observer = new IntersectionObserver(
-        (entries) =>
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            (entry.target as HTMLElement).classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }),
-        { threshold: 0.12, rootMargin: "0px 0px -5% 0px" },
-      );
-      targets.forEach((target) => observer.observe(target));
-      return () => observer.disconnect();
-    }
-  }, []);
-
-  useEffect(() => {
-    const bar = progressRef.current;
-    if (!bar) return;
-    const flow = document.querySelector<HTMLElement>(".service-flow");
-    const route = flow?.querySelector<SVGPathElement>(
-      ".signal-route__progress",
-    );
-    const track = flow?.querySelector<SVGPathElement>(".signal-route__track");
-    const routeSvg = flow?.querySelector<SVGSVGElement>(".signal-route");
-    const traveler = flow?.querySelector<HTMLElement>(
-      ".signal-route__traveler",
-    );
-    const routeLength = track?.getTotalLength() ?? 0;
-    const targets = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-parallax]"),
-    ).map((element) => ({
-      element,
-      top: element.getBoundingClientRect().top + window.scrollY,
-      height: element.offsetHeight,
-      depth: Number(element.dataset.parallax) || 1,
-      kinetic: element.dataset.kinetic ?? "",
-    }));
-    let frame = 0;
-    const update = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        const range =
-          document.documentElement.scrollHeight - window.innerHeight;
-        bar.style.transform = `scaleX(${range > 0 ? window.scrollY / range : 0})`;
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
-          return;
-        if (flow && route && track && routeSvg && traveler && routeLength > 0) {
-          const bounds = flow.getBoundingClientRect();
-          const routeProgress = Math.max(
-            0,
-            Math.min(
-              1,
-              (window.innerHeight * 0.8 - bounds.top) /
-                (bounds.height + window.innerHeight * 0.5),
-            ),
-          );
-          route.style.strokeDashoffset = `${1000 * (1 - routeProgress)}`;
-          const point = track.getPointAtLength(routeLength * routeProgress);
-          const svgBounds = routeSvg.getBoundingClientRect();
-          traveler.style.left = `${(point.x / 1000) * svgBounds.width}px`;
-          traveler.style.top = `${(point.y / 1000) * svgBounds.height}px`;
-          traveler.style.opacity =
-            routeProgress > 0 && routeProgress < 1 ? "1" : "0";
-        }
-        const mobileMotion = window.matchMedia("(max-width: 760px)").matches;
-        const maxShift = mobileMotion ? 34 : 64;
-        for (const target of targets) {
-          const top = target.top - window.scrollY;
-          const progress = Math.max(
-            0,
-            Math.min(
-              1,
-              (window.innerHeight - top) / (window.innerHeight + target.height),
-            ),
-          );
-          const motionGain = target.kinetic ? (mobileMotion ? 3.2 : 2.1) : 1;
-          const shift = (progress - 0.5) * maxShift * target.depth * motionGain;
-          target.element.style.setProperty(
-            "--scroll-shift",
-            `${shift.toFixed(1)}px`,
-          );
-          const focus = Math.max(0, 1 - Math.abs(progress - 0.5) * 2);
-          if (target.kinetic === "title") {
-            target.element.style.setProperty(
-              "--kinetic-glow",
-              `${(16 + 24 * focus).toFixed(1)}px`,
-            );
-            const maxTilt = mobileMotion ? 24 : 16;
-            target.element.style.setProperty(
-              "--kinetic-tilt",
-              `${((0.5 - progress) * maxTilt).toFixed(1)}deg`,
-            );
-          } else if (target.kinetic === "cta") {
-            target.element.style.setProperty(
-              "--kinetic-brightness",
-              `${(1 + 0.16 * focus).toFixed(2)}`,
-            );
-          }
-        }
-      });
-    };
-    const refreshTargets = () => {
-      for (const target of targets) {
-        const currentShift =
-          Number.parseFloat(
-            target.element.style.getPropertyValue("--scroll-shift"),
-          ) || 0;
-        target.top =
-          target.element.getBoundingClientRect().top +
-          window.scrollY -
-          currentShift;
-        target.height = target.element.offsetHeight;
-      }
-      update();
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", refreshTargets, { passive: true });
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", refreshTargets);
-      targets.forEach((target) => {
-        [
-          "--scroll-shift",
-          "--kinetic-glow",
-          "--kinetic-tilt",
-          "--kinetic-brightness",
-        ].forEach((property) => target.element.style.removeProperty(property));
-      });
-    };
-  }, [progressRef]);
-}
-
 export default function HomePage() {
-  const progressRef = useRef<HTMLDivElement>(null);
-  useScrollExperience(progressRef);
-
   return (
-    <main className="home-shell relative min-h-dvh overflow-clip">
-      <div ref={progressRef} className="scroll-progress" aria-hidden="true" />
-      <VideoFlashBackground />
-      <header className="home-header relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
-        <a
-          href="#inicio"
-          className="wordmark"
-          aria-label="Valkyrja Reis, início"
-        >
-          VR<span>_</span>
-        </a>
-        <p className="hidden text-[11px] uppercase tracking-[0.22em] text-slate-300 sm:block">
-          Música · Tecnologia · Ideias
-        </p>
-        <a href="#universos" className="header-link">
-          Explorar <ArrowDown size={14} />
-        </a>
-      </header>
-
+    <SiteFrame>
       <section
         id="inicio"
         className="hero-section relative z-10 mx-auto flex min-h-[82svh] w-full max-w-6xl flex-col justify-center px-5 pb-20 pt-12 sm:min-h-[86svh] sm:px-8 sm:pt-16"
@@ -380,25 +213,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <footer className="home-footer relative z-10 mx-auto flex max-w-6xl flex-col gap-3 px-5 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-        <Link to="/" className="footer-brand">
-          VALKYRJA REIS <span>_</span>
-        </Link>
-        <p>Música, tecnologia e ideias. Feito com intenção.</p>
-        <a
-          href={waLink("Olá, Valkyrja! Vim pelo seu site.")}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Fale comigo <ArrowRight size={14} />
-        </a>
-      </footer>
-      <div
-        className="film-grain scanlines pointer-events-none fixed inset-0 z-[60]"
-        aria-hidden="true"
-      />
-      <WhatsAppButton />
-    </main>
+    </SiteFrame>
   );
 }

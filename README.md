@@ -6,7 +6,7 @@ Site autoral de Valkyrja Reis. A experiência conecta aulas online de guitarra e
 
 - Vite + React 18 + TypeScript
 - Tailwind CSS v4
-- React Router
+- React Router com carregamento sob demanda das landing pages
 - Deploy conectado ao Vercel (`vercel.json`)
 
 ## Rodar localmente
@@ -20,16 +20,20 @@ npm run build
 
 ## Fundo em flashes
 
-A home usa os seis vídeos (`video1.mp4` a `video6.mp4`) em flashes aleatórios de tela cheia, cada um por 3 segundos. Cada flash escolhe um trecho e enquadramento ao acaso. Dois players alternados deixam o próximo clipe pronto antes de trocar, sem pausa preta entre cenas. As cópias leves são servidas de `public/club-videos/`, em 960×540, 20 fps e sem áudio; os originais permanecem em `public/`.
+A home e as páginas de aulas/improvisação compartilham o fundo cyberpunk em flashes de tela cheia. Cada cena usa um trecho aleatório de um dos seis clipes, com aproximadamente 3 segundos por flash e dois players alternados para trocar sem intervalo preto. O navegador só começa a preparar os vídeos depois do primeiro render; movimento reduzido e conexões com economia de dados mantêm o fundo estático.
 
-Hero, chamadas, cartões e manifesto têm parallax ligado à rolagem da página; os reveals aparecem conforme entram na viewport. As animações respeitam `prefers-reduced-motion`, pausam os vídeos quando a aba fica oculta e não iniciam o fundo em conexões que pedem economia de dados.
+As versões leves ficam em `public/club-videos/` (960×540, 20 fps, sem áudio) e são as únicas entregues pelo site. Os originais de 1080p foram preservados em `source-media/videos/`, fora do diretório público, para não serem copiados ao build. O retrato otimizado é servido como `public/foto2.webp`; os arquivos originais estão em `source-media/photos/`.
+
+## Desempenho e movimento
+
+As três rotas usam o mesmo cabeçalho, fundo, progresso de rolagem, footer e botão de contato. As páginas secundárias são carregadas sob demanda. Títulos, chamadas e o percurso visual acompanham a rolagem; reveals usam `IntersectionObserver`. O grão animado em tela cheia foi removido para reduzir trabalho de pintura, sem retirar a atmosfera neon.
 
 ## Rotas
 
-- `/` — apresentação e três caminhos: aulas, curso/comunidade e sites
-- `/aulas-ao-vivo` — informações sobre aulas individuais
-- `/curso-improviso-na-pentatonica` — página da comunidade de improvisação
+- `/` — apresentação e três caminhos: aulas, improvisação/comunidade e criação de sites
+- `/aulas-ao-vivo` — aulas individuais de guitarra e violão online
+- `/curso-improviso-na-pentatonica` — página da comunidade gratuita de improvisação
 
 ## Configuração
 
-O número de WhatsApp e a identidade básica estão centralizados em `src/config.ts`. A home mantém os links de TikTok e YouTube fora da navegação, conforme solicitado.
+O número do WhatsApp e a identidade básica estão centralizados em `src/config.ts`. TikTok e YouTube não aparecem na navegação principal.

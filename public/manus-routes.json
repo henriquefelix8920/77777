@@ -1,0 +1,13 @@
+{
+  "routes": [
+    { "path": "/", "title": "Valkyrja Reis — Música, Tecnologia e Ideias" },
+    {
+      "path": "/aulas-ao-vivo",
+      "title": "Aulas de guitarra online — Valkyrja Reis"
+    },
+    {
+      "path": "/curso-improviso-na-pentatonica",
+      "title": "Improvisação e comunidade — Valkyrja Reis"
+    }
+  ]
+}

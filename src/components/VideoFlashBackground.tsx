@@ -29,7 +29,8 @@ export default function VideoFlashBackground() {
     if (
       reduceMotion ||
       connection?.saveData ||
-      connection?.effectiveType === "slow-2g"
+      connection?.effectiveType === "slow-2g" ||
+      connection?.effectiveType === "2g"
     )
       return;
 
@@ -38,6 +39,7 @@ export default function VideoFlashBackground() {
     let timer = 0;
     let fadeTimer = 0;
     let preloadTimer = 0;
+    let startTimer = 0;
     let generation = 0;
     let visible = !document.hidden;
     let cancelled = false;
@@ -205,11 +207,20 @@ export default function VideoFlashBackground() {
       scheduleAdvance(3000, token);
     };
 
+    const scheduleStart = () => {
+      window.clearTimeout(startTimer);
+      startTimer = window.setTimeout(() => {
+        startTimer = 0;
+        if (!cancelled && visible) void start();
+      }, 650);
+    };
+
     const onVisibility = () => {
       visible = !document.hidden;
       window.clearTimeout(timer);
       window.clearTimeout(fadeTimer);
       window.clearTimeout(preloadTimer);
+      window.clearTimeout(startTimer);
       generation++;
       cancelWaiters.forEach((cancel) => cancel());
       if (!visible) {
@@ -225,18 +236,19 @@ export default function VideoFlashBackground() {
         nextPrepared = null;
       } else {
         nextPrepared = null;
-        void start();
+        scheduleStart();
       }
     };
 
     document.addEventListener("visibilitychange", onVisibility);
-    if (visible) void start();
+    if (visible) scheduleStart();
     return () => {
       cancelled = true;
       generation++;
       window.clearTimeout(timer);
       window.clearTimeout(fadeTimer);
       window.clearTimeout(preloadTimer);
+      window.clearTimeout(startTimer);
       document.removeEventListener("visibilitychange", onVisibility);
       cancelWaiters.forEach((cancel) => cancel());
       flash.classList.remove("is-flashing");
