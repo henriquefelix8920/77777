@@ -108,7 +108,31 @@ export function useScrollExperience(progressRef: RefObject<HTMLDivElement>) {
             `${shift.toFixed(1)}px`,
           );
           if (target.kinetic === "title") {
-            const maxTilt = mobileMotion ? 24 : 16;
+            if (progress > 0 && progress < 1)
+              target.element.style.willChange = "clip-path, transform";
+            else target.element.style.removeProperty("will-change");
+            const revealEdge = Math.max(
+              0,
+              Math.min(1, Math.min(progress, 1 - progress) / 0.18),
+            );
+            const reveal = revealEdge * revealEdge * (3 - 2 * revealEdge);
+            target.element.style.setProperty(
+              "--title-clip",
+              `${((1 - reveal) * 100).toFixed(1)}%`,
+            );
+            target.element.style.setProperty(
+              "--title-lift",
+              `${((1 - reveal) * (mobileMotion ? 30 : 42)).toFixed(1)}px`,
+            );
+            target.element.style.setProperty(
+              "--title-scale",
+              (0.94 + reveal * 0.06).toFixed(3),
+            );
+            target.element.style.setProperty(
+              "--title-glow",
+              (reveal * (mobileMotion ? 0.38 : 0.3)).toFixed(3),
+            );
+            const maxTilt = mobileMotion ? 16 : 10;
             target.element.style.setProperty(
               "--kinetic-tilt",
               `${((0.5 - progress) * maxTilt).toFixed(1)}deg`,
@@ -143,9 +167,16 @@ export function useScrollExperience(progressRef: RefObject<HTMLDivElement>) {
       reduceMotion = event.matches;
       if (reduceMotion) {
         targets.forEach(({ element }) => {
-          ["--scroll-shift", "--kinetic-tilt", "--kinetic-brightness"].forEach(
-            (property) => element.style.removeProperty(property),
-          );
+          [
+            "--scroll-shift",
+            "--kinetic-tilt",
+            "--kinetic-brightness",
+            "--title-clip",
+            "--title-lift",
+            "--title-scale",
+            "--title-glow",
+          ].forEach((property) => element.style.removeProperty(property));
+          element.style.removeProperty("will-change");
         });
       }
       update();
@@ -162,9 +193,16 @@ export function useScrollExperience(progressRef: RefObject<HTMLDivElement>) {
       window.removeEventListener("resize", refreshTargets);
       motionQuery.removeEventListener("change", onMotionChange);
       targets.forEach(({ element }) => {
-        ["--scroll-shift", "--kinetic-tilt", "--kinetic-brightness"].forEach(
-          (property) => element.style.removeProperty(property),
-        );
+        [
+          "--scroll-shift",
+          "--kinetic-tilt",
+          "--kinetic-brightness",
+          "--title-clip",
+          "--title-lift",
+          "--title-scale",
+          "--title-glow",
+        ].forEach((property) => element.style.removeProperty(property));
+        element.style.removeProperty("will-change");
       });
     };
   }, [progressRef]);

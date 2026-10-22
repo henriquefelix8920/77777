@@ -24,7 +24,7 @@ A home e as páginas de aulas/improvisação compartilham o fundo cyberpunk em f
 
 As versões leves ficam em `public/club-videos/` (960×540, 20 fps, sem áudio) e são as únicas entregues pelo site. Os originais de 1080p foram preservados em `source-media/videos/`, fora do diretório público, para não serem copiados ao build. O retrato otimizado é servido como `public/foto2.webp`; os arquivos originais estão em `source-media/photos/`.
 
-A hero da página inicial também usa `video7.mp4` como uma camada de luz integrada ao fundo. A opacidade, o zoom e o deslocamento acompanham o scroll; o clipe só é carregado quando a hero se aproxima da viewport. Em movimento reduzido ou economia de dados, um poster WebP estático substitui o vídeo. O original enviado foi preservado em `source-media/videos/video7-original.mp4`.
+Os títulos da hero e de todas as seções usam texto real e uma revelação vertical ligada ao scroll, com subida, leve perspectiva e brilho progressivo. O efeito responde à rolagem por toque e mouse; em movimento reduzido os títulos ficam imediatamente visíveis e estáticos.
 
 ## Desempenho e movimento
 

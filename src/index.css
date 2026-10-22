@@ -591,9 +591,15 @@ body {
   color: #39ff88;
 }
 [data-kinetic="title"] {
-  transform: perspective(820px) rotateX(var(--kinetic-tilt, 0deg));
-  transform-origin: center;
+  clip-path: inset(var(--title-clip, 0%) 0 0 0);
+  transform: perspective(820px) rotateX(var(--kinetic-tilt, 0deg))
+    translate3d(0, var(--title-lift, 0px), 0) scale(var(--title-scale, 1));
+  transform-origin: center 78%;
   backface-visibility: hidden;
+  will-change: clip-path, transform;
+}
+[data-kinetic="title"]:not(.neon-title) {
+  text-shadow: 0 0 22px rgba(0, 240, 255, var(--title-glow, 0));
 }
 .hero-description {
   max-width: 58ch;
@@ -727,7 +733,7 @@ body {
 }
 .section-title[data-kinetic="title"],
 .service-stop__copy h3[data-kinetic="title"] {
-  text-shadow: 0 0 12px rgba(0, 240, 255, 0.12);
+  text-shadow: 0 0 22px rgba(0, 240, 255, var(--title-glow, 0.12));
 }
 .section-title span {
   color: #39ff88;
@@ -1128,6 +1134,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   [data-kinetic="title"] {
     transition: none !important;
+    clip-path: none !important;
+    transform: none !important;
+    will-change: auto !important;
   }
   [data-kinetic="cta"] {
     filter: none !important;
@@ -1215,143 +1224,5 @@ body {
   .lesson-portrait {
     order: 2;
     width: min(78%, 280px);
-  }
-}
-
-/* Hero opening scene: user clip revealed and parallaxed by touch or wheel scroll. */
-.hero-section {
-  isolation: isolate;
-}
-.hero-copy {
-  position: relative;
-  z-index: 2;
-}
-.hero-scroll-scene {
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 100vw;
-  overflow: hidden;
-  pointer-events: none;
-  translate: -50% 0;
-}
-.hero-scroll-scene__frame {
-  position: absolute;
-  inset: -4% 0;
-  overflow: hidden;
-  opacity: var(--hero-scene-opacity, 0.12);
-  transform: translate3d(0, var(--hero-scene-drift, 0px), 0)
-    scale(var(--hero-scene-scale, 1.13)) scaleY(var(--hero-scene-reveal, 0.84));
-  transform-origin: center;
-  mix-blend-mode: screen;
-  will-change: opacity, transform;
-}
-.hero-scroll-scene__poster,
-.hero-scroll-scene__video {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 52%;
-}
-.hero-scroll-scene__poster {
-  opacity: 0.88;
-}
-.hero-scroll-scene__video {
-  opacity: 0;
-  transition: opacity 500ms ease;
-}
-.hero-scroll-scene.is-ready .hero-scroll-scene__poster {
-  opacity: 0;
-}
-.hero-scroll-scene.is-ready .hero-scroll-scene__video {
-  opacity: 0.92;
-}
-.hero-scroll-scene__shade {
-  position: absolute;
-  z-index: 1;
-  inset: 0;
-  background:
-    linear-gradient(
-      90deg,
-      rgba(5, 6, 13, 0.62),
-      rgba(5, 6, 13, 0.32) 48%,
-      rgba(5, 6, 13, 0.12)
-    ),
-    linear-gradient(
-      180deg,
-      rgba(5, 6, 13, 0.36),
-      transparent 24%,
-      transparent 72%,
-      rgba(5, 6, 13, 0.58)
-    );
-}
-.hero-scroll-scene__edge {
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 1px;
-  opacity: 0.72;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(0, 240, 255, 0.7) 28%,
-    rgba(57, 255, 136, 0.75) 68%,
-    transparent
-  );
-}
-.hero-scroll-scene[data-static="true"] .hero-scroll-scene__frame {
-  opacity: 0.34;
-  transform: none;
-  will-change: auto;
-}
-.hero-scroll-scene[data-static="true"] .hero-scroll-scene__video {
-  display: none;
-}
-.hero-scroll-scene[data-static="true"] .hero-scroll-scene__poster {
-  opacity: 0.9;
-}
-@media (max-width: 760px) {
-  .hero-scroll-scene__frame {
-    inset: -2% -12%;
-  }
-  .hero-scroll-scene__poster,
-  .hero-scroll-scene__video {
-    object-position: center center;
-  }
-  .hero-scroll-scene__shade {
-    background:
-      linear-gradient(
-        90deg,
-        rgba(5, 6, 13, 0.46),
-        rgba(5, 6, 13, 0.24) 72%,
-        rgba(5, 6, 13, 0.16)
-      ),
-      linear-gradient(
-        180deg,
-        rgba(5, 6, 13, 0.42),
-        transparent 24%,
-        transparent 74%,
-        rgba(5, 6, 13, 0.62)
-      );
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-scroll-scene__frame {
-    opacity: 0.34;
-    transform: none;
-    will-change: auto;
-  }
-  .hero-scroll-scene__video {
-    display: none;
-  }
-  .hero-scroll-scene__poster {
-    opacity: 0.9;
   }
 }
