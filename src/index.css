@@ -1126,6 +1126,11 @@ article.group:hover .cinema-icon__spark {
 .hero-title-accent {
   color: #39ff88;
 }
+[data-kinetic="title"] {
+  transform: perspective(820px) rotateX(var(--kinetic-tilt, 0deg));
+  transform-origin: center;
+  backface-visibility: hidden;
+}
 .hero-description {
   max-width: 58ch;
   margin-top: 1.4rem;
@@ -1232,6 +1237,17 @@ article.group:hover .cinema-icon__spark {
     opacity: 1;
   }
 }
+@keyframes cue-pulse-horizontal {
+  0%,
+  100% {
+    transform: scaleX(0.5);
+    opacity: 0.45;
+  }
+  55% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
 .offerings-section {
   scroll-margin-top: 1.5rem;
 }
@@ -1244,6 +1260,12 @@ article.group:hover .cinema-icon__spark {
   font-size: clamp(2rem, 5vw, 3.8rem);
   font-weight: 700;
   line-height: 1.15;
+}
+.section-title[data-kinetic="title"],
+.service-stop__copy h3[data-kinetic="title"] {
+  --kinetic-glow: 18px;
+  text-shadow: 0 0 var(--kinetic-glow) rgba(0, 240, 255, 0.16);
+  transition: text-shadow 140ms linear;
 }
 .section-title span {
   color: #39ff88;
@@ -1576,9 +1598,21 @@ article.group:hover .cinema-icon__spark {
     justify-content: center;
   }
   .scroll-cue {
-    right: 1.25rem;
-    bottom: 0.65rem;
+    position: relative;
+    right: auto;
+    bottom: auto;
+    align-self: flex-end;
+    flex-direction: row;
+    margin: 1.25rem 0 0;
     font-size: 0.55rem;
+    writing-mode: horizontal-tb;
+  }
+  .scroll-cue-line {
+    width: 2.5rem;
+    height: 1px;
+    background: linear-gradient(90deg, #39ff88, transparent);
+    transform-origin: left;
+    animation: cue-pulse-horizontal 1.8s ease-in-out infinite;
   }
   .service-flow {
     margin-top: 2.2rem;
@@ -1639,8 +1673,7 @@ article.group:hover .cinema-icon__spark {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-title,
-  .manifesto-inner h2 {
+  [data-kinetic="title"] {
     transition: none !important;
   }
   [data-kinetic="cta"] {

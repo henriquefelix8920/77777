@@ -109,9 +109,8 @@ function useScrollExperience(
           traveler.style.opacity =
             routeProgress > 0 && routeProgress < 1 ? "1" : "0";
         }
-        const maxShift = window.matchMedia("(max-width: 760px)").matches
-          ? 34
-          : 64;
+        const mobileMotion = window.matchMedia("(max-width: 760px)").matches;
+        const maxShift = mobileMotion ? 34 : 64;
         for (const target of targets) {
           const top = target.top - window.scrollY;
           const progress = Math.max(
@@ -121,7 +120,8 @@ function useScrollExperience(
               (window.innerHeight - top) / (window.innerHeight + target.height),
             ),
           );
-          const shift = (progress - 0.5) * maxShift * target.depth;
+          const motionGain = target.kinetic ? (mobileMotion ? 3.2 : 2.1) : 1;
+          const shift = (progress - 0.5) * maxShift * target.depth * motionGain;
           target.element.style.setProperty(
             "--scroll-shift",
             `${shift.toFixed(1)}px`,
@@ -131,6 +131,11 @@ function useScrollExperience(
             target.element.style.setProperty(
               "--kinetic-glow",
               `${(16 + 24 * focus).toFixed(1)}px`,
+            );
+            const maxTilt = mobileMotion ? 24 : 16;
+            target.element.style.setProperty(
+              "--kinetic-tilt",
+              `${((0.5 - progress) * maxTilt).toFixed(1)}deg`,
             );
           } else if (target.kinetic === "cta") {
             target.element.style.setProperty(
@@ -163,9 +168,12 @@ function useScrollExperience(
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", refreshTargets);
       targets.forEach((target) => {
-        ["--scroll-shift", "--kinetic-glow", "--kinetic-brightness"].forEach(
-          (property) => target.element.style.removeProperty(property),
-        );
+        [
+          "--scroll-shift",
+          "--kinetic-glow",
+          "--kinetic-tilt",
+          "--kinetic-brightness",
+        ].forEach((property) => target.element.style.removeProperty(property));
       });
     };
   }, [progressRef]);
@@ -206,7 +214,7 @@ export default function HomePage() {
           </p>
           <h1
             className="hero-title neon-title"
-            data-parallax="0.78"
+            data-parallax="0.95"
             data-kinetic="title"
           >
             Música, tecnologia
@@ -222,7 +230,7 @@ export default function HomePage() {
             <a
               href="#universos"
               className="primary-cta"
-              data-parallax="0.38"
+              data-parallax="0.72"
               data-kinetic="cta"
             >
               Encontre seu próximo passo <ArrowDown size={17} />
@@ -234,7 +242,7 @@ export default function HomePage() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-cta"
-              data-parallax="-0.28"
+              data-parallax="-0.62"
               data-kinetic="cta"
             >
               Vamos conversar <ArrowRight size={16} />
@@ -259,9 +267,13 @@ export default function HomePage() {
         id="universos"
         className="offerings-section relative z-10 mx-auto w-full max-w-6xl px-5 pb-24 pt-12 sm:px-8 sm:pb-36"
       >
-        <div className="section-intro" data-reveal data-parallax="-0.75">
+        <div className="section-intro" data-reveal>
           <p className="section-kicker">TRÊS FORMAS DE TIRAR IDEIAS DO PAPEL</p>
-          <h2 className="section-title">
+          <h2
+            className="section-title"
+            data-parallax="0.95"
+            data-kinetic="title"
+          >
             Aprender. Criar. <span>Compartilhar.</span>
           </h2>
           <p className="section-lead">
@@ -296,18 +308,23 @@ export default function HomePage() {
           </svg>
           <span className="signal-route__traveler" aria-hidden="true" />
           {services.map((service, index) => {
-            const parallax = index === 1 ? "-0.8" : "0.8";
+            const headingParallax = index === 1 ? "-0.95" : "0.95";
+            const actionParallax = index === 1 ? "0.7" : "-0.7";
             return (
               <article key={service.title} className="service-stop" data-reveal>
-                <div className="service-stop__copy" data-parallax={parallax}>
+                <div className="service-stop__copy">
                   <p className={`service-eyebrow accent-${service.color}`}>
                     <span>{service.eyebrow}</span>
                   </p>
-                  <h3>{service.title}</h3>
+                  <h3 data-parallax={headingParallax} data-kinetic="title">
+                    {service.title}
+                  </h3>
                   <p className="service-description">{service.text}</p>
                   {service.external ? (
                     <a
                       className={`service-link accent-${service.color}`}
+                      data-parallax={actionParallax}
+                      data-kinetic="cta"
                       href={service.href}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -317,6 +334,8 @@ export default function HomePage() {
                   ) : (
                     <Link
                       className={`service-link accent-${service.color}`}
+                      data-parallax={actionParallax}
+                      data-kinetic="cta"
                       to={service.href}
                     >
                       {service.label}
@@ -333,7 +352,7 @@ export default function HomePage() {
         <div className="manifesto-inner mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
           <div className="manifesto-copy">
             <p className="section-kicker">MÚSICA · TECNOLOGIA · IDEIAS</p>
-            <h2 data-parallax="0.55" data-kinetic="title">
+            <h2 data-parallax="0.95" data-kinetic="title">
               <span className="manifesto-word--curiosity">Curiosidade</span>{" "}
               para começar.
               <br />
@@ -353,7 +372,7 @@ export default function HomePage() {
               target="_blank"
               rel="noopener noreferrer"
               className="primary-cta"
-              data-parallax="-0.32"
+              data-parallax="-0.72"
               data-kinetic="cta"
             >
               Me conta o que você quer criar <ArrowRight size={17} />
