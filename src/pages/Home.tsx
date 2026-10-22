@@ -76,6 +76,18 @@ function useScrollExperience(
   useEffect(() => {
     const bar = progressRef.current;
     if (!bar) return;
+    const hero = document.querySelector<HTMLElement>(".hero-section");
+    const resonanceScene = hero?.querySelector<HTMLElement>(
+      "[data-resonance-scene]",
+    );
+    const resonanceWaves = Array.from(
+      resonanceScene?.querySelectorAll<SVGPathElement>(
+        ".hero-resonance__wave",
+      ) ?? [],
+    );
+    const plectrum = resonanceScene?.querySelector<HTMLElement>(
+      ".hero-resonance__plectrum",
+    );
     const flow = document.querySelector<HTMLElement>(".service-flow");
     const route = flow?.querySelector<SVGPathElement>(
       ".signal-route__progress",
@@ -105,6 +117,40 @@ function useScrollExperience(
         bar.style.transform = `scaleX(${range > 0 ? window.scrollY / range : 0})`;
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
           return;
+        if (hero && resonanceScene) {
+          const heroBounds = hero.getBoundingClientRect();
+          const resonanceProgress = Math.max(
+            0,
+            Math.min(1, -heroBounds.top / Math.max(heroBounds.height, 1)),
+          );
+          resonanceScene.style.setProperty(
+            "--resonance-progress",
+            resonanceProgress.toFixed(3),
+          );
+          resonanceScene.style.setProperty(
+            "--resonance-tilt",
+            `${(12 - 24 * resonanceProgress).toFixed(1)}deg`,
+          );
+          resonanceScene.style.setProperty(
+            "--resonance-scale",
+            `${(0.94 + 0.08 * resonanceProgress).toFixed(3)}`,
+          );
+          resonanceScene.style.setProperty(
+            "--resonance-energy",
+            `${(0.46 + 0.4 * resonanceProgress).toFixed(3)}`,
+          );
+          resonanceWaves.forEach((wave, index) => {
+            const phase = resonanceProgress * Math.PI * 2.15 + index * 0.88;
+            const amplitude = 5 + index * 2.5;
+            const x = Math.cos(phase) * amplitude * 0.6;
+            const y = Math.sin(phase) * amplitude;
+            const twist = Math.sin(phase * 0.5) * 2.2;
+            wave.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) rotate(${twist.toFixed(1)}deg)`;
+          });
+          if (plectrum) {
+            plectrum.style.transform = `translate3d(0, ${(Math.sin(resonanceProgress * Math.PI * 2) * 12).toFixed(1)}px, 0) rotateX(${(-14 + 30 * resonanceProgress).toFixed(1)}deg) rotateY(${(26 - 52 * resonanceProgress).toFixed(1)}deg) rotateZ(${(-22 + 44 * resonanceProgress).toFixed(1)}deg)`;
+          }
+        }
         if (flow && route && track && routeSvg && traveler && routeLength > 0) {
           const bounds = flow.getBoundingClientRect();
           const routeProgress = Math.max(
@@ -220,6 +266,14 @@ function useScrollExperience(
         "--focus-aperture",
         "--focus-glow",
       ].forEach((property) => focusScene?.style.removeProperty(property));
+      [
+        "--resonance-progress",
+        "--resonance-tilt",
+        "--resonance-scale",
+        "--resonance-energy",
+      ].forEach((property) => resonanceScene?.style.removeProperty(property));
+      resonanceWaves.forEach((wave) => wave.style.removeProperty("transform"));
+      plectrum?.style.removeProperty("transform");
     };
   }, [progressRef]);
 }
@@ -286,6 +340,91 @@ export default function HomePage() {
             <Sparkles size={14} /> Música, tecnologia e ideias — conectadas pela
             vontade de criar.
           </p>
+        </div>
+        <div className="hero-resonance" data-resonance-scene aria-hidden="true">
+          <div className="hero-resonance__aura" />
+          <svg
+            className="hero-resonance__field"
+            viewBox="0 0 720 500"
+            fill="none"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient
+                id="hero-resonance-gradient"
+                x1="0"
+                y1="0"
+                x2="1"
+                y2="0"
+              >
+                <stop offset="0%" stopColor="#00f0ff" stopOpacity="0.12" />
+                <stop offset="42%" stopColor="#39ff88" />
+                <stop offset="76%" stopColor="#00f0ff" />
+                <stop offset="100%" stopColor="#ff4da6" stopOpacity="0.28" />
+              </linearGradient>
+            </defs>
+            <path
+              className="hero-resonance__wave hero-resonance__wave--far"
+              d="M0 250 C90 95 180 95 270 250 S450 405 540 250 S630 95 720 250"
+            />
+            <path
+              className="hero-resonance__wave hero-resonance__wave--upper"
+              d="M0 112 C82 182 165 182 248 112 S414 42 497 112 S638 182 720 112"
+            />
+            <path
+              className="hero-resonance__wave hero-resonance__wave--middle"
+              d="M0 202 C92 332 176 332 268 202 S452 72 544 202 S628 332 720 202"
+            />
+            <path
+              className="hero-resonance__wave hero-resonance__wave--lower"
+              d="M0 338 C78 258 156 258 234 338 S390 418 468 338 S624 258 720 338"
+            />
+            <path
+              className="hero-resonance__wave hero-resonance__wave--near"
+              d="M0 430 C92 300 184 300 276 430 S460 560 552 430 S644 300 720 430"
+            />
+          </svg>
+          <div className="hero-resonance__plectrum">
+            <svg viewBox="0 0 120 150" fill="none" aria-hidden="true">
+              <defs>
+                <linearGradient
+                  id="hero-plectrum-gradient"
+                  x1="12"
+                  y1="8"
+                  x2="108"
+                  y2="140"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop stopColor="#E8FFFF" stopOpacity="0.82" />
+                  <stop offset="0.42" stopColor="#00F0FF" stopOpacity="0.28" />
+                  <stop offset="1" stopColor="#39FF88" stopOpacity="0.16" />
+                </linearGradient>
+              </defs>
+              <path
+                className="hero-resonance__plectrum-face"
+                d="M60 6C82 12 111 26 108 51C104 83 78 129 60 144C42 129 16 83 12 51C9 26 38 12 60 6Z"
+                fill="url(#hero-plectrum-gradient)"
+                stroke="#C9FFFF"
+                strokeOpacity="0.86"
+                strokeWidth="1.5"
+              />
+              <path
+                d="M35 30C46 21 70 20 84 31"
+                stroke="#F2FFFF"
+                strokeOpacity="0.72"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <path
+                d="M60 48V101M44 74L60 91L77 66"
+                stroke="#E9FFFF"
+                strokeOpacity="0.9"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
         </div>
         <a
           href="#universos"
