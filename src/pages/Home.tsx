@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowDown, ArrowRight, Sparkles } from "lucide-react";
 import { SITE, waLink } from "../config";
 import SiteFrame from "../components/SiteFrame";
+import HeroScrollVideo from "../components/HeroScrollVideo";
 
 const services = [
   {
@@ -40,6 +41,7 @@ export default function HomePage() {
         id="inicio"
         className="hero-section relative z-10 mx-auto flex min-h-[82svh] w-full max-w-6xl flex-col justify-center px-5 pb-20 pt-12 sm:min-h-[86svh] sm:px-8 sm:pt-16"
       >
+        <HeroScrollVideo />
         <div className="hero-copy" data-reveal>
           <p className="eyebrow">
             <span className="live-dot" aria-hidden="true" /> Valkyrja Reis{" "}
