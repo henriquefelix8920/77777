@@ -85,6 +85,8 @@ function useScrollExperience(
     const traveler = flow?.querySelector<HTMLElement>(
       ".signal-route__traveler",
     );
+    const focusScene =
+      document.querySelector<HTMLElement>("[data-focus-scene]");
     const routeLength = track?.getTotalLength() ?? 0;
     const targets = Array.from(
       document.querySelectorAll<HTMLElement>("[data-parallax]"),
@@ -120,6 +122,49 @@ function useScrollExperience(
           traveler.style.top = `${(point.y / 1000) * svgBounds.height}px`;
           traveler.style.opacity =
             routeProgress > 0 && routeProgress < 1 ? "1" : "0";
+        }
+        if (focusScene) {
+          const bounds = focusScene.getBoundingClientRect();
+          const distance = Math.max(
+            bounds.height + window.innerHeight * 0.48,
+            1,
+          );
+          const focusProgress = Math.max(
+            0,
+            Math.min(1, (window.innerHeight * 0.88 - bounds.top) / distance),
+          );
+          focusScene.style.setProperty(
+            "--focus-progress",
+            focusProgress.toFixed(3),
+          );
+          focusScene.style.setProperty(
+            "--focus-rotation",
+            `${(-56 + 112 * focusProgress).toFixed(1)}deg`,
+          );
+          focusScene.style.setProperty(
+            "--focus-counter-rotation",
+            `${(56 - 112 * focusProgress).toFixed(1)}deg`,
+          );
+          focusScene.style.setProperty(
+            "--focus-tilt-x",
+            `${(16 - 32 * focusProgress).toFixed(1)}deg`,
+          );
+          focusScene.style.setProperty(
+            "--focus-tilt-y",
+            `${(-11 + 22 * focusProgress).toFixed(1)}deg`,
+          );
+          focusScene.style.setProperty(
+            "--focus-scale",
+            `${(0.76 + 0.22 * focusProgress).toFixed(3)}`,
+          );
+          focusScene.style.setProperty(
+            "--focus-aperture",
+            `${(0.3 + 0.6 * focusProgress).toFixed(3)}`,
+          );
+          focusScene.style.setProperty(
+            "--focus-glow",
+            `${(0.25 + 0.55 * focusProgress).toFixed(3)}`,
+          );
         }
         const maxShift = window.matchMedia("(max-width: 760px)").matches
           ? 34
@@ -165,6 +210,16 @@ function useScrollExperience(
       targets.forEach((target) =>
         target.element.style.removeProperty("--scroll-shift"),
       );
+      [
+        "--focus-progress",
+        "--focus-rotation",
+        "--focus-counter-rotation",
+        "--focus-tilt-x",
+        "--focus-tilt-y",
+        "--focus-scale",
+        "--focus-aperture",
+        "--focus-glow",
+      ].forEach((property) => focusScene?.style.removeProperty(property));
     };
   }, [progressRef]);
 }
@@ -329,31 +384,50 @@ export default function HomePage() {
       </section>
 
       <section className="manifesto-section relative z-10" data-reveal>
-        <div
-          className="manifesto-inner mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28"
-          data-parallax="0.65"
-        >
-          <p className="section-kicker">MÚSICA · TECNOLOGIA · IDEIAS</p>
-          <h2>
-            Curiosidade para começar.
-            <br />
-            <span>Intenção para chegar mais longe.</span>
-          </h2>
-          <p>
-            Seja aprendendo uma música, encontrando sua voz na improvisação ou
-            construindo sua presença na internet: o melhor caminho é aquele que
-            faz sentido para você.
-          </p>
-          <a
-            href={waLink(
-              "Olá, Valkyrja! Quero conversar sobre meu próximo passo.",
-            )}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="primary-cta"
-          >
-            Me conta o que você quer criar <ArrowRight size={17} />
-          </a>
+        <div className="manifesto-inner mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+          <div className="manifesto-copy" data-parallax="0.65">
+            <p className="section-kicker">MÚSICA · TECNOLOGIA · IDEIAS</p>
+            <h2>
+              <span className="manifesto-word--curiosity">Curiosidade</span>{" "}
+              para começar.
+              <br />
+              <span className="manifesto-word--intention">
+                Intenção para chegar mais longe.
+              </span>
+            </h2>
+            <p>
+              Seja aprendendo uma música, encontrando sua voz na improvisação ou
+              construindo sua presença na internet: o melhor caminho é aquele
+              que faz sentido para você.
+            </p>
+            <a
+              href={waLink(
+                "Olá, Valkyrja! Quero conversar sobre meu próximo passo.",
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="primary-cta"
+            >
+              Me conta o que você quer criar <ArrowRight size={17} />
+            </a>
+          </div>
+          <div className="focus-stage" data-focus-scene aria-hidden="true">
+            <div className="focus-stage__aura" />
+            <div className="focus-lens">
+              <span className="focus-lens__orbit focus-lens__orbit--outer" />
+              <span className="focus-lens__orbit focus-lens__orbit--polar" />
+              <span className="focus-lens__orbit focus-lens__orbit--inner" />
+              <span className="focus-lens__body" />
+              <span className="focus-lens__iris" />
+              <span className="focus-lens__core" />
+              <span className="focus-lens__glint" />
+            </div>
+            <div className="focus-stage__caption">
+              <span>IDEIA</span>
+              <i className="focus-stage__signal" />
+              <span>EM FOCO</span>
+            </div>
+          </div>
         </div>
       </section>
 
