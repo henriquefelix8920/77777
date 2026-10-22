@@ -1,135 +1,279 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { SITE, LINKS, waLink } from "../config";
-import VideoBackground from "../components/VideoBackground";
+import {
+  ArrowDown,
+  ArrowRight,
+  Code2,
+  Guitar,
+  Radio,
+  Sparkles,
+} from "lucide-react";
+import { SITE, waLink } from "../config";
+import VideoFlashBackground from "../components/VideoFlashBackground";
 import WhatsAppButton from "../components/WhatsAppButton";
-import LinkTile from "../components/LinkTile";
 
-/**
- * HOME — hub estilo linktree, emoldurado como um cartaz de show.
- * Fundo: video01.mp4 tocando guitarra (com fallback neon cinematográfico).
- */
+const services = [
+  {
+    number: "01",
+    eyebrow: "APRENDER · 1:1 · ONLINE",
+    title: "Guitarra com direção. Música com intenção.",
+    text: "Aulas individuais de guitarra e violão, construídas ao redor do que você quer tocar. Técnica, ritmo, harmonia e repertório entram no plano para fazer sentido na sua música — não numa fórmula pronta.",
+    icon: Guitar,
+    color: "cyan",
+    label: "Conhecer as aulas",
+    href: "/aulas-ao-vivo",
+  },
+  {
+    number: "02",
+    eyebrow: "ESTUDAR · IMPROVISAÇÃO · COMUNIDADE",
+    title: "Menos decorar. Mais ouvir, escolher e criar.",
+    text: "A Arte Suave da Improvisação aproxima conceitos musicais do instrumento. Um espaço para explorar ideias, experimentar frases e transformar escalas em linguagem própria — no seu tempo e junto com outros guitarristas.",
+    icon: Radio,
+    color: "magenta",
+    label: "Explorar o curso",
+    href: "/curso-improviso-na-pentatonica",
+  },
+  {
+    number: "03",
+    eyebrow: "CRIAR · PRESENÇA DIGITAL · WEB",
+    title: "Uma ideia boa merece um site à altura.",
+    text: "Crio sites autorais para artistas, profissionais e projetos com algo a dizer: identidade visual, mensagem clara e uma experiência que funciona de verdade no celular. Tecnologia a serviço da sua ideia — sem cara de template genérico.",
+    icon: Code2,
+    color: "violet",
+    label: "Conversar sobre meu site",
+    href: waLink(
+      "Olá, Valkyrja! Quero conversar sobre a criação de um site para meu projeto.",
+    ),
+    external: true,
+  },
+];
+
+function useScrollExperience(
+  progressRef: React.RefObject<HTMLDivElement | null>,
+) {
+  useEffect(() => {
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const targets = document.querySelectorAll<HTMLElement>("[data-reveal]");
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      targets.forEach((target) => target.classList.add("is-visible"));
+    } else {
+      const observer = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            (entry.target as HTMLElement).classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }),
+        { threshold: 0.12, rootMargin: "0px 0px -5% 0px" },
+      );
+      targets.forEach((target) => observer.observe(target));
+      return () => observer.disconnect();
+    }
+  }, []);
+
+  useEffect(() => {
+    const bar = progressRef.current;
+    if (!bar) return;
+    let frame = 0;
+    const update = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const range =
+          document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.transform = `scaleX(${range > 0 ? window.scrollY / range : 0})`;
+      });
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [progressRef]);
+}
+
 export default function HomePage() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const progressRef = useRef<HTMLDivElement>(null);
+  useScrollExperience(progressRef);
 
   return (
-    <main className="relative min-h-dvh">
-      <VideoBackground src="/video2.mp4" />
-
-      {/* ---------- Moldura editorial do "cartaz" ---------- */}
-      <div className="relative z-10 mx-auto flex min-h-dvh w-full max-w-[560px] flex-col px-5 pb-28 pt-6 sm:px-8">
-        {/* cabeçalho do cartaz */}
-        <header className="anim-fade-down flex items-center justify-between text-[10px] uppercase tracking-[0.34em] text-slate-400 [animation-delay:120ms]">
-          <span>Online</span>
-          <span className="mx-4 h-px flex-1 bg-gradient-to-r from-neon-cyan/40 via-neon-magenta/40 to-transparent" />
-          <span>Guitarra · Violão</span>
-        </header>
-
-        {/* carimbos verticais (desktop) */}
-        <span
-          className="vertical-text pointer-events-none fixed left-3 top-1/2 hidden -translate-y-1/2 text-[10px] text-slate-500/70 lg:block"
-          aria-hidden="true"
+    <main className="home-shell relative min-h-dvh overflow-clip">
+      <div ref={progressRef} className="scroll-progress" aria-hidden="true" />
+      <VideoFlashBackground />
+      <header className="home-header relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
+        <a
+          href="#inicio"
+          className="wordmark"
+          aria-label="Valkyrja Reis, início"
         >
-          Aula online · Ao vivo
-        </span>
-        <span
-          className="vertical-text pointer-events-none fixed right-3 top-1/2 hidden -translate-y-1/2 rotate-180 text-[10px] text-slate-500/70 lg:block"
-          aria-hidden="true"
-        >
-          Toque com intenção
-        </span>
+          VR<span>_</span>
+        </a>
+        <p className="hidden text-[11px] uppercase tracking-[0.22em] text-slate-300 sm:block">
+          Música · Tecnologia · Ideias
+        </p>
+        <a href="#universos" className="header-link">
+          Explorar <ArrowDown size={14} />
+        </a>
+      </header>
 
-        {/* ---------- Hero: nome como letreiro de palco ---------- */}
-        <section className="mt-10 text-center sm:mt-14">
-          <p className="anim-fade-down inline-flex items-center gap-2 rounded-full border border-neon-cyan/30 bg-neon-cyan/5 px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.3em] text-neon-cyan [animation-delay:240ms]">
-            <span className="live-dot" aria-hidden="true" />
-            {SITE.role}
+      <section
+        id="inicio"
+        className="hero-section relative z-10 mx-auto flex min-h-[82svh] w-full max-w-6xl flex-col justify-center px-5 pb-20 pt-12 sm:min-h-[86svh] sm:px-8 sm:pt-16"
+      >
+        <div className="hero-copy" data-reveal>
+          <p className="eyebrow">
+            <span className="live-dot" aria-hidden="true" /> Valkyrja Reis{" "}
+            <span className="eyebrow-separator">/</span> {SITE.tagline}
           </p>
-
-          <h1 className="mt-14 leading-none sm:mt-20">
-            <span className="neon-title anim-letter-drop block text-[clamp(2.9rem,11vw,4.6rem)] font-black tracking-[0.04em] [animation-delay:380ms]">
-              VALKYRJA
-            </span>
-            <span className="neon-title anim-letter-drop mt-1 block !font-bold text-[clamp(1.7rem,6.5vw,2.6rem)] tracking-[0.5em] text-neon-yellow [text-shadow:0_0_18px_rgba(255,238,0,0.35)] [animation-delay:560ms]">
-              REIS
-            </span>
+          <h1 className="hero-title neon-title">
+            Música, tecnologia
+            <br />
+            <span className="hero-title-accent">e ideias em movimento.</span>
           </h1>
-
-          <p className="anim-fade-up mx-auto mt-5 max-w-[36ch] text-[15px] font-light leading-relaxed text-slate-300 [animation-delay:760ms]">
-            Aulas de <strong className="font-semibold text-white">guitarra e violão</strong>,
-            100% online. Escolha seu caminho abaixo — ou fale direto comigo.
+          <p className="hero-description">
+            Da primeira nota ao próximo projeto digital: ensino guitarra,
+            compartilho caminhos para improvisar e crio sites que dão forma a
+            boas ideias.
           </p>
-
-          {/* cordas decorativas sob o título */}
-          <div
-            className="anim-fade-up relative mx-auto mt-7 h-5 w-44 [animation-delay:900ms]"
-            aria-hidden="true"
-          >
-            <span className="string-line top-1 animate-string-vibe" />
-            <span className="string-line top-2.5 animate-string-vibe [animation-delay:0.5s]" />
-            <span className="string-line top-4 animate-string-vibe [animation-delay:1s]" />
+          <div className="hero-actions">
+            <a href="#universos" className="primary-cta">
+              Encontre seu próximo passo <ArrowDown size={17} />
+            </a>
+            <a
+              href={waLink(
+                "Olá, Valkyrja! Quero conversar sobre aulas de guitarra, o curso ou um site para meu projeto.",
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cta"
+            >
+              Vamos conversar <ArrowRight size={16} />
+            </a>
           </div>
-        </section>
+          <p className="hero-note">
+            <Sparkles size={14} /> Música, tecnologia e ideias — conectadas pela
+            vontade de criar.
+          </p>
+        </div>
+        <a
+          href="#universos"
+          className="scroll-cue"
+          aria-label="Role para explorar"
+        >
+          <span>ROLE PARA EXPLORAR</span>
+          <span className="scroll-cue-line" />
+        </a>
+      </section>
 
-        {/* ---------- Links principais (hub) ---------- */}
-        <nav aria-label="Links principais" className="mt-9 flex flex-col gap-3.5 sm:mt-11">
-          {LINKS.map((item, i) => (
-            <LinkTile key={item.id} item={item} index={i} />
-          ))}
-        </nav>
+      <section
+        id="universos"
+        className="offerings-section relative z-10 mx-auto w-full max-w-6xl px-5 pb-24 pt-12 sm:px-8 sm:pb-36"
+      >
+        <div className="section-intro" data-reveal>
+          <p className="section-kicker">TRÊS FORMAS DE TIRAR IDEIAS DO PAPEL</p>
+          <h2 className="section-title">
+            Aprender. Criar. <span>Compartilhar.</span>
+          </h2>
+          <p className="section-lead">
+            O fio que conecta tudo é o mesmo: curiosidade, prática e intenção —
+            na música e além dela.
+          </p>
+        </div>
+        <div className="service-list">
+          {services.map((service) => {
+            const Icon = service.icon;
+            const CardContent = (
+              <>
+                <div className="service-topline">
+                  <span className="service-number">{service.number}</span>
+                  <span className="service-mark">
+                    <Icon size={20} strokeWidth={1.6} />
+                  </span>
+                </div>
+                <p className={`service-eyebrow accent-${service.color}`}>
+                  {service.eyebrow}
+                </p>
+                <h3>{service.title}</h3>
+                <p className="service-description">{service.text}</p>
+                <span className={`service-link accent-${service.color}`}>
+                  {service.label}
+                  <ArrowRight size={16} />
+                </span>
+              </>
+            );
+            return service.external ? (
+              <a
+                key={service.number}
+                className={`service-card accent-border-${service.color} reveal-up`}
+                data-reveal
+                href={service.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {CardContent}
+              </a>
+            ) : (
+              <Link
+                key={service.number}
+                className={`service-card accent-border-${service.color} reveal-up`}
+                data-reveal
+                to={service.href}
+              >
+                {CardContent}
+              </Link>
+            );
+          })}
+        </div>
+      </section>
 
-        {/* ---------- CTA de conversão: agendar aula ---------- */}
-        <div className="anim-fade-up mt-8 [animation-delay:820ms]">
+      <section className="manifesto-section relative z-10" data-reveal>
+        <div className="manifesto-inner mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+          <p className="section-kicker">MÚSICA · TECNOLOGIA · IDEIAS</p>
+          <h2>
+            Curiosidade para começar.
+            <br />
+            <span>Intenção para chegar mais longe.</span>
+          </h2>
+          <p>
+            Seja aprendendo uma música, encontrando sua voz na improvisação ou
+            construindo sua presença na internet: o melhor caminho é aquele que
+            faz sentido para você.
+          </p>
           <a
             href={waLink(
-              "Olá, Valkyrja! Quero agendar uma aula experimental de guitarra/violão online."
+              "Olá, Valkyrja! Quero conversar sobre meu próximo passo.",
             )}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-[14px] px-6 py-4 text-[15px] font-bold uppercase tracking-[0.18em] text-void transition-transform duration-300 hover:-translate-y-0.5 active:translate-y-0"
-            style={{
-              background:
-                "linear-gradient(92deg, #00f0ff 0%, #7000ff 55%, #ff007f 100%)",
-              boxShadow:
-                "0 14px 44px -12px rgba(0,240,255,0.5), 0 14px 44px -12px rgba(255,0,127,0.4)",
-            }}
-            aria-label="Agendar aula experimental pelo WhatsApp"
+            className="primary-cta"
           >
-            {/* brilho que atravessa no hover */}
-            <span
-              className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-white/40 opacity-0 transition-all duration-700 group-hover:left-[110%] group-hover:opacity-100"
-              aria-hidden="true"
-            />
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-            Agendar minha aula
+            Me conta o que você quer criar <ArrowRight size={17} />
           </a>
-
-          <p className="mt-4 text-center text-[11px] uppercase tracking-[0.28em] text-slate-500">
-            Atendimento pessoal · Aulas exclusivas para a sua trajetória musical
-          </p>
         </div>
+      </section>
 
-        {/* rodapé discreto */}
-        <footer className="mt-auto pt-12 text-center">
-          <p className="text-[10.5px] uppercase tracking-[0.3em] text-slate-500">
-            <Link to="/" className="transition-colors hover:text-neon-cyan">
-              valkyrja&nbsp;reis
-            </Link>
-            <span className="mx-2 text-neon-magenta/60">✦</span>
-            aulas online de guitarra & violão
-          </p>
-        </footer>
-      </div>
-
-      {/* camadas cinematográficas globais */}
-      <div className="film-grain scanlines pointer-events-none fixed inset-0 z-[60]" aria-hidden="true" />
-
+      <footer className="home-footer relative z-10 mx-auto flex max-w-6xl flex-col gap-3 px-5 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <Link to="/" className="footer-brand">
+          VALKYRJA REIS <span>_</span>
+        </Link>
+        <p>Música, tecnologia e ideias. Feito com intenção.</p>
+        <a
+          href={waLink("Olá, Valkyrja! Vim pelo seu site.")}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Fale comigo <ArrowRight size={14} />
+        </a>
+      </footer>
+      <div
+        className="film-grain scanlines pointer-events-none fixed inset-0 z-[60]"
+        aria-hidden="true"
+      />
       <WhatsAppButton />
-
-      {!mounted && null}
     </main>
   );
 }

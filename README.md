@@ -1,36 +1,33 @@
-# Valkyrja Reis — Site oficial (hub de links cinematográfico)
+# Valkyrja Reis — Música, Tecnologia e Ideias
 
-Experiência digital premium para a guitarrista **Valkyrja Reis**.
-Página inicial estilo linktree sobre vídeo de guitarra em loop, com CTA de conversão
-para agendamento de aulas online via WhatsApp.
+Site autoral de Valkyrja Reis. A experiência conecta aulas online de guitarra e violão, improvisação e criação de sites para artistas, profissionais e projetos.
 
 ## Stack
+
 - Vite + React 18 + TypeScript
 - Tailwind CSS v4
-- React Router (rotas preparadas para as próximas páginas)
-- Deploy: Vercel (`vercel.json` incluído)
+- React Router
+- Deploy conectado ao Vercel (`vercel.json`)
 
 ## Rodar localmente
+
 ```bash
-npm install
-npm run dev      # desenvolvimento
-npm run build    # produção (gera /dist)
+npm ci
+npm run dev
+npm run typecheck
+npm run build
 ```
 
-## Vídeo de fundo
-Coloque o arquivo **`video01.mp4`** dentro da pasta `public/`.
-Sem o arquivo, o site exibe automaticamente um fallback neon cinematográfico.
+## Fundo em flashes
 
-## Configuração central
-Todos os links, número de WhatsApp e textos editáveis ficam em **`src/config.ts`**:
-- WhatsApp: (34) 99650-8397 → botão flutuante + CTAs com mensagem pré-preenchida
-- TikTok: `@valkyrjareis1` (confirme o @ completo)
-- YouTube: marcado como "em breve" — troque `href` quando o canal existir
+A home usa os seis vídeos (`video1.mp4` a `video6.mp4`) em recortes aleatórios, com um decoder ativo por vez. As cópias para o fundo são servidas de `public/club-videos/`, em 960×540, 20 fps e sem áudio; os originais permanecem em `public/`. O efeito respeita `prefers-reduced-motion`, pausa quando a aba fica oculta e não inicia em conexões que pedem economia de dados.
 
 ## Rotas
-- `/` — hub de links (página inicial)
-- `/aulas-ao-vivo` — página placeholder (conteúdo completo será criado a seguir)
-- `/curso-improviso-na-pentatonica` — página placeholder (idem)
 
-## Paleta
-`#080A14` · `#00F0FF` · `#FF007F` · `#7000FF` · `#FFEE00`
+- `/` — apresentação e três caminhos: aulas, curso/comunidade e sites
+- `/aulas-ao-vivo` — informações sobre aulas individuais
+- `/curso-improviso-na-pentatonica` — página da comunidade de improvisação
+
+## Configuração
+
+O número de WhatsApp e a identidade básica estão centralizados em `src/config.ts`. A home mantém os links de TikTok e YouTube fora da navegação, conforme solicitado.

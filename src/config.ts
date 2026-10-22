@@ -5,7 +5,7 @@
 
 export const SITE = {
   name: "Valkyrja Reis",
-  role: "Guitarrista · Aulas Online",
+  role: "Música · Tecnologia · Ideias",
   tagline: "Toque com intenção.",
   /** WhatsApp real — usado pelo botão flutuante e pelos CTAs das aulas */
   whatsappNumber: "5534996508397", // (34) 99650-8397
@@ -43,24 +43,5 @@ export const LINKS: LinkItem[] = [
     href: "/curso-improviso-na-pentatonica",
     icon: "course",
     accent: "magenta",
-  },
-  {
-    id: "tiktok",
-    label: "TikTok",
-    sub: "Ver no TikTok",
-    href: "https://www.tiktok.com/@valkyrja.reis",
-    external: true,
-    icon: "tiktok",
-    accent: "violet",
-  },
-  {
-    id: "youtube",
-    label: "YouTube",
-    sub: "Canal em breve",
-    href: "#",
-    external: true,
-    icon: "youtube",
-    accent: "yellow",
-    comingSoon: true, // [DEPOIS] trocar pelo link real do canal
   },
 ];

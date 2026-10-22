@@ -1,1 +1,1 @@
-Coloque aqui o arquivo video01.mp4 (vídeo tocando guitarra, usado como fundo da página inicial).
+A home usa os seis vídeos video1.mp4 a video6.mp4 como flashes aleatórios. As cópias leves para o efeito ficam em public/club-videos/; os arquivos originais permanecem em public/.
