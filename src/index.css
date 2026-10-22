@@ -564,7 +564,7 @@ body {
   min-height: min(850px, 88svh);
 }
 .guitar-scroll-sequence {
-  height: 210svh;
+  height: 420svh;
   scroll-margin-top: 0;
 }
 .guitar-scroll-sticky {
@@ -1082,9 +1082,6 @@ body {
   );
 }
 @media (max-width: 760px) {
-  .guitar-scroll-sequence {
-    height: 195svh;
-  }
   .hero-section {
     min-height: 78svh;
     padding-top: 2.6rem;
