@@ -10,12 +10,10 @@ const MAX_CACHED_FRAMES = 6;
 export default function GuitarScrollSequence() {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const counterRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     const canvas = canvasRef.current;
-    const counter = counterRef.current;
     const context = canvas?.getContext("2d");
     if (!section || !canvas || !context) return;
 
@@ -44,23 +42,21 @@ export default function GuitarScrollSequence() {
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       context.clearRect(0, 0, width, height);
 
-      const scale = Math.min(
+      const scale = Math.max(
         width / image.naturalWidth,
         height / image.naturalHeight,
       );
       const drawWidth = image.naturalWidth * scale;
       const drawHeight = image.naturalHeight * scale;
+      const offsetY = (height - drawHeight) * 0.56;
       context.drawImage(
         image,
         (width - drawWidth) / 2,
-        (height - drawHeight) / 2,
+        offsetY,
         drawWidth,
         drawHeight,
       );
       drawnFrame = index;
-      if (counter) counter.textContent = `${FRAME_PAD(index)} / ${FRAME_COUNT}`;
-      const phase = index < 13 ? "one" : index < 27 ? "two" : "three";
-      section.dataset.phase = phase;
       return true;
     };
 
@@ -138,7 +134,6 @@ export default function GuitarScrollSequence() {
         latestFrame = reduceMotion.matches
           ? FRAME_COUNT - 1
           : Math.round(progress * (FRAME_COUNT - 1));
-        section.style.setProperty("--guitar-progress", progress.toFixed(3));
         requestNeighborhood(latestFrame);
       });
     };
@@ -190,37 +185,13 @@ export default function GuitarScrollSequence() {
     <section
       ref={sectionRef}
       className="guitar-scroll-sequence relative z-10"
-      aria-label="Animação da guitarra controlada pela rolagem"
-      data-phase="one"
+      aria-label="Animação em tela cheia de uma guitarra, sincronizada com a rolagem"
     >
       <div className="guitar-scroll-sticky">
         <div className="guitar-scroll-visual" aria-hidden="true">
           <canvas ref={canvasRef} className="guitar-scroll-canvas" />
           <div className="guitar-scroll-vignette" />
         </div>
-        <div className="guitar-scroll-copy">
-          <p className="guitar-scroll-kicker">SEQUÊNCIA 01 — 40 QUADROS</p>
-          <h2>A música ganha forma.</h2>
-          <p className="guitar-scroll-caption guitar-scroll-caption--one">
-            Primeiro, a ideia aparece no silêncio.
-          </p>
-          <p className="guitar-scroll-caption guitar-scroll-caption--two">
-            Cada detalhe encontra seu lugar.
-          </p>
-          <p className="guitar-scroll-caption guitar-scroll-caption--three">
-            E a guitarra responde com voz própria.
-          </p>
-          <div className="guitar-scroll-readout" aria-hidden="true">
-            <span className="guitar-scroll-meter">
-              <i />
-            </span>
-            <span ref={counterRef}>001 / 40</span>
-          </div>
-        </div>
-        <span className="sr-only">
-          A sequência mostra uma guitarra elétrica surgindo e ganhando detalhes
-          em quarenta imagens sincronizadas com a rolagem da página.
-        </span>
       </div>
     </section>
   );

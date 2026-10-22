@@ -26,7 +26,7 @@ As versões leves ficam em `public/club-videos/` (960×540, 20 fps, sem áudio) 
 
 Os títulos da hero e de todas as seções usam texto real em um scrollmation ligado continuamente à posição na viewport: deslocamento vertical de parallax, escala, inclinação 3D, opacidade e revelação por recorte. O efeito responde à rolagem por toque e mouse; em movimento reduzido os títulos ficam imediatamente visíveis e estáticos. A promoção gráfica temporária só é ativada enquanto cada título atravessa a viewport.
 
-Entre o hero e a seção de ofertas, a home apresenta uma sequência cinematográfica de 40 quadros da guitarra, sincronizada diretamente ao scroll (scrub reversível: avançar e voltar a página também avança e volta a animação). O palco usa um canvas sticky, carrega quadros próximos sob demanda e limita o cache decodificado para dispositivos móveis. Os PNGs originais estão preservados em `source-media/guitarra-original/`; o site entrega apenas as versões WebP 720×1280, com aproximadamente 0,90 MB no total. Com movimento reduzido, a sequência fica estática e acessível.
+Entre o hero e a seção de ofertas, a home apresenta uma sequência cinematográfica de 40 quadros da guitarra em tela cheia e sem copy visível, sincronizada diretamente ao scroll (scrub reversível: avançar e voltar a página também avança e volta a animação). O canvas sticky ocupa a viewport, preenche a cena de forma imersiva e carrega quadros próximos sob demanda, com cache decodificado limitado para dispositivos móveis. Os PNGs originais estão preservados em `source-media/guitarra-original/`; o site entrega apenas as versões WebP 720×1280, com aproximadamente 0,90 MB no total. Com movimento reduzido, a sequência fica estática e acessível.
 
 ## Desempenho e movimento
 

@@ -570,19 +570,16 @@ body {
 .guitar-scroll-sticky {
   position: sticky;
   top: 0;
-  display: flex;
-  min-height: 100svh;
+  width: 100%;
   height: 100svh;
-  align-items: center;
   overflow: clip;
   isolation: isolate;
 }
 .guitar-scroll-visual {
   position: absolute;
-  z-index: -1;
-  top: 0;
-  right: clamp(1rem, 5vw, 5rem);
-  width: min(59vw, 760px);
+  z-index: 0;
+  inset: 0;
+  width: 100%;
   height: 100%;
 }
 .guitar-scroll-canvas {
@@ -592,99 +589,24 @@ body {
   filter: brightness(1.16) contrast(1.08);
   mix-blend-mode: screen;
 }
-@media (min-width: 761px) {
-  .guitar-scroll-canvas {
-    mask-image: radial-gradient(
-      ellipse 58% 96% at 50% 50%,
-      #000 42%,
-      transparent 100%
-    );
-  }
-}
 .guitar-scroll-vignette {
   position: absolute;
+  z-index: 1;
   inset: 0;
   pointer-events: none;
   background:
     linear-gradient(
-      90deg,
-      #05070b 0%,
-      rgba(5, 7, 11, 0.42) 26%,
-      transparent 58%
+      180deg,
+      rgba(5, 7, 11, 0.26),
+      transparent 22%,
+      transparent 78%,
+      rgba(5, 7, 11, 0.38)
     ),
-    radial-gradient(ellipse at 55% 50%, transparent 38%, #05070b 90%);
-}
-.guitar-scroll-copy {
-  position: relative;
-  z-index: 1;
-  width: min(42vw, 470px);
-  margin-left: max(7vw, calc((100vw - 1120px) / 2));
-  padding: 2rem 0;
-}
-.guitar-scroll-kicker {
-  color: #39ff88;
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-  line-height: 1.7;
-  text-transform: uppercase;
-}
-.guitar-scroll-copy h2 {
-  margin-top: 1rem;
-  color: #f0fff7;
-  font-size: clamp(2.35rem, 5vw, 4.65rem);
-  font-weight: 700;
-  letter-spacing: -0.055em;
-  line-height: 1.02;
-  text-wrap: balance;
-  text-shadow: 0 0 28px rgba(0, 240, 255, 0.14);
-}
-.guitar-scroll-caption {
-  max-width: 31ch;
-  min-height: 3.4em;
-  margin-top: 1.2rem;
-  color: #bdcbd0;
-  font-size: clamp(0.95rem, 1.5vw, 1.08rem);
-  line-height: 1.75;
-  transition:
-    opacity 220ms ease,
-    transform 220ms ease;
-}
-.guitar-scroll-caption--two,
-.guitar-scroll-caption--three {
-  display: none;
-}
-.guitar-scroll-sequence[data-phase="two"] .guitar-scroll-caption--one,
-.guitar-scroll-sequence[data-phase="three"] .guitar-scroll-caption--one {
-  display: none;
-}
-.guitar-scroll-sequence[data-phase="two"] .guitar-scroll-caption--two,
-.guitar-scroll-sequence[data-phase="three"] .guitar-scroll-caption--three {
-  display: block;
-}
-.guitar-scroll-readout {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  margin-top: 2rem;
-  color: rgba(180, 205, 210, 0.72);
-  font-size: 0.66rem;
-  letter-spacing: 0.16em;
-  font-variant-numeric: tabular-nums;
-}
-.guitar-scroll-meter {
-  display: block;
-  width: min(11vw, 116px);
-  height: 1px;
-  background: rgba(164, 192, 200, 0.26);
-}
-.guitar-scroll-meter i {
-  display: block;
-  width: 100%;
-  height: 100%;
-  transform: scaleX(var(--guitar-progress, 0));
-  transform-origin: left;
-  background: linear-gradient(90deg, #00f0ff, #39ff88, #ff007f);
-  box-shadow: 0 0 10px rgba(57, 255, 136, 0.7);
+    radial-gradient(
+      ellipse at center,
+      transparent 44%,
+      rgba(5, 7, 11, 0.28) 100%
+    );
 }
 .hero-copy {
   max-width: 870px;
@@ -1163,60 +1085,6 @@ body {
   .guitar-scroll-sequence {
     height: 195svh;
   }
-  .guitar-scroll-visual {
-    top: 10svh;
-    right: auto;
-    left: 50%;
-    width: min(100vw, 48svh);
-    height: 80svh;
-    transform: translateX(-50%);
-  }
-  .guitar-scroll-vignette {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(5, 7, 11, 0.8),
-        transparent 32%,
-        transparent 70%,
-        rgba(5, 7, 11, 0.58)
-      ),
-      radial-gradient(
-        ellipse at 50% 52%,
-        transparent 25%,
-        rgba(5, 7, 11, 0.5) 100%
-      );
-  }
-  .guitar-scroll-copy {
-    align-self: flex-start;
-    width: 100%;
-    margin: 0;
-    padding: 8svh 1.25rem 0;
-  }
-  .guitar-scroll-kicker {
-    font-size: 0.58rem;
-    letter-spacing: 0.15em;
-  }
-  .guitar-scroll-copy h2 {
-    max-width: 13ch;
-    margin-top: 0.55rem;
-    font-size: clamp(2rem, 8.6vw, 3.1rem);
-  }
-  .guitar-scroll-caption {
-    min-height: 2.9em;
-    max-width: 30ch;
-    margin-top: 0.55rem;
-    font-size: 0.88rem;
-    line-height: 1.55;
-    text-shadow: 0 2px 14px #05070b;
-  }
-  .guitar-scroll-readout {
-    gap: 0.65rem;
-    margin-top: 1rem;
-    font-size: 0.59rem;
-  }
-  .guitar-scroll-meter {
-    width: 22vw;
-  }
   .hero-section {
     min-height: 78svh;
     padding-top: 2.6rem;
@@ -1318,9 +1186,6 @@ body {
   .guitar-scroll-sticky {
     position: relative;
     top: auto;
-  }
-  .guitar-scroll-caption {
-    transition: none;
   }
   [data-kinetic="title"] {
     transition: none !important;
