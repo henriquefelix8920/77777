@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const GUITAR_VIDEO = "/club-videos/guitarra/video8.mp4";
+const GUITAR_VIDEO = "/club-videos/guitarra/video8-scroll.mp4";
 const VIDEO_FPS = 24;
 const SEEK_THRESHOLD = 1 / (VIDEO_FPS * 2);
 
