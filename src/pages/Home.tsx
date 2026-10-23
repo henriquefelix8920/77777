@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { ArrowDown, ArrowRight, Sparkles } from "lucide-react";
 import { SITE, waLink } from "../config";
 import SiteFrame from "../components/SiteFrame";
-import GuitarScrollSequence from "../components/GuitarScrollSequence";
 
 const services = [
   {
@@ -96,8 +95,6 @@ export default function HomePage() {
           <span className="scroll-cue-line" />
         </a>
       </section>
-
-      <GuitarScrollSequence />
 
       <section
         id="universos"
