@@ -5,10 +5,10 @@ import { LiquidMetalButton } from "../components/ui/liquid-metal-button";
 import SiteFrame from "../components/SiteFrame";
 
 const capabilities = [
-  { title: "Sistemas e plataformas", text: "Ferramentas feitas para a rotina do seu negócio — não mais uma planilha improvisada." },
-  { title: "Automação e integrações", text: "Menos tarefas repetidas. Mais tempo para o trabalho que realmente precisa de gente." },
-  { title: "Inteligência artificial", text: "IA aplicada a situações concretas: atendimento, análise, conteúdo e operações." },
-  { title: "Sites e experiências digitais", text: "Presença digital com personalidade, clareza e uma função que vai além de parecer bonita." },
+  { number: "01", title: "Sistemas e plataformas", text: "Ferramentas feitas para a rotina do seu negócio — não mais uma planilha improvisada.", tag: "ESTRUTURA PARA CRESCER", visual: "systems" },
+  { number: "02", title: "Automação e integrações", text: "Menos tarefas repetidas. Mais tempo para o trabalho que realmente precisa de gente.", tag: "FLUXOS QUE SE CONECTAM", visual: "automation" },
+  { number: "03", title: "Inteligência artificial", text: "IA aplicada a situações concretas: atendimento, análise, conteúdo e operações.", tag: "INTELIGÊNCIA APLICADA", visual: "ai" },
+  { number: "04", title: "Sites e experiências digitais", text: "Presença digital com personalidade, clareza e uma função que vai além de parecer bonita.", tag: "PRESENÇA COM PROPÓSITO", visual: "web" },
 ];
 
 function Film({ src, className = "", priority = false }: { src: number; className?: string; priority?: boolean }) {
@@ -91,11 +91,17 @@ export default function HomePage() {
           <p className="kicker reveal-left">A FERRAMENTA VEM DEPOIS DO PROBLEMA.</p>
           <h2 className="reveal-right">Uma solução certa<br/><em>para cada desafio.</em></h2>
         </div>
-        <div className="capability-grid">
-          {capabilities.map((item, i) => <article className={`capability reveal-${i % 2 ? "right" : "left"}`} key={item.title}>
-            <div className="capability-top"><span>O QUE EU FAÇO</span></div>
-            <h3>{item.title}</h3><p>{item.text}</p>
-            <span className="capability-rule" />
+        <div className="capability-bento">
+          {capabilities.map((item, i) => <article className={`capability-tile capability-tile-${i + 1} reveal-${i % 2 ? "right" : "left"}`} key={item.title}>
+            <div className="tile-meta"><span>{item.number} / 04</span><span>{item.tag}</span></div>
+            <div className={`tile-visual tile-visual-${item.visual}`} aria-hidden="true">
+              {item.visual === "systems" && <><span className="system-window"><i/><i/><i/><b/><b/><b/><b/></span><span className="system-orbit system-orbit-a"/><span className="system-orbit system-orbit-b"/></>}
+              {item.visual === "automation" && <><span className="flow-node flow-node-a"/><span className="flow-line"/><span className="flow-node flow-node-b"/><span className="flow-line flow-line-two"/><span className="flow-node flow-node-c"/></>}
+              {item.visual === "ai" && <><span className="ai-core">IA</span><span className="ai-ring ai-ring-a"/><span className="ai-ring ai-ring-b"/></>}
+              {item.visual === "web" && <><span className="web-frame"><i/><i/><i/><b/></span><span className="web-cursor">↗</span></>}
+            </div>
+            <div className="tile-copy"><h3>{item.title}</h3><p>{item.text}</p></div>
+            <span className="tile-arrow" aria-hidden="true"><ArrowUpRight size={19}/></span>
           </article>)}
         </div>
       </div>
