@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
-import { ArrowUpRight, Workflow, BrainCircuit, PanelsTopLeft, Blocks } from "lucide-react";
+import { ArrowUpRight, Workflow, BrainCircuit, Monitor, Blocks } from "lucide-react";
 import "../styles/capabilities-3d.css";
 
 const services = [
   { number: "01", code: "SYSTEMS / CORE", title: "Sistemas & plataformas", text: "Ferramentas feitas para a rotina do seu negócio — não mais uma planilha improvisada.", detail: "ESTRUTURA PARA CRESCER", icon: Blocks, visual: "systems" },
   { number: "02", code: "AUTOMATION / FLOW", title: "Automação & integrações", text: "Menos tarefas repetidas. Mais tempo para o trabalho que realmente precisa de gente.", detail: "FLUXOS QUE SE CONECTAM", icon: Workflow, visual: "flow" },
   { number: "03", code: "INTELLIGENCE / AI", title: "Inteligência artificial", text: "IA aplicada a situações concretas: atendimento, análise, conteúdo e operações.", detail: "INTELIGÊNCIA APLICADA", icon: BrainCircuit, visual: "ai" },
-  { number: "04", code: "DIGITAL / EXPERIENCE", title: "Sites & experiências digitais", text: "Presença digital com personalidade, clareza e uma função que vai além de parecer bonita.", detail: "PRESENÇA COM PROPÓSITO", icon: PanelsTopLeft, visual: "web" },
+  { number: "04", code: "DIGITAL / EXPERIENCE", title: "Sites & experiências digitais", text: "Presença digital com personalidade, clareza e uma função que vai além de parecer bonita.", detail: "PRESENÇA COM PROPÓSITO", icon: Monitor, visual: "web" },
 ];
 
 function ServiceGeometry({ visual }: { visual: string }) {
