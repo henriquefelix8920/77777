@@ -1299,3 +1299,27 @@ body, p, a, button, .tile-meta, .process-card-top {
     transition: none !important;
   }
 }
+
+
+/* Final CTA width rules after replacing the old Shiny CTA component. */
+@media (max-width: 760px) {
+  .hero-prisma .hero-actions .tech-glow-button { max-width: 100%; }
+  .closing-content .tech-glow-button { max-width: 100%; white-space: normal; }
+}
+@media (max-width: 480px) {
+  .hero-prisma .hero-actions .tech-glow-button {
+    width: min(100%, 330px);
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .closing-content .tech-glow-button {
+    width: 100%;
+    justify-content: space-between;
+    gap: 12px;
+    padding-inline: 17px;
+  }
+}
+@media (max-width: 360px) {
+  .hero-prisma .hero-actions .tech-glow-button { width: 100%; padding-inline: 16px; }
+  .closing-content .tech-glow-button { font-size: 9px; }
+}
