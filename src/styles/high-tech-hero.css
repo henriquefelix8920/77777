@@ -894,14 +894,14 @@
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(90deg, rgba(2, 6, 17, .72) 0%, rgba(2, 6, 17, .22) 54%, rgba(2, 6, 17, .34) 100%),
-    linear-gradient(0deg, rgba(2, 6, 17, .42), transparent 38%, rgba(2, 6, 17, .12));
+    linear-gradient(90deg, rgba(2, 6, 17, .48) 0%, rgba(2, 6, 17, .12) 54%, rgba(2, 6, 17, .24) 100%),
+    linear-gradient(0deg, rgba(2, 6, 17, .32), transparent 38%, rgba(2, 6, 17, .08));
 }
 @media (max-width: 800px) {
   .hero-shader-background .animated-wallpaper { opacity: .78; }
   .hero-shader-background .hero-shader-vignette {
     background:
-      linear-gradient(90deg, rgba(2, 6, 17, .58), rgba(2, 6, 17, .24)),
-      linear-gradient(0deg, rgba(2, 6, 17, .48), transparent 54%, rgba(2, 6, 17, .18));
+      linear-gradient(90deg, rgba(2, 6, 17, .42), rgba(2, 6, 17, .16)),
+      linear-gradient(0deg, rgba(2, 6, 17, .36), transparent 54%, rgba(2, 6, 17, .1));
   }
 }
