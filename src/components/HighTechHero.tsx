@@ -150,13 +150,13 @@ export default function HighTechHero({ contact }: HighTechHeroProps) {
         <div className="hightech-copy">
           <div className="hightech-eyebrow"><span className="hightech-eyebrow-mark"><Zap size={12} /></span> TECNOLOGIA COM INTENÇÃO <i /> SYSTEMS / AUTOMATION / AI</div>
           <div className="hightech-status"><span /> INDEPENDENT DIGITAL STUDIO <b>EST. 2026</b></div>
-          <h1 className="hightech-title" aria-label="Seu negócio tem desafios. Eu construo caminhos.">
+          <h1 className="hightech-title" data-title-motion aria-label="Seu negócio tem desafios. Eu construo caminhos.">
             <span className="hightech-title-line"><span>Seu negócio</span></span>
             <span className="hightech-title-line"><span>tem desafios<span className="hightech-title-mark">.</span></span></span>
             <span className="hightech-title-line hightech-title-accent"><span>Eu construo</span></span>
             <span className="hightech-title-line hightech-title-accent"><span>caminhos<span className="hightech-title-mark">.</span></span></span>
           </h1>
-          <p className="hightech-lead">
+          <p className="hightech-lead" data-title-motion>
             Entendo como sua empresa funciona, encontro o que pode melhorar e desenvolvo tecnologia para resolver — do primeiro diagnóstico à implementação.
           </p>
           <div className="hightech-actions">
