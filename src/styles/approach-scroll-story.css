@@ -384,7 +384,7 @@
     linear-gradient(90deg, rgba(2, 6, 15, .34) 0%, rgba(2, 6, 15, .1) 48%, rgba(2, 6, 15, .28) 100%),
     linear-gradient(180deg, rgba(2, 6, 15, .14), transparent 26%, transparent 74%, rgba(2, 6, 15, .32));
 }
-.site-shell .intro-story-section .section-mystery-wallpaper {
+.site-shell .intro-story-section .section-fog-wallpaper {
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -403,8 +403,8 @@
   box-shadow: 0 28px 82px rgba(0, 0, 0, .28), inset 0 0 70px rgba(21, 116, 213, .045);
 }
 @media (max-width: 800px) {
-  .site-shell .intro-story-section .section-mystery-wallpaper { opacity: .9; }
+  .site-shell .intro-story-section .section-fog-wallpaper { opacity: .9; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .site-shell .intro-story-section .section-mystery-wallpaper { opacity: .72; }
+  .site-shell .intro-story-section .section-fog-wallpaper { opacity: .72; }
 }
