@@ -5,6 +5,13 @@ import "../styles/capability-bento.css";
 import { LiquidMetalButton } from "../components/ui/liquid-metal-button";
 import SiteFrame from "../components/SiteFrame";
 
+const processSteps = [
+  { number: "01", title: "Entender", text: "Conversamos sobre a empresa, a rotina e o que precisa mudar.", note: "DIAGNÓSTICO" },
+  { number: "02", title: "Desenhar", text: "Defino com você o caminho mais simples e útil para resolver o problema.", note: "DIREÇÃO" },
+  { number: "03", title: "Construir", text: "Desenvolvo, testo e implemento a solução no contexto real do negócio.", note: "IMPLEMENTAÇÃO" },
+  { number: "04", title: "Acompanhar", text: "Ajustamos o que for necessário depois que a solução começa a ser usada.", note: "EVOLUÇÃO" },
+];
+
 const capabilities = [
   { number: "01", title: "Sistemas e plataformas", text: "Ferramentas feitas para a rotina do seu negócio — não mais uma planilha improvisada.", tag: "ESTRUTURA PARA CRESCER", visual: "systems" },
   { number: "02", title: "Automação e integrações", text: "Menos tarefas repetidas. Mais tempo para o trabalho que realmente precisa de gente.", tag: "FLUXOS QUE SE CONECTAM", visual: "automation" },
@@ -55,7 +62,7 @@ function Film({ src, className = "", priority = false }: { src: number; classNam
 export default function HomePage() {
   const contact = waLink("Olá! Conheci seu trabalho pelo site e quero conversar sobre um problema ou projeto da minha empresa.");
   return <SiteFrame>
-    <section id="inicio" className="hero">
+    <section id="inicio" className="hero hero-prisma">
       <div className="hero-scroll-video" aria-hidden="true"><video src="/club-videos/video1.mp4" autoPlay muted loop playsInline preload="auto" /></div>
       <div className="hero-inner">
         <p className="eyebrow"><span className="eyebrow-line" /> TECNOLOGIA COM INTENÇÃO</p>
@@ -65,8 +72,12 @@ export default function HomePage() {
           <LiquidMetalButton label="Vamos conversar" onClick={() => window.open(contact, "_blank", "noopener,noreferrer")} />
           <a className="button button-quiet" href="#abordagem">Conheça meu jeito <ArrowDown size={16} /></a>
         </div>
+        <div className="hero-signature"><span>ESTRATÉGIA</span><i /> <span>TECNOLOGIA</span><i /> <span>RESULTADO</span></div>
       </div>
-      <div className="hero-floating-title" aria-hidden="true">IDEIAS<br/><em>EM</em><br/>MOVIMENTO</div>
+      <div className="hero-frame" aria-hidden="true">
+        <span className="hero-frame-label">01 — IDEIAS EM MOVIMENTO</span>
+        <span className="hero-frame-index">VR<span>.</span></span>
+      </div>
       <span className="hero-side-label" aria-hidden="true">PENSAR / CONSTRUIR / EVOLUIR</span>
     </section>
 
@@ -108,18 +119,22 @@ export default function HomePage() {
       </div>
     </section>
 
-    <section className="process-section section-wrap" id="processo">
+    <section className="process-section" id="processo">
       <Film src={5} className="process-film" />
-      <span className="floating-word process-float" aria-hidden="true">DO INÍCIO<br/>AO USO</span>
-      <div className="section-index reveal-right">DO PROBLEMA À SOLUÇÃO</div>
-      <div className="process-content">
-        <p className="kicker reveal-left">TRABALHO DO COMEÇO AO USO.</p>
-        <h2 className="reveal-right">Não entrego só<br/><em>um arquivo.</em></h2>
-        <div className="process-list">
-          <div className="reveal-left"><span>Entender</span><p>Conversamos sobre a empresa, a rotina e o que precisa mudar.</p></div>
-          <div className="reveal-right"><span>Desenhar</span><p>Defino com você o caminho mais simples e útil para resolver o problema.</p></div>
-          <div className="reveal-left"><span>Construir</span><p>Desenvolvo, testo e implemento a solução no contexto real do negócio.</p></div>
-          <div className="reveal-right"><span>Acompanhar</span><p>Ajustamos o que for necessário depois que a solução começa a ser usada.</p></div>
+      <div className="process-wrap">
+        <div className="section-index reveal-right">DO PROBLEMA À SOLUÇÃO</div>
+        <div className="process-heading">
+          <p className="kicker reveal-left">TRABALHO DO COMEÇO AO USO.</p>
+          <h2 className="reveal-right">Não entrego só<br/><em>um arquivo.</em></h2>
+          <p className="process-intro">Um caminho claro, construído junto com você — e pensado para funcionar na rotina real da empresa.</p>
+        </div>
+        <div className="process-bento">
+          {processSteps.map((step, i) => <article className="process-card" key={step.number}>
+            <div className="process-card-top"><span>{step.number} / 04</span><span>{step.note}</span></div>
+            <span className="process-card-mark" aria-hidden="true">0{i + 1}</span>
+            <div className="process-card-copy"><h3>{step.title}</h3><p>{step.text}</p></div>
+            <span className="process-card-line" aria-hidden="true" />
+          </article>)}
         </div>
       </div>
     </section>
