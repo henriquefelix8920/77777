@@ -406,7 +406,7 @@
   .site-shell .intro-story-section .section-fog-wallpaper { opacity: .9; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .site-shell .intro-story-section .section-fog-wallpaper { opacity: .72; }
+  .site-shell .intro-story-section .section-fog-wallpaper { opacity: .88; }
 }
 
 
@@ -445,7 +445,6 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .site-shell .intro-story-section .intro-story-ambient::before {
-    animation: none !important;
-    transform: none;
+    animation: section-fog-fallback-drift 30s ease-in-out infinite alternate !important;
   }
 }
