@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
 import { waLink } from "../config";
+import { LiquidMetalButton } from "../components/ui/liquid-metal-button";
 import SiteFrame from "../components/SiteFrame";
 
 const capabilities = [
@@ -54,13 +55,13 @@ export default function HomePage() {
   const contact = waLink("Olá! Conheci seu trabalho pelo site e quero conversar sobre um problema ou projeto da minha empresa.");
   return <SiteFrame>
     <section id="inicio" className="hero">
-      <Film src={1} className="hero-film-bg" priority />
+      <div className="hero-scroll-video" aria-hidden="true"><video src="/club-videos/video1.mp4" autoPlay muted loop playsInline preload="auto" /></div>
       <div className="hero-inner">
         <p className="eyebrow"><span className="eyebrow-line" /> TECNOLOGIA COM INTENÇÃO</p>
-        <h1>Seu negócio tem desafios.<br /><span>Eu construo caminhos.</span></h1>
+        <h1 className="hero-title"><span className="sumi-title">Seu negócio tem desafios.</span><span className="curtain-title">Eu construo caminhos.</span></h1>
         <p className="hero-lead">Entendo como sua empresa funciona, encontro o que pode melhorar e desenvolvo tecnologia para resolver — do primeiro diagnóstico à implementação.</p>
         <div className="hero-actions">
-          <a className="button button-primary" href={contact} target="_blank" rel="noreferrer">Vamos conversar <ArrowUpRight size={17} /></a>
+          <LiquidMetalButton label="Vamos conversar" onClick={() => window.open(contact, "_blank", "noopener,noreferrer")} />
           <a className="button button-quiet" href="#abordagem">Conheça meu jeito <ArrowDown size={16} /></a>
         </div>
       </div>
@@ -123,7 +124,7 @@ export default function HomePage() {
         <p className="kicker reveal-left">TEM ALGUMA COISA QUE PODERIA FUNCIONAR MELHOR?</p>
         <h2 className="reveal-right">Vamos descobrir<br/><em>e construir.</em></h2>
         <p className="reveal-left">Você não precisa chegar com a solução pronta. Me conte o que acontece hoje, onde está o problema e o que gostaria de mudar.</p>
-        <a className="button button-primary reveal-up" href={contact} target="_blank" rel="noreferrer">Me conte sobre seu negócio <ArrowRight size={17}/></a>
+        <LiquidMetalButton label="Me conte sobre seu negócio" onClick={() => window.open(contact, "_blank", "noopener,noreferrer")} />
       </div>
       <div className="closing-mark">VR<span>®</span></div>
     </section>
