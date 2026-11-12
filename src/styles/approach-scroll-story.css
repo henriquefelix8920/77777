@@ -351,3 +351,60 @@
 @media (prefers-reduced-motion: reduce) {
   .story-wireframe-canvas { opacity: .72; }
 }
+
+
+/* Section 02: the animated 3D wireframe is a full-section wallpaper,
+   not artwork embedded in the sticky illustration card. */
+.site-shell .intro-story-section {
+  position: relative;
+  isolation: isolate;
+  background: #020711 !important;
+}
+.site-shell .intro-story-section .intro-story-ambient {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  overflow: hidden;
+  opacity: 1 !important;
+  pointer-events: none;
+  background: #020711 !important;
+}
+.site-shell .intro-story-section .intro-story-ambient::before {
+  display: none !important;
+}
+.site-shell .intro-story-section .intro-story-ambient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  pointer-events: none;
+  opacity: 1;
+  background:
+    linear-gradient(90deg, rgba(2, 6, 15, .68) 0%, rgba(2, 6, 15, .3) 48%, rgba(2, 6, 15, .48) 100%),
+    linear-gradient(180deg, rgba(2, 6, 15, .2), transparent 26%, transparent 74%, rgba(2, 6, 15, .46));
+}
+.site-shell .intro-story-section .section-wireframe-wallpaper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: .92;
+}
+.site-shell .intro-story-section > .intro-story-wrap {
+  position: relative;
+  z-index: 2 !important;
+}
+.site-shell .intro-story-section .story-visual-frame {
+  background: linear-gradient(145deg, rgba(3, 15, 32, .58), rgba(2, 7, 17, .44)) !important;
+  border-color: rgba(111, 188, 255, .24) !important;
+  box-shadow: 0 28px 82px rgba(0, 0, 0, .28), inset 0 0 70px rgba(21, 116, 213, .045);
+}
+@media (max-width: 800px) {
+  .site-shell .intro-story-section .section-wireframe-wallpaper { opacity: .78; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-shell .intro-story-section .section-wireframe-wallpaper { opacity: .66; }
+}
