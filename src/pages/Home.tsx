@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { waLink } from "../config";
 import "../styles/capability-bento.css";
@@ -19,58 +19,6 @@ const capabilities = [
   { number: "03", title: "Inteligência artificial", text: "IA aplicada a situações concretas: atendimento, análise, conteúdo e operações.", tag: "INTELIGÊNCIA APLICADA", visual: "ai" },
   { number: "04", title: "Sites e experiências digitais", text: "Presença digital com personalidade, clareza e uma função que vai além de parecer bonita.", tag: "PRESENÇA COM PROPÓSITO", visual: "web" },
 ];
-
-function Film({ src, className = "", priority = false }: { src: number; className?: string; priority?: boolean }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-    if (connection?.saveData) return;
-
-    const activate = () => {
-      if (!video.getAttribute("src")) {
-        video.src = video.dataset.src || "";
-        video.load();
-      }
-      const playback = video.play();
-      if (playback) playback.catch(() => {});
-    };
-    const release = () => {
-      video.pause();
-      if (video.hasAttribute("src")) {
-        video.removeAttribute("src");
-        video.load();
-      }
-    };
-
-    if (!("IntersectionObserver" in window)) {
-      activate();
-      return () => release();
-    }
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) activate();
-      else release();
-    }, { rootMargin: priority ? "100px 0px" : "72px 0px", threshold: 0.01 });
-
-    observer.observe(video);
-    return () => {
-      observer.disconnect();
-      release();
-    };
-  }, [priority]);
-
-  return <div className={`film-object ${className}`} aria-hidden="true">
-    <video
-      ref={videoRef}
-      data-src={`/club-videos/video${src}.mp4`}
-      muted loop playsInline preload="none" tabIndex={-1}
-    />
-    <span className="film-tint" />
-  </div>;
-}
 
 /* Motion treatments for the section headlines. */
 function MotionWords({ text, delay = 0 }: { text: string; delay?: number }) {
@@ -119,7 +67,11 @@ export default function HomePage() {
 
   return <SiteFrame>
     <section id="inicio" className="hero hero-prisma">
-      <Film src={5} className="hero-film-bg" priority />
+      <div className="hero-aurora-bg" aria-hidden="true">
+        <span className="hero-aurora-orbit hero-aurora-orbit-a" />
+        <span className="hero-aurora-orbit hero-aurora-orbit-b" />
+        <span className="hero-aurora-glow" />
+      </div>
       <div className="hero-inner">
         <p className="eyebrow"><span className="eyebrow-line" /> TECNOLOGIA COM INTENÇÃO</p>
         <h1 className="hero-title title-motion-kinetic" data-title-motion aria-label="Seu negócio tem desafios. Eu construo caminhos.">
@@ -142,7 +94,10 @@ export default function HomePage() {
     </section>
 
     <section className="intro-section section-wrap" id="abordagem">
-      <Film src={4} className="intro-film" />
+      <div className="intro-ambient-bg" aria-hidden="true">
+        <span className="intro-topography-lines" />
+        <span className="intro-topography-glow" />
+      </div>
       <span className="floating-word intro-float" aria-hidden="true">ENTENDER</span>
       <div className="section-index reveal-left">A ABORDAGEM</div>
       <div className="intro-copy">
@@ -222,7 +177,11 @@ export default function HomePage() {
     <PortfolioShowcase />
 
     <section className="closing-section">
-      <Film src={6} className="closing-film" />
+      <div className="closing-beams-bg" aria-hidden="true">
+        <span className="closing-beam closing-beam-a" />
+        <span className="closing-beam closing-beam-b" />
+        <span className="closing-beam-orbit" />
+      </div>
       <span className="closing-floating" aria-hidden="true">VAMOS<br/>CONSTRUIR?</span>
       <div className="closing-content">
         <p className="kicker reveal-left">TEM ALGUMA COISA QUE PODERIA FUNCIONAR MELHOR?</p>

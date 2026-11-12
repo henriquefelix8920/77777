@@ -138,6 +138,7 @@ function EscarlateFeature() {
 export default function PortfolioShowcase() {
   return (
     <section className="portfolio-section" id="portfolio" aria-labelledby="portfolio-title">
+      <div className="portfolio-constellation-bg" aria-hidden="true" />
       <div className="portfolio-wrap">
         <div className="portfolio-topline">
           <span className="portfolio-index">05 / PROJETOS EM CENA</span>
