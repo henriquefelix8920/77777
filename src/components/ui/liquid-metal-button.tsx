@@ -14,7 +14,6 @@ export function LiquidMetalButton({
       <span className="tech-glow-button-aura" aria-hidden="true" />
       <span className="tech-glow-button-sweep" aria-hidden="true" />
       <span className="tech-glow-button-label">{viewMode === "icon" ? "✦" : label}</span>
-      <span className="tech-glow-button-arrow" aria-hidden="true">↗</span>
     </button>
   );
 }
