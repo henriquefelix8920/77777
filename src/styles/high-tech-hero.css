@@ -564,3 +564,102 @@
   .hightech-lead.is-visible { animation: none !important; }
   .hightech-primary-cta, .hightech-secondary-cta { transition: none !important; }
 }
+
+
+/* Animated technology field — replace the static half-ring with layered motion. */
+.hightech-hero {
+  background:
+    radial-gradient(ellipse at 76% 46%, rgba(39, 93, 205, .13), transparent 36%),
+    linear-gradient(118deg, #03060d 0%, #070d1b 48%, #040812 100%);
+}
+.hightech-world::before,
+.hightech-world::after {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  pointer-events: none;
+}
+.hightech-world::before {
+  background:
+    radial-gradient(ellipse at 72% 38%, rgba(46, 112, 255, .26), transparent 28%),
+    radial-gradient(ellipse at 83% 68%, rgba(101, 244, 242, .19), transparent 30%),
+    radial-gradient(ellipse at 39% 78%, rgba(115, 91, 255, .15), transparent 31%),
+    linear-gradient(118deg, transparent 28%, rgba(76, 155, 255, .045) 49%, transparent 68%);
+  filter: blur(30px);
+  opacity: .9;
+  transform: scale(1.04);
+  animation: hightech-aurora-drift 19s ease-in-out infinite alternate;
+}
+.hightech-world::after {
+  inset: -8%;
+  opacity: .28;
+  background-image:
+    radial-gradient(circle, rgba(127, 207, 255, .85) 1px, transparent 1.8px),
+    linear-gradient(115deg, transparent 35%, rgba(101, 244, 242, .075) 50%, transparent 63%);
+  background-size: 76px 76px, 100% 100%;
+  background-position: 0 0, 0 0;
+  mask-image: radial-gradient(ellipse at 68% 48%, #000 8%, rgba(0,0,0,.8) 42%, transparent 78%);
+  animation: hightech-particle-drift 36s linear infinite;
+}
+.hightech-horizon {
+  width: min(78vw, 1080px);
+  height: min(68vw, 760px);
+  aspect-ratio: auto;
+  right: -16%;
+  top: -12%;
+  border: 0;
+  border-radius: 50%;
+  background:
+    conic-gradient(from 205deg at 50% 50%,
+      transparent 0deg,
+      rgba(101, 244, 242, .025) 42deg,
+      rgba(99, 125, 255, .16) 105deg,
+      rgba(101, 244, 242, .12) 164deg,
+      transparent 238deg,
+      rgba(168, 139, 255, .08) 300deg,
+      transparent 360deg);
+  filter: blur(28px);
+  opacity: .72;
+  box-shadow: none;
+  animation: hightech-horizon-flow 26s ease-in-out infinite alternate;
+}
+.hightech-grid {
+  opacity: .3;
+  background-size: 58px 58px;
+}
+.hightech-scanline {
+  height: 2px;
+  opacity: .42;
+  box-shadow: 0 0 22px rgba(101,244,242,.65), 0 0 50px rgba(99,125,255,.24);
+}
+.hightech-orbit-one {
+  border-color: rgba(101, 244, 242, .22);
+  box-shadow: 0 0 42px rgba(101, 244, 242, .08);
+}
+.hightech-orbit-two {
+  border-color: rgba(99, 125, 255, .2);
+}
+@keyframes hightech-aurora-drift {
+  0% { transform: translate3d(-2%, 1%, 0) scale(1.02) rotate(-3deg); opacity: .68; }
+  50% { transform: translate3d(2%, -2%, 0) scale(1.09) rotate(2deg); opacity: .98; }
+  100% { transform: translate3d(-1%, 2%, 0) scale(1.04) rotate(-2deg); opacity: .78; }
+}
+@keyframes hightech-particle-drift {
+  from { background-position: 0 0, -8% 0; }
+  to { background-position: 152px 76px, 8% 0; }
+}
+@keyframes hightech-horizon-flow {
+  0% { transform: translate3d(-2%, 0, 0) rotate(-12deg) scale(.96); }
+  100% { transform: translate3d(3%, 5%, 0) rotate(8deg) scale(1.08); }
+}
+@media (max-width: 800px) {
+  .hightech-world::before { opacity: .62; filter: blur(24px); }
+  .hightech-world::after { opacity: .2; background-size: 64px 64px, 100% 100%; }
+  .hightech-horizon { width: 120vw; height: 82vw; right: -46%; top: 4%; opacity: .48; }
+  .hightech-grid { opacity: .2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hightech-world::before,
+  .hightech-world::after,
+  .hightech-horizon { animation: none !important; }
+}
