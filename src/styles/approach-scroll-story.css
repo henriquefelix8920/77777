@@ -448,3 +448,181 @@
     animation: section-fog-fallback-drift 30s ease-in-out infinite alternate !important;
   }
 }
+
+
+/* Section 02 — new CSS-only 3D kinetic architecture.
+   Layered orbital ribbons replace the WebGL smoke shader completely. */
+.site-shell .intro-story-section .intro-story-ambient::before {
+  display: none !important;
+}
+.site-shell .intro-story-section .section-depth-wallpaper {
+  position: absolute;
+  inset: -1px;
+  z-index: 0;
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
+  isolation: isolate;
+  perspective: 1100px;
+  transform-style: preserve-3d;
+  background:
+    radial-gradient(ellipse at 50% 44%, rgba(23, 61, 111, .18), transparent 48%),
+    radial-gradient(ellipse at 14% 74%, rgba(25, 48, 81, .2), transparent 38%),
+    radial-gradient(ellipse at 88% 28%, rgba(23, 55, 97, .16), transparent 34%),
+    linear-gradient(135deg, #02050b 0%, #070d18 48%, #02050b 100%);
+}
+.site-shell .intro-story-section .section-depth-floor {
+  position: absolute;
+  left: -28%;
+  right: -28%;
+  bottom: -42%;
+  height: 86%;
+  opacity: .38;
+  transform: rotateX(66deg) rotateZ(-8deg) translateZ(-100px);
+  transform-origin: center bottom;
+  background-image:
+    linear-gradient(rgba(86, 145, 216, .18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(86, 145, 216, .18) 1px, transparent 1px);
+  background-size: 66px 66px;
+  mask-image: linear-gradient(to top, #000 8%, rgba(0,0,0,.72) 48%, transparent 95%);
+  animation: depth-floor-travel 18s linear infinite;
+  will-change: background-position;
+}
+.site-shell .intro-story-section .section-depth-halo {
+  position: absolute;
+  width: 44vw;
+  height: 44vw;
+  max-width: 680px;
+  max-height: 680px;
+  min-width: 280px;
+  min-height: 280px;
+  border-radius: 50%;
+  opacity: .44;
+  background: radial-gradient(circle, rgba(44, 107, 183, .2), rgba(28, 68, 123, .08) 36%, transparent 70%);
+  will-change: transform;
+}
+.site-shell .intro-story-section .section-depth-halo--left {
+  left: -12%;
+  top: 12%;
+  animation: depth-halo-left 15s ease-in-out infinite alternate;
+}
+.site-shell .intro-story-section .section-depth-halo--right {
+  right: -14%;
+  bottom: 1%;
+  animation: depth-halo-right 19s ease-in-out infinite alternate;
+}
+.site-shell .intro-story-section .section-depth-orbit {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: min(128vw, 1700px);
+  height: clamp(260px, 43vw, 650px);
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  transform-origin: center;
+  will-change: transform;
+}
+.site-shell .intro-story-section .section-depth-orbit--back {
+  border: 1px solid rgba(75, 135, 205, .2);
+  box-shadow: 0 0 46px rgba(33, 91, 160, .12), inset 0 0 42px rgba(45, 108, 180, .07);
+  background: radial-gradient(ellipse, transparent 57%, rgba(35, 79, 132, .06) 64%, transparent 72%);
+  animation: depth-orbit-back 21s ease-in-out infinite alternate;
+}
+.site-shell .intro-story-section .section-depth-orbit--middle {
+  border: 2px solid rgba(103, 166, 233, .32);
+  box-shadow: 0 0 24px rgba(53, 127, 209, .2), inset 0 0 35px rgba(74, 145, 216, .1);
+  background: radial-gradient(ellipse, transparent 55%, rgba(69, 133, 194, .1) 62%, transparent 70%);
+  animation: depth-orbit-middle 13s ease-in-out infinite alternate;
+}
+.site-shell .intro-story-section .section-depth-orbit--front {
+  border: 1px solid rgba(176, 195, 218, .22);
+  box-shadow: 0 0 30px rgba(106, 151, 201, .14), inset 0 0 46px rgba(107, 151, 201, .08);
+  animation: depth-orbit-front 17s ease-in-out infinite alternate;
+}
+.site-shell .intro-story-section .section-depth-ribbon {
+  position: absolute;
+  left: -22%;
+  width: 144%;
+  height: clamp(110px, 20vw, 260px);
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+.site-shell .intro-story-section .section-depth-ribbon--blue {
+  top: 20%;
+  border-top: 2px solid rgba(83, 166, 255, .7);
+  box-shadow: 0 -9px 22px -14px rgba(72, 161, 255, .9);
+  transform: rotateX(68deg) rotateZ(-11deg) translate3d(-3%, 0, 80px);
+  animation: depth-ribbon-blue 11s ease-in-out infinite alternate;
+}
+.site-shell .intro-story-section .section-depth-ribbon--silver {
+  top: 35%;
+  height: clamp(130px, 25vw, 330px);
+  border-bottom: 2px solid rgba(190, 207, 229, .44);
+  box-shadow: 0 10px 24px -16px rgba(166, 194, 226, .8);
+  transform: rotateX(65deg) rotateZ(8deg) translate3d(2%, 0, 30px);
+  animation: depth-ribbon-silver 14s ease-in-out infinite alternate;
+}
+.site-shell .intro-story-section .section-depth-ribbon--amber {
+  top: 47%;
+  height: clamp(90px, 15vw, 210px);
+  border-top: 1px solid rgba(193, 155, 103, .42);
+  box-shadow: 0 -7px 18px -14px rgba(224, 174, 111, .7);
+  transform: rotateX(70deg) rotateZ(-4deg) translate3d(0, 0, -25px);
+  animation: depth-ribbon-amber 16s ease-in-out infinite alternate;
+}
+.site-shell .intro-story-section .intro-story-ambient::after {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(2, 5, 12, .46), rgba(2, 5, 12, .08) 48%, rgba(2, 5, 12, .42)),
+    linear-gradient(180deg, rgba(2, 5, 12, .28), transparent 28%, transparent 72%, rgba(2, 5, 12, .46));
+}
+@keyframes depth-floor-travel {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 0 132px, 132px 0; }
+}
+@keyframes depth-halo-left {
+  from { transform: translate3d(-5%, 4%, 0) scale(.88); }
+  to { transform: translate3d(15%, -8%, 0) scale(1.18); }
+}
+@keyframes depth-halo-right {
+  from { transform: translate3d(8%, -7%, 0) scale(1.12); }
+  to { transform: translate3d(-14%, 10%, 0) scale(.86); }
+}
+@keyframes depth-orbit-back {
+  from { transform: translate3d(-50%, -48%, -80px) rotateX(64deg) rotateZ(-17deg) scale(.88); }
+  to { transform: translate3d(-46%, -55%, -20px) rotateX(70deg) rotateZ(13deg) scale(1.08); }
+}
+@keyframes depth-orbit-middle {
+  from { transform: translate3d(-54%, -42%, 35px) rotateX(72deg) rotateZ(12deg) scale(1.04); }
+  to { transform: translate3d(-47%, -54%, 95px) rotateX(61deg) rotateZ(-15deg) scale(.88); }
+}
+@keyframes depth-orbit-front {
+  from { transform: translate3d(-49%, -53%, 110px) rotateX(58deg) rotateZ(-5deg) scale(.92); }
+  to { transform: translate3d(-53%, -43%, 55px) rotateX(72deg) rotateZ(16deg) scale(1.12); }
+}
+@keyframes depth-ribbon-blue {
+  from { transform: rotateX(68deg) rotateZ(-11deg) translate3d(-4%, -12%, 80px) scaleX(.94); }
+  to { transform: rotateX(61deg) rotateZ(5deg) translate3d(5%, 10%, 120px) scaleX(1.08); }
+}
+@keyframes depth-ribbon-silver {
+  from { transform: rotateX(65deg) rotateZ(8deg) translate3d(3%, 8%, 30px) scaleX(1.06); }
+  to { transform: rotateX(72deg) rotateZ(-8deg) translate3d(-5%, -10%, 75px) scaleX(.92); }
+}
+@keyframes depth-ribbon-amber {
+  from { transform: rotateX(70deg) rotateZ(-4deg) translate3d(-3%, 10%, -25px) scaleX(.96); opacity: .42; }
+  to { transform: rotateX(62deg) rotateZ(9deg) translate3d(4%, -8%, 20px) scaleX(1.07); opacity: .8; }
+}
+@media (max-width: 800px) {
+  .site-shell .intro-story-section .section-depth-orbit { width: 160vw; height: 62vw; }
+  .site-shell .intro-story-section .section-depth-ribbon { left: -45%; width: 190%; }
+  .site-shell .intro-story-section .section-depth-floor { left: -60%; right: -60%; opacity: .3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* This background deliberately remains animated: motion is transform-only and low cost. */
+  .site-shell .intro-story-section .section-depth-wallpaper,
+  .site-shell .intro-story-section .section-depth-wallpaper * {
+    animation-duration: 18s !important;
+    animation-iteration-count: infinite !important;
+  }
+}
