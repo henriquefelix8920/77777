@@ -1,4 +1,5 @@
-import { ArrowUpRight, ExternalLink, LockKeyhole } from "lucide-react";
+import { ArrowUpRight, LockKeyhole } from "lucide-react";
+import "../styles/portfolio-showcase.css";
 
 type PortfolioProject = {
   number: string;
