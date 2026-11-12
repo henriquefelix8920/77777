@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, Play } from "lucide-react";
 import { waLink } from "../config";
 import SiteFrame from "../components/SiteFrame";
 
@@ -16,7 +16,6 @@ export default function HomePage() {
   return (
     <SiteFrame>
       <section id="inicio" className="hero">
-        <div className="hero-grain" aria-hidden="true" />
         <div className="hero-inner">
           <p className="eyebrow"><span className="eyebrow-line" /> TECNOLOGIA COM INTENÇÃO <span className="eyebrow-index">VR — 001</span></p>
           <h1>Seu negócio tem desafios.<br /><span>Eu construo caminhos.</span></h1>
@@ -27,6 +26,12 @@ export default function HomePage() {
           </div>
           <div className="hero-footnote"><span>01 / 04</span><span>IDEIA · ESTRATÉGIA · CONSTRUÇÃO</span></div>
         </div>
+        <div className="hero-film" aria-label="Demonstrações de criação audiovisual com inteligência artificial">
+          <div className="hero-film-main"><video src="/club-videos/video1.mp4" autoPlay muted loop playsInline preload="metadata" /><span className="film-tag"><Play size={12} /> AI GENERATED / 001</span></div>
+          <div className="hero-film-small hero-film-a"><video src="/club-videos/video2.mp4" autoPlay muted loop playsInline preload="metadata" /><span>GENERATIVE VIDEO</span></div>
+          <div className="hero-film-small hero-film-b"><video src="/club-videos/video3.mp4" autoPlay muted loop playsInline preload="metadata" /><span>CREATIVE TECHNOLOGY</span></div>
+          <div className="hero-film-stamp">IDEIA<br/><b>→</b><br/>IMAGEM</div>
+        </div>
         <div className="hero-side-label" aria-hidden="true">PENSAR / CONSTRUIR / EVOLUIR</div>
       </section>
 
@@ -34,11 +39,11 @@ export default function HomePage() {
         <div className="section-index">[ 01 — A ABORDAGEM ]</div>
         <div className="intro-copy">
           <p className="kicker">NÃO COMEÇO PELO CÓDIGO.</p>
-          <h2>Começo entendendo<br />o que está <em>travando</em><br />o seu negócio.</h2>
+          <h2>Começo entendendo<br/>o que está <em>travando</em><br/>o seu negócio.</h2>
           <p className="body-copy">Às vezes o problema é um processo manual. Às vezes, informação espalhada em cinco lugares. Em outras, falta uma ferramenta que simplesmente não existe.</p>
           <p className="body-copy">Antes de sugerir qualquer tecnologia, quero entender a operação, ouvir quem faz o trabalho e descobrir onde uma mudança pode fazer diferença de verdade.</p>
         </div>
-        <div className="approach-stamp"><span>PRIMEIRO<br />ENTENDER</span></div>
+        <div className="approach-stamp"><span>PRIMEIRO<br/>ENTENDER</span></div>
       </section>
 
       <section className="work-section" id="trabalho">
@@ -46,7 +51,7 @@ export default function HomePage() {
           <div className="section-index">[ 02 — O QUE POSSO FAZER ]</div>
           <div className="section-heading">
             <p className="kicker">A FERRAMENTA VEM DEPOIS DO PROBLEMA.</p>
-            <h2>Uma solução certa<br /><em>para cada desafio.</em></h2>
+            <h2>Uma solução certa<br/><em>para cada desafio.</em></h2>
           </div>
           <div className="capability-grid">
             {capabilities.map((item) => <article className="capability" key={item.number}>
@@ -62,7 +67,7 @@ export default function HomePage() {
         <div className="section-index">[ 03 — COMO ACONTECE ]</div>
         <div className="process-content">
           <p className="kicker">DO PROBLEMA À SOLUÇÃO EM USO.</p>
-          <h2>Não entrego só<br /><em>um arquivo.</em></h2>
+          <h2>Não entrego só<br/><em>um arquivo.</em></h2>
           <div className="process-list">
             <div><span>01</span><p><strong>Entender</strong> — conversamos sobre a empresa, a rotina e o que precisa mudar.</p></div>
             <div><span>02</span><p><strong>Desenhar</strong> — defino com você o caminho mais simples e útil para resolver o problema.</p></div>
@@ -76,16 +81,16 @@ export default function HomePage() {
         <div className="section-wrap">
           <div className="section-index">[ 04 — EXPERIMENTAÇÃO ]</div>
           <div className="proof-heading">
-            <div><p className="kicker">TECNOLOGIA TAMBÉM É IMAGINAÇÃO.</p><h2>Eu gosto de descobrir<br /><em>até onde dá para ir.</em></h2></div>
-            <p className="body-copy">Experimentos com inteligência artificial, vídeo e criação digital. Aqui, usei IA para me colocar em cenas e contextos que não existiriam numa gravação convencional.</p>
+            <div><p className="kicker">IA NÃO É SÓ DISCURSO.</p><h2>Eu testo.<br/><em>Eu crio. Eu construo.</em></h2></div>
+            <p className="body-copy">Estes filmes são experimentos reais com inteligência artificial. Eu me coloquei em cenas e contextos que não existiriam numa gravação convencional — explorando ferramentas, direção visual e novas possibilidades de criação.</p>
           </div>
           <div className="film-grid">
             {videos.map((video, index) => <figure className={index === 0 ? "film-frame film-frame-featured" : "film-frame"} key={video}>
-              <video src={`/club-videos/video${video}.mp4`} controls muted playsInline preload="metadata" aria-label={`Experimento audiovisual com inteligência artificial ${video}`} />
-              <figcaption><span>EXPERIMENTO IA</span><span>TAKE 0{video}</span></figcaption>
+              <video src={`/club-videos/video${video}.mp4`} controls muted playsInline preload="metadata" />
+              <figcaption><span>EXPERIMENTO COM IA</span><span>TAKE 0{video}</span></figcaption>
             </figure>)}
           </div>
-          <p className="film-note">Cenas criadas com IA. Uma demonstração de processo, repertório e curiosidade — não uma promessa de efeito mágico.</p>
+          <p className="film-note">Vídeos criados com inteligência artificial — parte de uma exploração prática do que a tecnologia já permite fazer.</p>
         </div>
       </section>
 
@@ -93,9 +98,9 @@ export default function HomePage() {
         <div className="closing-orbit" aria-hidden="true" />
         <div className="closing-content">
           <p className="kicker">TEM ALGUMA COISA QUE PODERIA FUNCIONAR MELHOR?</p>
-          <h2>Vamos descobrir<br /><em>e construir.</em></h2>
+          <h2>Vamos descobrir<br/><em>e construir.</em></h2>
           <p>Você não precisa chegar com a solução pronta. Me conte o que acontece hoje, onde está o problema e o que gostaria de mudar.</p>
-          <a className="button button-primary" href={contact} target="_blank" rel="noreferrer">Me conte sobre seu negócio <ArrowRight size={17} /></a>
+          <a className="button button-primary" href={contact} target="_blank" rel="noreferrer">Me conte sobre seu negócio <ArrowRight size={17}/></a>
         </div>
         <div className="closing-mark">VR<span>®</span></div>
       </section>
