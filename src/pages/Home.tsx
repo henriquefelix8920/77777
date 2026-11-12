@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
 import { waLink } from "../config";
 import SiteFrame from "../components/SiteFrame";
@@ -9,9 +10,42 @@ const capabilities = [
   { title: "Sites e experiências digitais", text: "Presença digital com personalidade, clareza e uma função que vai além de parecer bonita." },
 ];
 
-function Film({ src, className = "" }: { src: number; className?: string }) {
+function Film({ src, className = "", priority = false }: { src: number; className?: string; priority?: boolean }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) return;
+    const activate = () => {
+      if (!video.src) {
+        video.src = video.dataset.src || "";
+        video.load();
+      }
+      const play = video.play();
+      if (play) play.catch(() => {});
+    };
+    if (priority) {
+      activate();
+      return;
+    }
+    if (!("IntersectionObserver" in window)) {
+      activate();
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) activate();
+      else video.pause();
+    }, { rootMargin: "240px 0px" });
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [priority]);
   return <div className={`film-object ${className}`} aria-hidden="true">
-    <video src={`/club-videos/video${src}.mp4`} autoPlay muted loop playsInline preload="metadata" tabIndex={-1} />
+    <video
+      ref={videoRef}
+      {...(priority ? { src: `/club-videos/video${src}.mp4` } : { "data-src": `/club-videos/video${src}.mp4` })}
+      autoPlay muted loop playsInline preload={priority ? "auto" : "none"} tabIndex={-1}
+    />
     <span className="film-tint" />
   </div>;
 }
@@ -20,7 +54,7 @@ export default function HomePage() {
   const contact = waLink("Olá! Conheci seu trabalho pelo site e quero conversar sobre um problema ou projeto da minha empresa.");
   return <SiteFrame>
     <section id="inicio" className="hero">
-      <Film src={1} className="hero-film-bg" />
+      <Film src={1} className="hero-film-bg" priority />
       <div className="hero-inner">
         <p className="eyebrow"><span className="eyebrow-line" /> TECNOLOGIA COM INTENÇÃO</p>
         <h1>Seu negócio tem desafios.<br /><span>Eu construo caminhos.</span></h1>
@@ -66,7 +100,7 @@ export default function HomePage() {
       </div>
     </section>
 
-    <section className="process-section section-wrap">
+    <section className="process-section section-wrap" id="processo">
       <Film src={5} className="process-film" />
       <span className="floating-word process-float" aria-hidden="true">DO INÍCIO<br/>AO USO</span>
       <div className="section-index reveal-right">DO PROBLEMA À SOLUÇÃO</div>
