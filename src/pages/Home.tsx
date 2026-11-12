@@ -1,12 +1,12 @@
-import { ArrowDown, ArrowRight, ArrowUpRight, Braces, Bot, Workflow, PanelsTopLeft, ScanSearch } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
 import { waLink } from "../config";
 import SiteFrame from "../components/SiteFrame";
 
 const capabilities = [
-  { number: "01", icon: PanelsTopLeft, title: "Sistemas e plataformas", text: "Ferramentas feitas para a rotina do seu negócio — não mais uma planilha improvisada." },
-  { number: "02", icon: Workflow, title: "Automação e integrações", text: "Menos tarefas repetidas. Mais tempo para o trabalho que realmente precisa de gente." },
-  { number: "03", icon: Bot, title: "Inteligência artificial", text: "IA aplicada a situações concretas: atendimento, análise, conteúdo e operações." },
-  { number: "04", icon: Braces, title: "Sites e experiências digitais", text: "Presença digital com personalidade, clareza e uma função que vai além de parecer bonita." },
+  { number: "01", title: "Sistemas e plataformas", text: "Ferramentas feitas para a rotina do seu negócio — não mais uma planilha improvisada." },
+  { number: "02", title: "Automação e integrações", text: "Menos tarefas repetidas. Mais tempo para o trabalho que realmente precisa de gente." },
+  { number: "03", title: "Inteligência artificial", text: "IA aplicada a situações concretas: atendimento, análise, conteúdo e operações." },
+  { number: "04", title: "Sites e experiências digitais", text: "Presença digital com personalidade, clareza e uma função que vai além de parecer bonita." },
 ];
 
 const videos = [1, 2, 3, 4, 5, 6];
@@ -38,7 +38,7 @@ export default function HomePage() {
           <p className="body-copy">Às vezes o problema é um processo manual. Às vezes, informação espalhada em cinco lugares. Em outras, falta uma ferramenta que simplesmente não existe.</p>
           <p className="body-copy">Antes de sugerir qualquer tecnologia, quero entender a operação, ouvir quem faz o trabalho e descobrir onde uma mudança pode fazer diferença de verdade.</p>
         </div>
-        <div className="approach-stamp"><ScanSearch size={25} /><span>PRIMEIRO<br />ENTENDER</span></div>
+        <div className="approach-stamp"><span>PRIMEIRO<br />ENTENDER</span></div>
       </section>
 
       <section className="work-section" id="trabalho">
@@ -49,14 +49,11 @@ export default function HomePage() {
             <h2>Uma solução certa<br /><em>para cada desafio.</em></h2>
           </div>
           <div className="capability-grid">
-            {capabilities.map((item) => {
-              const Icon = item.icon;
-              return <article className="capability" key={item.number}>
-                <div className="capability-top"><span>{item.number} / 04</span><Icon size={22} strokeWidth={1.5} /></div>
-                <h3>{item.title}</h3><p>{item.text}</p>
-                <span className="capability-rule" />
-              </article>;
-            })}
+            {capabilities.map((item) => <article className="capability" key={item.number}>
+              <div className="capability-top"><span>{item.number} / 04</span><span>ÁREA DE ATUAÇÃO</span></div>
+              <h3>{item.title}</h3><p>{item.text}</p>
+              <span className="capability-rule" />
+            </article>)}
           </div>
         </div>
       </section>
