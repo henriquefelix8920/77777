@@ -1323,3 +1323,209 @@ body, p, a, button, .tile-meta, .process-card-top {
   .hero-prisma .hero-actions .tech-glow-button { width: 100%; padding-inline: 16px; }
   .closing-content .tech-glow-button { font-size: 9px; }
 }
+
+
+/* Mobile refinement — preserve the kinetic headline while tightening the CTAs. */
+.hero-prisma .hero-title {
+  font-family: "Oxanium", "Space Grotesk", sans-serif;
+  font-weight: 700;
+  letter-spacing: -.052em;
+}
+@media (max-width: 760px) {
+  .hero-prisma .hero-title { letter-spacing: -.045em; }
+  .hero-prisma .hero-actions {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .hero-prisma .hero-actions .tech-glow-button {
+    width: fit-content;
+    min-height: 48px;
+    max-width: 100%;
+    justify-content: center;
+    gap: 14px;
+    padding-inline: 19px;
+  }
+}
+@media (max-width: 480px) {
+  .hero-prisma .hero-actions { align-items: center; }
+  .hero-prisma .hero-actions .tech-glow-button { width: fit-content; }
+}
+
+/* 21st.dev Slide Up Text direction — staggered word entrance, kept as real text. */
+.hero-lead-words { display: inline; }
+.hero-lead-word {
+  display: inline-block;
+  margin-right: .22em;
+  transform-origin: 50% 100%;
+}
+.hero-lead-motion.is-visible .hero-lead-word {
+  animation: hero-lead-word-up .62s cubic-bezier(.2,.8,.25,1) both;
+}
+@keyframes hero-lead-word-up {
+  from { opacity: 0; transform: translate3d(0,13px,0); filter: blur(5px); }
+  to { opacity: 1; transform: translate3d(0,0,0); filter: blur(0); }
+}
+
+/* 21st.dev Reveal direction — both approach paragraphs share one text axis. */
+.intro-copy .approach-copy-reveal {
+  display: block;
+  width: 100%;
+  max-width: 610px;
+  margin: 0 0 18px;
+  text-align: left;
+  align-self: start;
+  opacity: 1;
+  translate: none;
+}
+.intro-copy .approach-copy-reveal.is-visible {
+  animation: approach-copy-reveal .82s cubic-bezier(.2,.8,.25,1) both;
+}
+.intro-copy .approach-copy-reveal-two.is-visible { animation-delay: .14s; }
+@keyframes approach-copy-reveal {
+  from { opacity: 0; filter: blur(8px); transform: translate3d(0,22px,0); }
+  to { opacity: 1; filter: blur(0); transform: translate3d(0,0,0); }
+}
+
+/* 21st.dev Motion Grid direction — diagonal moving grid + restrained radial glow.
+   Adapted to the site's blood-red / orange / white palette, without a JS animation loop. */
+.process-motion-grid-bg {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  contain: paint;
+  background:
+    radial-gradient(ellipse at 84% 44%, rgba(255,101,0,.15), transparent 40%),
+    radial-gradient(ellipse at 66% 78%, rgba(139,0,24,.065), transparent 43%),
+    linear-gradient(118deg, #fff 0%, #fff 64%, #fff8f4 100%);
+}
+.process-motion-grid-bg:before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  opacity: .28;
+  background-image:
+    linear-gradient(rgba(139,0,24,.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,0,24,.18) 1px, transparent 1px);
+  background-size: 48px 48px;
+  transform: perspective(820px) rotateX(58deg) rotateZ(-23deg) scale(1.28);
+  transform-origin: 74% 50%;
+  animation: process-motion-grid-drift 26s linear infinite;
+  mask-image: radial-gradient(ellipse at 70% 48%, #000 18%, rgba(0,0,0,.76) 61%, transparent 100%);
+}
+.process-motion-grid-bg:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(112deg, transparent 42%, rgba(255,101,0,.16) 52%, transparent 63%);
+  transform: translate3d(-42%,0,0);
+  animation: process-motion-grid-scan 10s ease-in-out infinite alternate;
+}
+.process-grid-glow {
+  position: absolute;
+  top: 13%;
+  right: 8%;
+  width: clamp(250px, 42vw, 520px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(255,101,0,.32);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,101,0,.085), rgba(255,255,255,0) 63%);
+  box-shadow: 0 0 0 24px rgba(255,101,0,.025), 0 0 0 62px rgba(139,0,24,.018), inset 0 0 42px rgba(255,101,0,.055);
+  animation: process-grid-glow-float 18s ease-in-out infinite alternate;
+}
+.process-grid-orbit {
+  position: absolute;
+  top: 24%;
+  right: 19%;
+  width: clamp(170px, 27vw, 330px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(139,0,24,.22);
+  border-radius: 50%;
+  transform: rotateX(64deg) rotateZ(-22deg);
+  box-shadow: 0 0 0 18px rgba(255,101,0,.025);
+  animation: process-grid-orbit-turn 38s linear infinite;
+}
+.process-grid-scan {
+  position: absolute;
+  top: 18%;
+  right: 12%;
+  width: 2px;
+  height: 64%;
+  background: linear-gradient(transparent, rgba(255,101,0,.9), rgba(139,0,24,.42), transparent);
+  box-shadow: 0 0 20px rgba(255,101,0,.42);
+  opacity: .5;
+  transform-origin: center;
+  animation: process-grid-scan-pulse 5.6s ease-in-out infinite;
+}
+.process-grid-pulse {
+  position: absolute;
+  top: 50%;
+  right: 33%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff6500;
+  box-shadow: 0 0 0 7px rgba(255,101,0,.1), 0 0 22px rgba(255,101,0,.6);
+  animation: process-grid-node-pulse 3s ease-in-out infinite;
+}
+@keyframes process-motion-grid-drift {
+  to { transform: perspective(820px) rotateX(58deg) rotateZ(-23deg) scale(1.28) translate3d(0,42px,0); }
+}
+@keyframes process-motion-grid-scan {
+  to { transform: translate3d(42%,0,0); }
+}
+@keyframes process-grid-glow-float {
+  to { transform: translate3d(-22px,17px,0) scale(1.035); }
+}
+@keyframes process-grid-orbit-turn {
+  to { transform: rotateX(64deg) rotateZ(338deg); }
+}
+@keyframes process-grid-scan-pulse {
+  50% { opacity: .18; transform: scaleY(.76); }
+}
+@keyframes process-grid-node-pulse {
+  50% { opacity: .55; transform: scale(.72); }
+}
+.process-wrap { position: relative; z-index: 2; }
+
+/* The final card and both CTAs stay on a single, predictable mobile axis. */
+@media (max-width: 760px) {
+  .capability-bento { justify-items: stretch; }
+  .capability-tile-4 { width: 100%; justify-self: stretch; margin-inline: 0; }
+  .intro-copy .approach-copy-reveal { max-width: 100%; }
+  .process-motion-grid-bg:before { opacity: .18; background-size: 36px 36px; }
+  .process-grid-glow { top: 22%; right: -22%; width: 290px; opacity: .72; }
+  .process-grid-orbit { right: -8%; top: 29%; width: 190px; opacity: .7; }
+  .process-grid-scan { right: 8%; opacity: .25; }
+  .process-grid-pulse { right: 24%; }
+  .hero-prisma .hero-actions .tech-glow-button { min-height: 46px; }
+  .closing-content .tech-glow-button {
+    width: fit-content;
+    max-width: 100%;
+    min-height: 48px;
+    justify-content: center;
+    gap: 12px;
+    padding-inline: 19px;
+    margin-inline: auto;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 360px) {
+  .closing-content .tech-glow-button { padding-inline: 15px; gap: 10px; font-size: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-lead-motion.is-visible .hero-lead-word,
+  .intro-copy .approach-copy-reveal.is-visible,
+  .process-motion-grid-bg:before, .process-motion-grid-bg:after,
+  .process-grid-glow, .process-grid-orbit, .process-grid-scan, .process-grid-pulse {
+    animation: none !important;
+    filter: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .intro-copy .approach-copy-reveal { opacity: 1 !important; }
+}
