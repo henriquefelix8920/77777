@@ -840,3 +840,32 @@
   .hightech-world-particles,
   .hightech-energy-sweep { animation: none !important; }
 }
+
+/* Hero visual direction: one fluid shader field, no particles, rings or grid. */
+.hightech-hero { background: #020611 !important; }
+.hightech-world { z-index: 0; }
+.hightech-world::before, .hightech-world::after { display: none !important; }
+.hightech-world > span { display: none !important; }
+.hero-shader-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: .78;
+  pointer-events: none;
+}
+.hero-shader-background > div,
+.hero-shader-background canvas { width: 100% !important; height: 100% !important; }
+.hero-shader-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(2,6,17,.52), transparent 66%),
+    linear-gradient(0deg, rgba(2,6,17,.36), transparent 48%),
+    radial-gradient(ellipse at center, transparent 28%, rgba(2,6,17,.42) 100%);
+}
+@media (max-width: 800px) {
+  .hero-shader-background { opacity: .66; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-shader-background { opacity: .5; }
+}
