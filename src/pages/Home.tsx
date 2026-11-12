@@ -4,6 +4,7 @@ import { waLink } from "../config";
 import "../styles/capability-bento.css";
 import { LiquidMetalButton } from "../components/ui/liquid-metal-button";
 import SiteFrame from "../components/SiteFrame";
+import PortfolioShowcase from "../components/PortfolioShowcase";
 
 const processSteps = [
   { number: "01", title: "Entender", text: "Conversamos sobre a empresa, a rotina e o que precisa mudar.", note: "DIAGNÓSTICO" },
@@ -217,6 +218,8 @@ export default function HomePage() {
         </div>
       </div>
     </section>
+
+    <PortfolioShowcase />
 
     <section className="closing-section">
       <Film src={6} className="closing-film" />

@@ -12,6 +12,7 @@ export default function SiteFrame({ children }: { children: ReactNode }) {
             <a href="#abordagem">Abordagem</a>
             <a href="#trabalho">O que faço</a>
             <a href="#processo">Processo</a>
+            <a href="#portfolio">Projetos</a>
           </nav>
           <a className="header-contact" href={waLink("Olá! Quero conversar sobre um projeto.")} target="_blank" rel="noreferrer">Contato <ArrowUpRight size={15} /></a>
         </header>
