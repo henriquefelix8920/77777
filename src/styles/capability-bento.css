@@ -870,3 +870,432 @@ body, p, a, button, .tile-meta, .process-card-top {
   .hero-prisma > .hero-film-bg,
   .hero-prisma > .hero-film-bg:after { animation: none !important; }
 }
+
+
+/* ─────────────────────────────────────────────────────────────
+   Final visual pass — kinetic hero, luminous orange CTAs,
+   new animated section backdrops and lighter motion workload.
+   ───────────────────────────────────────────────────────────── */
+
+/* Kinetic hero headline: staggered 3D word lift with a fast orange accent. */
+.hero-prisma .hero-title.title-motion-kinetic {
+  display: flex;
+  flex-direction: column;
+  gap: .055em;
+  perspective: 900px;
+}
+.hero-prisma .hero-title.title-motion-kinetic .hero-line {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 .16em;
+  width: 100%;
+  overflow: hidden;
+  padding: 0 .025em .08em;
+  line-height: .92;
+}
+.hero-prisma .hero-title.title-motion-kinetic .hero-line-light { color: #fff; }
+.hero-prisma .hero-title.title-motion-kinetic .hero-line-orange { color: #ff7a00; }
+.hero-prisma .hero-title.title-motion-kinetic .hero-word {
+  display: inline-block !important;
+  margin: 0;
+  opacity: 1;
+  transform: none;
+  transform-origin: 50% 100%;
+  backface-visibility: hidden;
+}
+.hero-prisma .hero-title.title-motion-kinetic.is-visible .hero-word {
+  animation: hero-word-launch .95s cubic-bezier(.16,1,.3,1) both;
+}
+.hero-prisma .hero-title.title-motion-kinetic .hero-line-orange:after {
+  content: "";
+  display: block;
+  flex: 0 0 100%;
+  width: 0;
+  height: .065em;
+  margin-top: .045em;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff6500, #ffb15a 45%, rgba(255,101,0,0));
+  transform-origin: left;
+}
+.hero-prisma .hero-title.title-motion-kinetic.is-visible .hero-line-orange:after {
+  animation: hero-orange-stroke .78s .7s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes hero-word-launch {
+  0% { opacity: 0; transform: translate3d(0, 115%, 0) rotateX(-65deg) scale(.88); }
+  62% { opacity: 1; transform: translate3d(0, -7%, 0) rotateX(7deg) scale(1.025); }
+  82% { transform: translate3d(0, 2%, 0) rotateX(-2deg) scale(.995); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) rotateX(0) scale(1); }
+}
+@keyframes hero-orange-stroke { to { width: 78%; } }
+
+/* Glow Button, adapted from 21st.dev's Glow Button direction.
+   Pure CSS: no motion runtime or extra icon package. */
+.tech-glow-button {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  overflow: visible;
+  padding: 0 25px;
+  border: 1px solid rgba(255,255,255,.82);
+  border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(112deg, #ff8a00 0%, #ff6500 48%, #f04400 100%);
+  box-shadow: 0 0 0 1px rgba(255,101,0,.24), 0 8px 22px rgba(255,101,0,.32), inset 0 1px 0 rgba(255,255,255,.4);
+  cursor: pointer;
+  font: 700 11px/1 "DM Sans", sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+}
+.tech-glow-button-aura {
+  position: absolute;
+  z-index: -1;
+  inset: -7px;
+  border-radius: inherit;
+  background: linear-gradient(110deg, rgba(255,101,0,.82), rgba(255,172,64,.58), rgba(255,70,0,.78));
+  filter: blur(11px);
+  opacity: .56;
+  pointer-events: none;
+  animation: tech-button-aura 3.6s ease-in-out infinite;
+}
+.tech-glow-button-sweep {
+  position: absolute;
+  inset: 1px;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.tech-glow-button-sweep:after {
+  content: "";
+  position: absolute;
+  inset: -25% auto -25% -45%;
+  width: 34%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.58), transparent);
+  transform: skewX(-22deg) translateX(-180%);
+  animation: tech-button-sweep 4.2s ease-in-out infinite;
+}
+.tech-glow-button-label,
+.tech-glow-button-arrow { position: relative; z-index: 1; }
+.tech-glow-button-arrow {
+  color: #fff;
+  font-size: 19px;
+  line-height: 1;
+  transition: transform .22s ease;
+}
+.tech-glow-button:hover,
+.tech-glow-button:focus-visible {
+  transform: translateY(-3px);
+  filter: saturate(1.14) brightness(1.06);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.55), 0 0 18px rgba(255,101,0,.56), 0 12px 34px rgba(255,78,0,.42), inset 0 1px 0 rgba(255,255,255,.55);
+}
+.tech-glow-button:hover .tech-glow-button-arrow,
+.tech-glow-button:focus-visible .tech-glow-button-arrow { transform: translate(3px,-3px); }
+.tech-glow-button:active { transform: translateY(0) scale(.98); }
+@keyframes tech-button-aura {
+  0%, 100% { opacity: .44; transform: scale(.98); }
+  50% { opacity: .76; transform: scale(1.035); }
+}
+@keyframes tech-button-sweep {
+  0%, 28% { transform: skewX(-22deg) translateX(-180%); }
+  58%, 100% { transform: skewX(-22deg) translateX(470%); }
+}
+@media (max-width: 540px) {
+  .tech-glow-button { min-height: 52px; gap: 16px; padding-inline: 19px; font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tech-glow-button-aura, .tech-glow-button-sweep:after { animation: none !important; }
+  .tech-glow-button { transition: none; }
+}
+
+/* Section 2 — move the former capabilities video here as a lazy, full-bleed film. */
+.intro-section > .intro-film {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .29;
+  border: 0;
+  border-radius: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.2), #000 42%, #000 100%);
+  mask-image: linear-gradient(90deg, rgba(0,0,0,.2), #000 42%, #000 100%);
+}
+.intro-section > .intro-film video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 48%;
+  filter: saturate(.86) contrast(1.06) brightness(.85);
+  mix-blend-mode: multiply;
+}
+.intro-section > .intro-film .film-tint {
+  background: linear-gradient(105deg, rgba(255,255,255,.92) 0%, rgba(255,255,255,.72) 48%, rgba(255,101,0,.13) 100%);
+  mix-blend-mode: screen;
+  opacity: .92;
+}
+.intro-section > .intro-film:after {
+  background: linear-gradient(90deg, rgba(255,255,255,.74), rgba(255,255,255,.28) 70%, rgba(255,255,255,.14));
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+.intro-section > .section-index,
+.intro-section > .intro-copy,
+.intro-section > .approach-stamp { z-index: 2; }
+
+/* Section 3 — CSS-only Animated Grid, adapted from 21st.dev / rmahammad.
+   The grid and glow move on transforms; no canvas, shader, video or JS loop. */
+.work-tech-grid-bg,
+.work-animated-grid-bg {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  contain: paint;
+  background:
+    radial-gradient(ellipse at 80% 42%, rgba(255,101,0,.16), transparent 40%),
+    linear-gradient(118deg, #8b0018 0%, #760014 100%);
+}
+.work-animated-grid-bg:before {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  opacity: .24;
+  background-image:
+    linear-gradient(rgba(255,255,255,.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.16) 1px, transparent 1px);
+  background-size: 46px 46px;
+  transform: perspective(850px) rotateX(13deg) scale(1.08);
+  transform-origin: center;
+  animation: work-grid-drift 28s linear infinite;
+  mask-image: radial-gradient(ellipse at 68% 50%, #000 14%, rgba(0,0,0,.76) 55%, transparent 100%);
+}
+.work-animated-grid-bg:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 36%, rgba(255,101,0,.11) 52%, transparent 68%);
+  transform: translate3d(-35%,0,0);
+  animation: work-grid-scan 11s ease-in-out infinite alternate;
+}
+.work-grid-glow {
+  position: absolute;
+  display: block;
+  width: clamp(240px, 34vw, 520px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(255,101,0,.22);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 28px rgba(255,101,0,.025), 0 0 0 34px rgba(255,101,0,.025), 0 0 0 70px rgba(255,255,255,.015);
+  will-change: transform;
+}
+.work-grid-glow-a { right: 5%; top: 2%; animation: work-glow-float 19s ease-in-out infinite alternate; }
+.work-grid-glow-b { right: 27%; bottom: -44%; width: clamp(200px, 26vw, 390px); opacity: .62; animation: work-glow-float 24s ease-in-out infinite alternate-reverse; }
+.work-grid-scan {
+  position: absolute;
+  right: 0;
+  top: 18%;
+  width: 1px;
+  height: 64%;
+  background: linear-gradient(transparent, rgba(255,101,0,.8), transparent);
+  box-shadow: 0 0 28px rgba(255,101,0,.5);
+  opacity: .62;
+  animation: work-scan-pulse 4.8s ease-in-out infinite;
+}
+@keyframes work-grid-drift { to { transform: perspective(850px) rotateX(13deg) scale(1.08) translate3d(0,46px,0); } }
+@keyframes work-grid-scan { to { transform: translate3d(35%,0,0); } }
+@keyframes work-glow-float { to { transform: translate3d(-24px,-20px,0) rotate(9deg); } }
+@keyframes work-scan-pulse { 50% { opacity: .2; transform: scaleY(.74); } }
+.work-section > .section-wrap { position: relative; z-index: 2; }
+.work-section .section-index,
+.work-section .section-heading,
+.work-section .capability-bento { position: relative; z-index: 2; }
+.title-motion-digital .digital-title-line {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+}
+.title-motion-digital.is-visible .digital-title-line {
+  animation: digital-title-reveal .8s cubic-bezier(.2,.8,.2,1) both;
+}
+.title-motion-digital.is-visible em.digital-title-line { animation-delay: .16s; }
+@keyframes digital-title-reveal {
+  from { opacity: .2; clip-path: inset(0 100% 0 0); transform: translateX(-.14em); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateX(0); }
+}
+.capability-tile .tile-meta { justify-content: flex-end; }
+.capability-tile .tile-meta span { width: 100%; text-align: right; }
+
+/* Section 4 — new data-flow / radar background, intentionally distinct from the grid. */
+.process-energy-bg {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  contain: paint;
+  background:
+    radial-gradient(ellipse at 84% 30%, rgba(255,101,0,.105), transparent 35%),
+    radial-gradient(ellipse at 92% 86%, rgba(139,0,24,.07), transparent 40%),
+    linear-gradient(118deg, #fff 0%, #fff 55%, #fff9f5 100%);
+}
+.process-energy-bg:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .24;
+  background-image:
+    linear-gradient(rgba(139,0,24,.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,0,24,.1) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(90deg, transparent 8%, #000 95%);
+}
+.process-energy-bg:after {
+  content: "";
+  position: absolute;
+  right: -9%;
+  top: -58%;
+  width: min(78vw, 980px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(255,101,0,.21);
+  border-radius: 50%;
+  box-shadow: 0 0 0 26px rgba(139,0,24,.018), 0 0 0 68px rgba(255,101,0,.02), 0 0 0 112px rgba(139,0,24,.014);
+  transform-origin: center;
+  animation: energy-radar-turn 62s linear infinite;
+}
+.energy-matrix {
+  position: absolute;
+  right: 2%;
+  top: 8%;
+  width: min(56vw, 760px);
+  height: 85%;
+  opacity: .52;
+  background:
+    radial-gradient(circle at 22% 28%, rgba(255,101,0,.78) 0 2px, transparent 3px),
+    radial-gradient(circle at 56% 52%, rgba(139,0,24,.6) 0 2px, transparent 3px),
+    radial-gradient(circle at 82% 22%, rgba(255,101,0,.8) 0 2px, transparent 3px),
+    radial-gradient(circle at 73% 82%, rgba(139,0,24,.54) 0 2px, transparent 3px);
+  background-size: 100% 100%;
+}
+.energy-ring {
+  position: absolute;
+  right: 6%;
+  top: 6%;
+  width: min(54vw, 700px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(139,0,24,.13);
+  border-radius: 50%;
+  transform: rotateX(67deg) rotateZ(-18deg);
+}
+.energy-ring-one { box-shadow: 0 0 0 24px rgba(255,101,0,.018), 0 0 0 58px rgba(139,0,24,.015); }
+.energy-ring-two {
+  right: 18%;
+  top: 21%;
+  width: min(34vw, 450px);
+  border-color: rgba(255,101,0,.28);
+  transform: rotateX(67deg) rotateZ(35deg);
+  animation: energy-ring-breathe 9s ease-in-out infinite alternate;
+}
+.energy-beam {
+  position: absolute;
+  display: block;
+  height: 1px;
+  width: clamp(150px, 26vw, 380px);
+  transform-origin: left;
+  background: linear-gradient(90deg, transparent, rgba(255,101,0,.82), rgba(139,0,24,.38), transparent);
+  box-shadow: 0 0 10px rgba(255,101,0,.3);
+  opacity: .7;
+  will-change: transform, opacity;
+}
+.energy-beam-one { top: 29%; right: 10%; rotate: 12deg; animation: energy-beam-travel 7.5s ease-in-out infinite alternate; }
+.energy-beam-two { top: 57%; right: 3%; rotate: -18deg; animation: energy-beam-travel 9s 1.2s ease-in-out infinite alternate-reverse; }
+.energy-beam-three { top: 76%; right: 18%; rotate: 4deg; animation: energy-beam-travel 8.4s 2.1s ease-in-out infinite alternate; }
+.energy-node {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff6500;
+  border: 1px solid #fff;
+  box-shadow: 0 0 0 5px rgba(255,101,0,.09), 0 0 15px rgba(255,101,0,.38);
+  animation: energy-node-pulse 3.4s ease-in-out infinite;
+}
+.energy-node-one { top: 28%; right: 24%; }
+.energy-node-two { top: 55%; right: 43%; animation-delay: 1.1s; background: #8b0018; }
+.energy-node-three { top: 77%; right: 18%; animation-delay: 2.1s; }
+@keyframes energy-radar-turn { to { transform: rotate(360deg); } }
+@keyframes energy-ring-breathe { to { transform: rotateX(67deg) rotateZ(54deg) scale(1.06); } }
+@keyframes energy-beam-travel {
+  0% { transform: translate3d(-18px,0,0) scaleX(.78); opacity: .26; }
+  100% { transform: translate3d(25px,0,0) scaleX(1.08); opacity: .82; }
+}
+@keyframes energy-node-pulse { 0%,100% { transform: scale(.82); opacity: .54; } 50% { transform: scale(1.25); opacity: 1; } }
+.process-wrap { position: relative; z-index: 2; }
+.process-card {
+  background: rgba(255,255,255,.88);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* Orange, luminous WhatsApp contact to match the site CTAs. */
+.whatsapp-float {
+  color: #fff;
+  background: linear-gradient(145deg, #ff9a18, #ff6500 58%, #e94b00);
+  border-color: rgba(255,255,255,.95);
+  box-shadow: 0 0 0 1px rgba(255,101,0,.28), 0 8px 28px rgba(255,101,0,.38), 0 0 24px rgba(255,101,0,.34);
+  animation: whatsapp-float-bounce 2.8s ease-in-out infinite, whatsapp-orange-glow 3.2s ease-in-out infinite;
+}
+.whatsapp-float-pulse {
+  border-color: rgba(255,134,24,.78);
+  box-shadow: 0 0 14px rgba(255,101,0,.42);
+}
+.whatsapp-float-tooltip { background: #8b0018; }
+@keyframes whatsapp-orange-glow {
+  0%,100% { filter: brightness(1); }
+  50% { filter: brightness(1.16); }
+}
+
+/* Performance guardrails: avoid offscreen media work and simplify motion on small devices. */
+.film-object video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.work-section, .process-section, .intro-section { content-visibility: auto; contain-intrinsic-size: auto 900px; }
+.work-section > .section-wrap, .process-wrap, .intro-copy { contain: layout; }
+@media (max-width: 760px) {
+  .work-animated-grid-bg:before { opacity: .16; background-size: 38px 38px; }
+  .work-grid-glow { opacity: .4; }
+  .work-grid-scan { opacity: .3; }
+  .process-energy-bg:before { opacity: .15; }
+  .process-energy-bg:after { right: -48%; top: -16%; width: 125vw; }
+  .energy-matrix { right: -14%; width: 88vw; opacity: .34; }
+  .energy-ring { right: -18%; width: 80vw; }
+  .energy-ring-two { right: 2%; width: 50vw; }
+  .energy-beam { opacity: .38; }
+  .energy-beam-one { right: -24%; }
+  .energy-beam-two { right: -18%; }
+  .energy-beam-three { right: -32%; }
+  .capability-tile-4 .tile-meta { justify-content: center; }
+  .capability-tile-4 .tile-meta span { text-align: center; }
+}
+@media (max-width: 480px) {
+  .intro-section > .intro-film { opacity: .24; -webkit-mask-image: none; mask-image: none; }
+  .intro-section > .intro-film .film-tint { opacity: .98; }
+  .work-grid-glow-a { right: -18%; top: 4%; }
+  .work-grid-glow-b { right: 4%; bottom: -35%; }
+  .process-energy-bg:after { opacity: .72; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-prisma .hero-title.title-motion-kinetic.is-visible .hero-word,
+  .hero-prisma .hero-title.title-motion-kinetic.is-visible .hero-line-orange:after,
+  .work-animated-grid-bg:before, .work-animated-grid-bg:after,
+  .work-grid-glow, .work-grid-scan,
+  .process-energy-bg:after, .energy-ring-two,
+  .energy-beam, .energy-node,
+  .whatsapp-float {
+    animation: none !important;
+    transition: none !important;
+  }
+}
