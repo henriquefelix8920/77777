@@ -7,6 +7,7 @@ import "../styles/text-motion-system.css";
 import { LiquidMetalButton } from "../components/ui/liquid-metal-button";
 import SiteFrame from "../components/SiteFrame";
 import HighTechHero from "../components/HighTechHero";
+import { WireframeBackground } from "../components/VisualBackgrounds";
 import PortfolioShowcase from "../components/PortfolioShowcase";
 
 const processSteps = [
@@ -111,13 +112,9 @@ export default function HomePage() {
         <div className="intro-story-layout">
           <div className="intro-story-visual">
             <div className="story-visual-frame">
+              <WireframeBackground />
               <div className="story-visual-top"><span>V/R — THINKING SYSTEMS</span><span>LIVE SIGNAL <i /></span></div>
-              <div className="story-orbit story-orbit-one" />
-              <div className="story-orbit story-orbit-two" />
-              <div className="story-orbit story-orbit-three" />
-              <div className="story-crosshair story-crosshair-x" />
-              <div className="story-crosshair story-crosshair-y" />
-              <div className="story-core"><span>IDEIA</span><b>→</b><strong>IMPACTO</strong></div>
+               <div className="story-core"><span>IDEIA</span><b>→</b><strong>IMPACTO</strong></div>
               <div className="story-visual-coordinates">23° 32' 11.4" S<br/>46° 38' 05.2" W</div>
               <div className="story-visual-bottom"><span>PROBLEM / SOLUTION</span><span>01 — 03</span></div>
             </div>
