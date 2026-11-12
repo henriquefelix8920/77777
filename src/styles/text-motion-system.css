@@ -1,0 +1,142 @@
+/* 21st.dev-inspired text motion system.
+   Adaptations of Split Reveal, Splitting Text, Vertical Cut Reveal,
+   Text Blur Reveal, Text Reveal Block and Text Animate patterns.
+   Lightweight CSS keyframes + IntersectionObserver; no animation runtime. */
+
+.text-motion-target {
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
+}
+
+.text-motion-target.text-motion-visible {
+  animation-duration: 820ms;
+  animation-timing-function: cubic-bezier(.2,.8,.2,1);
+  animation-fill-mode: both;
+  animation-delay: var(--text-motion-delay, 0ms);
+}
+
+.text-motion-v0.text-motion-visible { animation-name: text-motion-cut-rise; }
+.text-motion-v1.text-motion-visible { animation-name: text-motion-blur-rise; }
+.text-motion-v2.text-motion-visible { animation-name: text-motion-center-open; }
+.text-motion-v3.text-motion-visible { animation-name: text-motion-slide-left; }
+.text-motion-v4.text-motion-visible { animation-name: text-motion-slide-right; }
+.text-motion-v5.text-motion-visible { animation-name: text-motion-flip-up; }
+.text-motion-v6.text-motion-visible { animation-name: text-motion-focus-zoom; }
+.text-motion-v7.text-motion-visible { animation-name: text-motion-tracking; }
+.text-motion-v8.text-motion-visible { animation-name: text-motion-horizontal-wipe; }
+.text-motion-v9.text-motion-visible { animation-name: text-motion-vertical-wipe; }
+.text-motion-v10.text-motion-visible { animation-name: text-motion-spring-up; }
+.text-motion-v11.text-motion-visible { animation-name: text-motion-pivot-left; }
+.text-motion-v12.text-motion-visible { animation-name: text-motion-perspective; }
+.text-motion-v13.text-motion-visible { animation-name: text-motion-soft-rise; }
+.text-motion-v14.text-motion-visible { animation-name: text-motion-stretch-in; }
+.text-motion-v15.text-motion-visible { animation-name: text-motion-diagonal-reveal; }
+.text-motion-v16.text-motion-visible { animation-name: text-motion-scale-settle; }
+.text-motion-v17.text-motion-visible { animation-name: text-motion-drop-in; }
+.text-motion-v18.text-motion-visible { animation-name: text-motion-blur-left; }
+.text-motion-v19.text-motion-visible { animation-name: text-motion-mask-unfold; }
+
+@keyframes text-motion-cut-rise {
+  from { opacity: 0; clip-path: inset(100% 0 0); transform: translateY(14px); }
+  to { opacity: 1; clip-path: inset(0); transform: translateY(0); }
+}
+@keyframes text-motion-blur-rise {
+  from { opacity: 0; filter: blur(10px); transform: translateY(20px) scale(.985); }
+  72% { opacity: 1; filter: blur(0); transform: translateY(-2px) scale(1.005); }
+  to { opacity: 1; filter: blur(0); transform: none; }
+}
+@keyframes text-motion-center-open {
+  from { opacity: .15; clip-path: inset(0 50%); transform: scaleX(.96); }
+  to { opacity: 1; clip-path: inset(0); transform: scaleX(1); }
+}
+@keyframes text-motion-slide-left {
+  from { opacity: 0; transform: translate3d(-34px, 8px, 0) skewX(5deg); }
+  to { opacity: 1; transform: translate3d(0,0,0) skewX(0); }
+}
+@keyframes text-motion-slide-right {
+  from { opacity: 0; transform: translate3d(34px, 8px, 0) skewX(-5deg); }
+  to { opacity: 1; transform: translate3d(0,0,0) skewX(0); }
+}
+@keyframes text-motion-flip-up {
+  from { opacity: 0; transform: perspective(700px) rotateX(62deg) translateY(14px); }
+  to { opacity: 1; transform: perspective(700px) rotateX(0) translateY(0); }
+}
+@keyframes text-motion-focus-zoom {
+  from { opacity: 0; filter: blur(5px); transform: scale(.84); }
+  70% { opacity: 1; filter: blur(0); transform: scale(1.025); }
+  to { opacity: 1; filter: none; transform: scale(1); }
+}
+@keyframes text-motion-tracking {
+  from { opacity: 0; letter-spacing: .22em; filter: blur(2px); }
+  to { opacity: 1; letter-spacing: normal; filter: none; }
+}
+@keyframes text-motion-horizontal-wipe {
+  from { opacity: .3; clip-path: inset(0 100% 0 0); transform: translateX(-10px); }
+  to { opacity: 1; clip-path: inset(0); transform: translateX(0); }
+}
+@keyframes text-motion-vertical-wipe {
+  from { opacity: .25; clip-path: inset(100% 0 0); }
+  to { opacity: 1; clip-path: inset(0); }
+}
+@keyframes text-motion-spring-up {
+  0% { opacity: 0; transform: translateY(22px) scale(.9); }
+  70% { opacity: 1; transform: translateY(-4px) scale(1.025); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes text-motion-pivot-left {
+  from { opacity: 0; transform-origin: left bottom; transform: translateY(12px) rotate(-4deg); }
+  to { opacity: 1; transform-origin: left bottom; transform: translateY(0) rotate(0); }
+}
+@keyframes text-motion-perspective {
+  from { opacity: 0; transform: perspective(800px) rotateY(-36deg) translateX(-18px); }
+  to { opacity: 1; transform: perspective(800px) rotateY(0) translateX(0); }
+}
+@keyframes text-motion-soft-rise {
+  from { opacity: 0; transform: translate3d(0,28px,0); filter: blur(3px); }
+  to { opacity: 1; transform: translate3d(0,0,0); filter: blur(0); }
+}
+@keyframes text-motion-stretch-in {
+  from { opacity: 0; transform-origin: left center; transform: scaleX(.72) translateX(-12px); }
+  to { opacity: 1; transform-origin: left center; transform: scaleX(1) translateX(0); }
+}
+@keyframes text-motion-diagonal-reveal {
+  from { opacity: 0; clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); transform: translate(12px,12px); }
+  to { opacity: 1; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: translate(0,0); }
+}
+@keyframes text-motion-scale-settle {
+  0% { opacity: 0; transform: scale(1.12); filter: blur(4px); }
+  65% { opacity: 1; transform: scale(.985); filter: blur(0); }
+  100% { opacity: 1; transform: scale(1); filter: none; }
+}
+@keyframes text-motion-drop-in {
+  from { opacity: 0; transform: translateY(-18px) rotate(1.8deg); }
+  72% { opacity: 1; transform: translateY(2px) rotate(-.3deg); }
+  to { opacity: 1; transform: translateY(0) rotate(0); }
+}
+@keyframes text-motion-blur-left {
+  from { opacity: 0; filter: blur(8px); transform: translateX(-24px); }
+  to { opacity: 1; filter: blur(0); transform: translateX(0); }
+}
+@keyframes text-motion-mask-unfold {
+  from { opacity: 0; clip-path: inset(0 50% 100% 50%); transform: scaleY(.92); }
+  to { opacity: 1; clip-path: inset(0); transform: scaleY(1); }
+}
+
+@media (max-width: 760px) {
+  .text-motion-target.text-motion-visible {
+    animation-duration: 680ms;
+    animation-delay: min(var(--text-motion-delay, 0ms), 90ms);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-motion-target,
+  .text-motion-target.text-motion-visible {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    clip-path: none !important;
+    transform: none !important;
+    letter-spacing: inherit !important;
+  }
+}
