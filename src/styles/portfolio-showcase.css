@@ -180,3 +180,14 @@
   .portfolio-preview-track, .portfolio-preview-scroll span { animation: none !important; }
   .portfolio-project:hover .portfolio-preview { transform: none; }
 }
+
+
+.portfolio-preview-fallback {
+  position: absolute; z-index: 0; inset: 0; display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: center; gap: 13px; padding: clamp(24px, 5vw, 58px);
+  color: #8b0018; background: radial-gradient(ellipse at 82% 22%, rgba(255,101,0,.25), transparent 42%), linear-gradient(135deg, #f4eee9, #d8c5c0);
+}
+.portfolio-preview-fallback span { color: #ff6500; font-size: 8px; letter-spacing: .2em; }
+.portfolio-preview-fallback strong { max-width: 80%; font: 600 clamp(25px, 4vw, 48px)/.95 "Space Grotesk", sans-serif; letter-spacing: -.06em; }
+.portfolio-preview-fallback i { color: rgba(139,0,24,.64); font-size: 7px; letter-spacing: .15em; font-style: normal; }
+.portfolio-preview-track { z-index: 1; }

@@ -15,8 +15,8 @@ const projects: PortfolioProject[] = [
   {
     number: "01",
     name: "Helena Vasconcelos",
-    category: "Landing page · Nutrição",
-    description: "Uma experiência editorial para apresentar uma abordagem de nutrição com clareza, sensibilidade e narrativa visual.",
+    category: "Landing page conceitual",
+    description: "Projeto conceitual com personagem fictícia, criado para demonstrar uma experiência editorial de nutrição com clareza, sensibilidade e narrativa visual.",
     url: "https://helena-vasconcelos-demo.vercel.app/",
     middleUrl: "https://helena-vasconcelos-demo.vercel.app/#metodo",
     domain: "helena-vasconcelos-demo.vercel.app",
@@ -72,6 +72,11 @@ function SitePreview({ project }: { project: PortfolioProject }) {
         <span className="browser-live">PREVIEW</span>
       </div>
       <div className="portfolio-preview-window">
+        <div className="portfolio-preview-fallback" aria-hidden="true">
+          <span>EXPERIÊNCIA DIGITAL</span>
+          <strong>{project.name}</strong>
+          <i>DESIGN · ESTRATÉGIA · TECNOLOGIA</i>
+        </div>
         <div className="portfolio-preview-track">
           <img
             src={screenshotUrl(project.url)}
