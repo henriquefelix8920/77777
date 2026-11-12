@@ -10,7 +10,7 @@ export default function SiteFrame({ children }: { children: ReactNode }) {
         <nav aria-label="Navegação principal">
           <a href="#abordagem">Abordagem</a>
           <a href="#trabalho">O que faço</a>
-          <a href="#experimentos">Experimentos</a>
+          <a href="#processo">Processo</a>
         </nav>
         <a className="header-contact" href={waLink("Olá! Quero conversar sobre um projeto.")} target="_blank" rel="noreferrer">Contato <ArrowUpRight size={15} /></a>
       </header>
