@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-type WallpaperVariant = "hero" | "wireframe";
+type WallpaperVariant = "wireframe" | "mystery";
 
 const VERTEX_SHADER = [
   "attribute vec2 a_position;",
@@ -11,7 +11,7 @@ const VERTEX_SHADER = [
   "}",
 ].join("\n");
 
-const HERO_FRAGMENT_SHADER = [
+const MYSTERY_FRAGMENT_SHADER = [
   "precision highp float;",
   "varying vec2 v_uv;",
   "uniform vec2 u_resolution;",
@@ -20,54 +20,88 @@ const HERO_FRAGMENT_SHADER = [
   "mat3 rotY(float a) { float c=cos(a), s=sin(a); return mat3(c,0.,-s,0.,1.,0.,s,0.,c); }",
   "mat3 rotZ(float a) { float c=cos(a), s=sin(a); return mat3(c,s,0.,-s,c,0.,0.,0.,1.); }",
   "float sdTorus(vec3 p, vec2 t) { return length(vec2(length(p.xz)-t.x,p.y))-t.y; }",
-  "float scene(vec3 p) {",
-  "  float t=u_time;",
-  "  vec3 q=p-vec3(0.92,0.02,0.0);",
-  "  q=rotY(t*0.16)*rotX(0.52+sin(t*0.22)*0.12)*q;",
-  "  float outer=sdTorus(q,vec2(1.28,0.105+0.018*sin(q.x*5.0+t)));",
-  "  vec3 r=p-vec3(0.92,0.02,0.0);",
-  "  r=rotZ(0.82+sin(t*0.18)*0.1)*rotY(-t*0.19)*r;",
-  "  float inner=sdTorus(r,vec2(0.86,0.052));",
-  "  return min(outer,inner);",
+  "float sdOctahedron(vec3 p, float s) {",
+  "  p=abs(p);",
+  "  float m=p.x+p.y+p.z-s;",
+  "  vec3 q;",
+  "  if(3.0*p.x<m) q=p.xyz;",
+  "  else if(3.0*p.y<m) q=p.yzx;",
+  "  else if(3.0*p.z<m) q=p.zxy;",
+  "  else return m*0.57735027;",
+  "  float k=clamp(0.5*(q.z-q.y+s),0.0,s);",
+  "  return length(vec3(q.x,q.y-s+k,q.z-k));",
   "}",
+  "float coreDistance(vec3 p) {",
+  "  float t=u_time;",
+  "  vec3 q=p-vec3(0.68,0.02,0.0);",
+  "  q=rotY(t*0.13)*rotX(0.24+sin(t*0.19)*0.08)*rotZ(0.18)*q;",
+  "  float crystal=sdOctahedron(q,0.98);",
+  "  vec3 shardA=rotY(-t*0.17)*rotX(0.45)*(p-vec3(-1.36,-0.62,-0.55));",
+  "  vec3 shardB=rotZ(t*0.12)*rotY(0.6)*(p-vec3(1.88,0.82,-1.15));",
+  "  return min(crystal,min(sdOctahedron(shardA,0.34),sdOctahedron(shardB,0.24)));",
+  "}",
+  "float ringDistance(vec3 p) {",
+  "  vec3 q=p-vec3(0.68,0.02,0.0);",
+  "  q=rotY(u_time*0.12)*rotX(0.78+sin(u_time*0.13)*0.08)*q;",
+  "  float ringA=sdTorus(q,vec2(1.48,0.018));",
+  "  vec3 r=p-vec3(0.68,0.02,0.0);",
+  "  r=rotZ(0.72)*rotX(1.18)*rotY(-u_time*0.15)*r;",
+  "  float ringB=sdTorus(r,vec2(1.22,0.012));",
+  "  return min(ringA,ringB);",
+  "}",
+  "float scene(vec3 p) { return min(coreDistance(p),ringDistance(p)); }",
   "float hash21(vec2 p) { p=fract(p*vec2(123.34,456.21)); p+=dot(p,p+45.32); return fract(p.x*p.y); }",
   "void main() {",
   "  vec2 uv=v_uv*2.0-1.0;",
   "  uv.x*=u_resolution.x/u_resolution.y;",
-  "  vec3 ro=vec3(0.0,0.0,5.0);",
+  "  float t=u_time;",
+  "  vec3 ro=vec3(0.0,0.0,5.3);",
   "  vec3 rd=normalize(vec3(uv.x,uv.y,-1.72));",
   "  float travel=0.0;",
   "  float hit=0.0;",
   "  vec3 p=ro;",
-  "  for(int i=0;i<82;i++) {",
+  "  for(int i=0;i<68;i++) {",
   "    p=ro+rd*travel;",
   "    float d=scene(p);",
-  "    if(d<0.0025) { hit=1.0; break; }",
-  "    travel+=max(d*0.78,0.008);",
-  "    if(travel>10.0) break;",
+  "    if(d<0.0028) { hit=1.0; break; }",
+  "    travel+=max(d*0.82,0.009);",
+  "    if(travel>11.0) break;",
   "  }",
-  "  vec3 color=vec3(0.003,0.008,0.022);",
-  "  float halo=exp(-length(uv-vec2(0.34,0.02))*2.1);",
-  "  color+=vec3(0.005,0.035,0.075)*halo;",
-  "  vec2 starCell=floor(v_uv*u_resolution/vec2(7.0));",
-  "  float star=step(0.9975,hash21(starCell));",
-  "  color+=vec3(0.18,0.52,0.9)*star*(0.45+0.55*sin(u_time*1.4+hash21(starCell)*6.28));",
+  "  float mistWave=sin(uv.x*2.7+t*0.09+sin(uv.y*3.1-t*0.07))*0.5+0.5;",
+  "  float mist=exp(-abs(uv.y-0.12*sin(uv.x*2.0+t*0.08))*4.2);",
+  "  vec3 color=vec3(0.0025,0.003,0.012);",
+  "  color+=vec3(0.012,0.008,0.042)*mist*(0.45+mistWave*0.6);",
+  "  color+=vec3(0.008,0.022,0.052)*exp(-length(uv-vec2(-0.48,0.18))*2.4);",
+  "  color+=vec3(0.018,0.006,0.034)*exp(-length(uv-vec2(0.58,-0.2))*2.1);",
+  "  vec2 dustCell=floor(v_uv*u_resolution/vec2(8.0));",
+  "  float dust=step(0.9978,hash21(dustCell));",
+  "  float dustPulse=0.35+0.65*sin(t*0.7+hash21(dustCell)*6.2831);",
+  "  color+=vec3(0.23,0.29,0.62)*dust*dustPulse;",
   "  if(hit>0.5) {",
-  "    vec2 e=vec2(0.003,0.0);",
+  "    vec2 e=vec2(0.0025,0.0);",
   "    vec3 n=normalize(vec3(scene(p+e.xyy)-scene(p-e.xyy),scene(p+e.yxy)-scene(p-e.yxy),scene(p+e.yyx)-scene(p-e.yyx)));",
-  "    vec3 lightDir=normalize(vec3(-0.48,0.74,0.62));",
+  "    float coreMask=step(coreDistance(p),ringDistance(p));",
+  "    vec3 lightDir=normalize(vec3(-0.52,0.68,0.74));",
   "    float diffuse=max(dot(n,lightDir),0.0);",
-  "    float fresnel=pow(1.0-max(dot(n,-rd),0.0),3.0);",
-  "    float specular=pow(max(dot(reflect(rd,n),lightDir),0.0),42.0);",
-  "    float bands=0.5+0.5*sin(p.y*5.0+p.x*2.8+u_time*0.55);",
-  "    vec3 material=mix(vec3(0.012,0.12,0.34),vec3(0.035,0.55,0.78),bands);",
-  "    vec3 lit=material*(0.28+diffuse*1.15);",
-  "    lit+=vec3(0.12,0.62,0.94)*(fresnel*1.05+specular*1.35);",
-  "    lit+=vec3(0.015,0.16,0.3)*pow(max(dot(n,vec3(0.0,1.0,0.0)),0.0),5.0);",
-  "    color=mix(color,lit,0.97);",
+  "    float fresnel=pow(1.0-max(dot(n,-rd),0.0),2.65);",
+  "    float specular=pow(max(dot(reflect(rd,n),lightDir),0.0),54.0);",
+  "    float facet=0.5+0.5*sin(p.x*3.3+p.y*4.1-p.z*2.7);",
+  "    vec3 obsidian=mix(vec3(0.004,0.006,0.016),vec3(0.014,0.009,0.03),facet);",
+  "    vec3 crystal=obsidian*(0.34+diffuse*0.52);",
+  "    crystal+=vec3(0.075,0.045,0.19)*fresnel*1.35;",
+  "    crystal+=vec3(0.025,0.14,0.29)*specular*1.3;",
+  "    float seam=pow(max(0.0,sin(p.y*15.0+p.x*5.0+t*0.22)),22.0);",
+  "    crystal+=vec3(0.12,0.22,0.48)*seam*0.16;",
+  "    vec3 ring=vec3(0.018,0.12,0.24)*(0.28+diffuse*0.6);",
+  "    ring+=vec3(0.14,0.07,0.34)*fresnel*1.8;",
+  "    ring+=vec3(0.08,0.33,0.52)*specular*1.4;",
+  "    vec3 surface=mix(ring,crystal,coreMask);",
+  "    color=mix(color,surface,0.985);",
   "  }",
-  "  float vignette=1.0-smoothstep(0.42,1.55,length(uv));",
-  "  color*=0.66+0.34*vignette;",
+  "  float aura=exp(-length(uv-vec2(0.18,0.02))*2.15);",
+  "  color+=vec3(0.012,0.018,0.07)*aura;",
+  "  float vignette=1.0-smoothstep(0.48,1.62,length(uv));",
+  "  color*=0.62+0.38*vignette;",
   "  gl_FragColor=vec4(color,1.0);",
   "}",
 ].join("\n");
@@ -162,7 +196,7 @@ function AnimatedWallpaper({ variant, className = "" }: { variant: WallpaperVari
     const vertexShader = compileShader(gl.VERTEX_SHADER, VERTEX_SHADER);
     const fragmentShader = compileShader(
       gl.FRAGMENT_SHADER,
-      variant === "hero" ? HERO_FRAGMENT_SHADER : WIREFRAME_FRAGMENT_SHADER,
+      variant === "mystery" ? MYSTERY_FRAGMENT_SHADER : WIREFRAME_FRAGMENT_SHADER,
     );
     if (!vertexShader || !fragmentShader) return;
 
@@ -265,12 +299,12 @@ function AnimatedWallpaper({ variant, className = "" }: { variant: WallpaperVari
 export function HeroShaderBackground() {
   return (
     <div className="hero-shader-background" aria-hidden="true">
-      <AnimatedWallpaper variant="hero" />
+      <AnimatedWallpaper variant="wireframe" className="hero-wireframe-wallpaper" />
       <span className="hero-shader-vignette" />
     </div>
   );
 }
 
 export function WireframeBackground() {
-  return <AnimatedWallpaper variant="wireframe" className="section-wireframe-wallpaper" />;
+  return <AnimatedWallpaper variant="mystery" className="section-mystery-wallpaper" />;
 }
