@@ -425,7 +425,7 @@
     radial-gradient(ellipse 36% 28% at 52% 78%, rgba(100, 108, 126, .3), transparent 82%),
     radial-gradient(ellipse 28% 24% at 88% 84%, rgba(53, 67, 88, .26), transparent 78%);
   transform: translate3d(-2%, 0, 0) scale(1.04);
-  animation: section-fog-fallback-drift 34s ease-in-out infinite alternate;
+  animation: section-fog-fallback-drift 22s ease-in-out infinite alternate;
 }
 .site-shell .intro-story-section .section-fog-wallpaper {
   opacity: 1;
@@ -436,9 +436,9 @@
     linear-gradient(180deg, rgba(2, 6, 15, .08), transparent 26%, transparent 74%, rgba(2, 6, 15, .2));
 }
 @keyframes section-fog-fallback-drift {
-  0% { transform: translate3d(-2%, -1%, 0) scale(1.02); }
-  50% { transform: translate3d(1%, 1.5%, 0) scale(1.06); }
-  100% { transform: translate3d(2%, -1%, 0) scale(1.03); }
+  0% { transform: translate3d(-4%, -2%, 0) scale(1.02); }
+  50% { transform: translate3d(2%, 3%, 0) scale(1.08); }
+  100% { transform: translate3d(4%, -2%, 0) scale(1.04); }
 }
 @media (max-width: 800px) {
   .site-shell .intro-story-section .intro-story-ambient::before { opacity: .82; }
