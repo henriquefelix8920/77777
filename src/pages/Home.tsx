@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
 import { waLink } from "../config";
+import "../styles/capability-bento.css";
 import { LiquidMetalButton } from "../components/ui/liquid-metal-button";
 import SiteFrame from "../components/SiteFrame";
 
