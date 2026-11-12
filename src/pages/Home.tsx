@@ -104,15 +104,14 @@ export default function HomePage() {
 
     <section className="intro-section intro-story-section" id="abordagem">
       <div className="intro-ambient-bg intro-story-ambient" aria-hidden="true">
-        <span className="intro-topography-lines" />
-        <span className="intro-topography-glow" />
+        <WireframeBackground />
+        <span className="intro-wallpaper-vignette" />
       </div>
       <div className="section-wrap intro-story-wrap">
         <div className="section-index reveal-left">A ABORDAGEM / 01—03</div>
         <div className="intro-story-layout">
           <div className="intro-story-visual">
             <div className="story-visual-frame">
-              <WireframeBackground />
               <div className="story-visual-top"><span>V/R — THINKING SYSTEMS</span><span>LIVE SIGNAL <i /></span></div>
                <div className="story-core"><span>IDEIA</span><b>→</b><strong>IMPACTO</strong></div>
               <div className="story-visual-coordinates">23° 32' 11.4" S<br/>46° 38' 05.2" W</div>
