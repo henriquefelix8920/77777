@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowDown, ArrowUpRight, Check, Copy, Terminal, Zap } from "lucide-react";
 import "../styles/high-tech-hero.css";
+import { HeroShaderBackground } from "./VisualBackgrounds";
 
 type HighTechHeroProps = {
   contact: string;
@@ -137,18 +138,7 @@ export default function HighTechHero({ contact }: HighTechHeroProps) {
   return (
     <section id="inicio" className="hightech-hero">
       <div className="hightech-world" aria-hidden="true">
-        <span className="hightech-aurora-cloud hightech-aurora-cloud-a" />
-        <span className="hightech-aurora-cloud hightech-aurora-cloud-b" />
-        <span className="hightech-aurora-cloud hightech-aurora-cloud-c" />
-        <span className="hightech-energy-sweep" />
-        <span className="hightech-world-particles" />
-        <span className="hightech-grid" />
-        <span className="hightech-horizon" />
-        <span className="hightech-orbit hightech-orbit-one" />
-        <span className="hightech-orbit hightech-orbit-two" />
-        <span className="hightech-scanline" />
-        <span className="hightech-node hightech-node-one" />
-        <span className="hightech-node hightech-node-two" />
+        <HeroShaderBackground />
       </div>
 
       <div className="hightech-hero-inner">
