@@ -1,0 +1,67 @@
+/* 21st.dev Container Scroll Animation-inspired 3D service experience. */
+.cap3d-section{position:relative;isolation:isolate;overflow:clip;padding:clamp(84px,10vw,150px) 0 50px;background:#090609;color:#fff}
+.cap3d-backdrop{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse at 72% 35%,rgba(139,0,24,.28),transparent 44%),linear-gradient(145deg,#090609,#17030a 55%,#090609)}
+.cap3d-backdrop-grid{position:absolute;inset:-20%;opacity:.22;background-image:linear-gradient(rgba(255,255,255,.075) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.075) 1px,transparent 1px);background-size:66px 66px;transform:perspective(800px) rotateX(62deg) scale(1.5);transform-origin:center bottom;mask-image:linear-gradient(transparent,#000 25%,#000 75%,transparent)}
+.cap3d-backdrop-glow{position:absolute;width:48vw;aspect-ratio:1;border-radius:50%;filter:blur(55px);opacity:.28}
+.cap3d-backdrop-glow-a{background:#a00025;top:12%;right:-15%;animation:cap3d-glow-drift 13s ease-in-out infinite alternate}
+.cap3d-backdrop-glow-b{background:#ff6500;bottom:12%;left:-22%;opacity:.15;animation:cap3d-glow-drift 17s ease-in-out infinite alternate-reverse}
+.cap3d-backdrop-ring{position:absolute;width:min(76vw,900px);aspect-ratio:1;border:1px solid rgba(255,101,0,.12);border-radius:50%;right:-24%;top:24%;box-shadow:0 0 100px rgba(255,101,0,.08),inset 0 0 100px rgba(139,0,24,.08);animation:cap3d-ring-turn 50s linear infinite}
+.cap3d-shell{position:relative;width:min(1180px,calc(100% - 48px));margin:auto}
+.cap3d-intro{min-height:52vh;display:flex;flex-direction:column;justify-content:center;padding:10px 0 58px}
+.cap3d-intro-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(220px,.55fr);align-items:end;gap:7vw;margin-top:40px}
+.cap3d-intro .kicker{color:#ff8a45;font-size:10px;letter-spacing:.2em}
+.cap3d-intro h2{max-width:850px;margin:20px 0 0;font:600 clamp(52px,8.8vw,112px)/.88 "Space Grotesk",sans-serif;letter-spacing:-.075em;text-transform:uppercase}
+.cap3d-intro h2 em{color:#ff6b2c;font-style:normal}
+.cap3d-intro-note{max-width:330px;margin:0 0 8px;color:rgba(255,255,255,.66);font-size:14px;line-height:1.9}
+.cap3d-scroll-cue{display:flex;align-items:center;gap:13px;margin-top:54px;color:rgba(255,255,255,.52);font-size:9px;letter-spacing:.18em}
+.cap3d-scroll-cue span{width:42px;height:1px;background:#ff6500;box-shadow:0 0 15px #ff6500}
+.cap3d-scroll-cue b{color:#ff8a45;font-size:16px;font-weight:400;animation:cap3d-cue-bob 1.5s ease-in-out infinite}
+.cap3d-panels{position:relative;padding-bottom:18vh;perspective:1400px}
+.cap3d-panel{--panel-index:0;position:sticky;top:11vh;min-height:min(570px,72vh);margin:0 auto 16vh;overflow:hidden;isolation:isolate;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;padding:clamp(28px,5vw,70px);border:1px solid rgba(255,255,255,.16);background:linear-gradient(120deg,rgba(32,8,16,.96),rgba(12,8,13,.91));box-shadow:0 35px 100px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.08);transform-origin:50% 0;transform-style:preserve-3d;backface-visibility:hidden;z-index:calc(5 + var(--panel-index));animation:cap3d-scroll-tilt linear both;animation-timeline:view();animation-range:entry 0% cover 45%;transition:border-color .5s ease,box-shadow .5s ease}
+.cap3d-panel:nth-child(1){--panel-index:0}.cap3d-panel:nth-child(2){--panel-index:1}.cap3d-panel:nth-child(3){--panel-index:2}.cap3d-panel:nth-child(4){--panel-index:3}
+.cap3d-panel:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 72% 48%,rgba(255,101,0,.2),transparent 38%),linear-gradient(115deg,rgba(139,0,24,.18),transparent 58%)}
+.cap3d-panel:after{content:"";position:absolute;inset:12px;border:1px solid rgba(255,255,255,.045);pointer-events:none}
+.cap3d-panel-top{position:absolute;top:26px;left:clamp(28px,5vw,70px);right:clamp(28px,5vw,70px);display:flex;justify-content:space-between;color:#ff8a45;font-size:9px;letter-spacing:.18em}
+.cap3d-panel-top span:first-child{color:rgba(255,255,255,.66)}
+.cap3d-panel-copy{position:relative;z-index:3;max-width:520px;padding-top:40px;transform:translateZ(70px)}
+.cap3d-panel-detail{color:#ff8a45;font-size:9px;letter-spacing:.2em}
+.cap3d-panel-copy h3{margin:22px 0 18px;color:#fff;font:600 clamp(36px,5.3vw,70px)/.92 "Space Grotesk",sans-serif;letter-spacing:-.065em;text-transform:uppercase}
+.cap3d-panel-copy p{max-width:420px;margin:0;color:rgba(255,255,255,.68);font-size:14px;line-height:1.85}
+.cap3d-panel-icon{display:grid;place-items:center;width:46px;height:46px;margin-top:30px;border:1px solid rgba(255,101,0,.55);border-radius:50%;color:#ff8a45;box-shadow:0 0 28px rgba(255,101,0,.12)}
+.cap3d-panel-watermark{position:absolute;right:3%;bottom:-18%;font:700 clamp(180px,31vw,410px)/.8 "Space Grotesk",sans-serif;letter-spacing:-.1em;color:rgba(255,255,255,.025);pointer-events:none}
+.cap3d-panel-edge{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,101,0,.12) 50%,transparent 65%);transform:translateX(-100%);animation:cap3d-edge-scan 6s ease-in-out infinite}
+.cap3d-panel-arrow{position:absolute;right:clamp(28px,5vw,70px);bottom:clamp(28px,4vw,54px);color:#ff8a45;transform:translateZ(55px)}
+.cap3d-geometry{position:relative;z-index:2;min-height:390px;display:grid;place-items:center;perspective:900px;transform:translateZ(90px)}
+.cap3d-object{position:relative;width:145px;height:145px;transform-style:preserve-3d;transform:rotateX(-28deg) rotateY(38deg);animation:cap3d-object-turn 14s linear infinite}
+.cap3d-object-face{position:absolute;inset:0;border:1px solid rgba(255,255,255,.55);background:linear-gradient(135deg,rgba(255,101,0,.42),rgba(139,0,24,.38));box-shadow:inset 0 0 35px rgba(255,101,0,.18),0 0 24px rgba(255,101,0,.12);backface-visibility:visible}
+.cap3d-face-front{transform:translateZ(72px)}.cap3d-face-back{transform:rotateY(180deg) translateZ(72px)}.cap3d-face-left{transform:rotateY(-90deg) translateZ(72px)}.cap3d-face-right{transform:rotateY(90deg) translateZ(72px)}.cap3d-face-top{transform:rotateX(90deg) translateZ(72px)}.cap3d-face-bottom{transform:rotateX(-90deg) translateZ(72px)}
+.cap3d-object-core{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font:600 22px "Space Grotesk",sans-serif;letter-spacing:.08em;text-shadow:0 0 20px #ff6500;transform:translateZ(74px)}
+.cap3d-orbit{position:absolute;width:280px;height:115px;border:1px solid rgba(255,101,0,.6);border-radius:50%;transform:rotateX(68deg) rotateZ(-22deg);animation:cap3d-orbit-turn 10s linear infinite}
+.cap3d-orbit-two{width:340px;height:150px;transform:rotateX(68deg) rotateZ(54deg);border-color:rgba(255,255,255,.22);animation-duration:16s;animation-direction:reverse}
+.cap3d-orbit-three{width:210px;height:210px;border-color:rgba(255,101,0,.18);transform:rotateY(68deg) rotateZ(12deg);animation-duration:22s}
+.cap3d-particle{position:absolute;width:7px;height:7px;border-radius:50%;background:#ff8a45;box-shadow:0 0 20px 4px rgba(255,101,0,.5);animation:cap3d-particle-float 4s ease-in-out infinite}
+.cap3d-particle-a{top:20%;left:20%}.cap3d-particle-b{right:16%;top:34%;animation-delay:-1.2s}.cap3d-particle-c{bottom:18%;left:34%;animation-delay:-2.1s}
+.cap3d-coordinate{position:absolute;right:0;bottom:12%;color:rgba(255,255,255,.3);font:9px monospace;letter-spacing:.2em}
+.cap3d-geometry-flow .cap3d-object{width:120px;height:120px;animation-duration:9s;transform:rotateX(55deg) rotateY(35deg)}
+.cap3d-geometry-flow .cap3d-orbit{width:360px;transform:rotateX(72deg) rotateZ(0)}
+.cap3d-geometry-ai .cap3d-object{width:126px;height:126px;border-radius:50%;animation-duration:8s}
+.cap3d-geometry-ai .cap3d-object-face{border-radius:50%;background:radial-gradient(circle at 35% 28%,rgba(255,153,90,.85),rgba(139,0,24,.4) 62%,transparent 70%)}
+.cap3d-geometry-ai .cap3d-face-front{transform:translateZ(62px)}.cap3d-geometry-ai .cap3d-face-back{transform:rotateY(180deg) translateZ(62px)}.cap3d-geometry-ai .cap3d-face-left{transform:rotateY(-90deg) translateZ(62px)}.cap3d-geometry-ai .cap3d-face-right{transform:rotateY(90deg) translateZ(62px)}.cap3d-geometry-ai .cap3d-face-top{transform:rotateX(90deg) translateZ(62px)}.cap3d-geometry-ai .cap3d-face-bottom{transform:rotateX(-90deg) translateZ(62px)}
+.cap3d-geometry-ai .cap3d-object-core{transform:translateZ(64px)}
+.cap3d-geometry-web .cap3d-object{width:190px;height:120px;animation-duration:18s;transform:rotateX(-22deg) rotateY(38deg)}
+.cap3d-geometry-web .cap3d-object-face{background:linear-gradient(135deg,rgba(255,101,0,.28),rgba(255,255,255,.08))}
+.cap3d-geometry-web .cap3d-face-front{transform:translateZ(12px)}.cap3d-geometry-web .cap3d-face-back{transform:rotateY(180deg) translateZ(12px)}.cap3d-geometry-web .cap3d-face-left{transform:rotateY(-90deg) translateZ(95px)}.cap3d-geometry-web .cap3d-face-right{transform:rotateY(90deg) translateZ(95px)}.cap3d-geometry-web .cap3d-face-top{transform:rotateX(90deg) translateZ(60px)}.cap3d-geometry-web .cap3d-face-bottom{transform:rotateX(-90deg) translateZ(60px)}
+.cap3d-geometry-web .cap3d-object-core{transform:translateZ(15px)}
+.cap3d-footer{display:flex;justify-content:space-between;padding:20px 0;border-top:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.4);font-size:9px;letter-spacing:.18em}
+@keyframes cap3d-scroll-tilt{0%{transform:rotateX(12deg) scale(.94) translateY(60px);opacity:.55}45%{transform:rotateX(0) scale(1) translateY(0);opacity:1}100%{transform:rotateX(-8deg) scale(.96) translateY(-35px);opacity:.82}}
+@keyframes cap3d-object-turn{to{transform:rotateX(-28deg) rotateY(398deg)}}
+@keyframes cap3d-orbit-turn{to{rotate:360deg}}
+@keyframes cap3d-particle-float{50%{transform:translate3d(12px,-20px,35px);opacity:.45}}
+@keyframes cap3d-edge-scan{0%,25%{transform:translateX(-100%)}65%,100%{transform:translateX(100%)}}
+@keyframes cap3d-glow-drift{to{transform:translate3d(8vw,-5vh,0) scale(1.18)}}
+@keyframes cap3d-ring-turn{to{transform:rotate(360deg)}}
+@keyframes cap3d-cue-bob{50%{transform:translateY(5px)}}
+@supports not (animation-timeline:view()){.cap3d-panel{animation:cap3d-panel-enter .9s cubic-bezier(.2,.8,.2,1) both}.cap3d-panel.cap3d-in-view{animation-name:cap3d-panel-enter}}
+@keyframes cap3d-panel-enter{from{opacity:0;transform:perspective(1200px) rotateX(18deg) translateY(70px)}to{opacity:1;transform:perspective(1200px) rotateX(0) translateY(0)}}
+@media(max-width:760px){.cap3d-section{padding:72px 0 32px}.cap3d-shell{width:calc(100% - 34px)}.cap3d-intro{min-height:0;padding:0 0 45px}.cap3d-intro-grid{grid-template-columns:1fr;gap:22px;margin-top:30px}.cap3d-intro h2{font-size:clamp(43px,12vw,72px)}.cap3d-intro-note{max-width:34em;font-size:13px}.cap3d-scroll-cue{margin-top:30px}.cap3d-panel{top:9vh;min-height:590px;margin-bottom:12vh;padding:28px 22px;grid-template-columns:1fr;grid-template-rows:1fr auto}.cap3d-panel-top{top:20px;left:22px;right:22px}.cap3d-geometry{grid-row:1;min-height:290px;transform:translateZ(40px) scale(.78)}.cap3d-panel-copy{grid-row:2;padding:0 0 35px;transform:none}.cap3d-panel-copy h3{font-size:clamp(34px,9vw,54px);margin:15px 0}.cap3d-panel-copy p{font-size:13px}.cap3d-panel-icon{display:none}.cap3d-panel-arrow{right:22px;bottom:24px}.cap3d-panel-watermark{font-size:210px;bottom:-7%}.cap3d-panel:nth-child(n){animation-range:entry 0% cover 35%}.cap3d-footer{font-size:7px;gap:12px}.cap3d-orbit{width:250px}.cap3d-orbit-two{width:290px}}
+@media(prefers-reduced-motion:reduce){.cap3d-backdrop-glow,.cap3d-backdrop-ring,.cap3d-scroll-cue b,.cap3d-object,.cap3d-orbit,.cap3d-particle,.cap3d-panel-edge{animation:none!important}.cap3d-panel{animation:none!important;transform:none!important}.cap3d-panel-edge{display:none}}
