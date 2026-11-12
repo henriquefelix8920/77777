@@ -21,7 +21,6 @@ export default function HomePage() {
   return <SiteFrame>
     <section id="inicio" className="hero">
       <Film src={1} className="hero-film-bg" />
-      <Film src={2} className="hero-film-orbit" />
       <div className="hero-inner">
         <p className="eyebrow"><span className="eyebrow-line" /> TECNOLOGIA COM INTENÇÃO</p>
         <h1>Seu negócio tem desafios.<br /><span>Eu construo caminhos.</span></h1>
