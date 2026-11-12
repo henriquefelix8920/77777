@@ -377,3 +377,207 @@
     transform: none !important;
   }
 }
+
+ 
+/* Section 2 — warm, organic ambient motion instead of the old video. */
+.intro-section {
+  background: #fff;
+}
+.intro-ambient-bg {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 78% 54%, rgba(255,101,0,.075), transparent 42%),
+    linear-gradient(112deg, rgba(139,0,24,.025), transparent 55%);
+}
+.intro-ambient-bg:before {
+  content: "";
+  position: absolute;
+  width: min(76vw, 980px);
+  aspect-ratio: 1;
+  right: -17%;
+  top: -44%;
+  border-radius: 50%;
+  background: conic-gradient(from 35deg, transparent 0 12%, rgba(139,0,24,.12) 22%, rgba(255,101,0,.17) 34%, rgba(139,0,24,.035) 49%, transparent 68% 100%);
+  filter: blur(38px);
+  opacity: .78;
+  animation: intro-aura-rotate 34s linear infinite;
+}
+.intro-ambient-bg:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(139,0,24,.19) .7px, transparent .9px);
+  background-size: 29px 29px;
+  opacity: .18;
+  mask-image: linear-gradient(90deg, transparent 20%, #000 78%);
+  animation: intro-particle-drift 26s linear infinite;
+}
+.intro-glow {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  filter: blur(3px);
+  will-change: transform;
+}
+.intro-glow-a {
+  width: clamp(220px, 35vw, 510px);
+  aspect-ratio: 1;
+  right: 5%;
+  bottom: -36%;
+  border: 1px solid rgba(255,101,0,.22);
+  box-shadow: inset 0 0 80px rgba(255,101,0,.055), 0 0 90px rgba(255,101,0,.07);
+  animation: intro-glow-float 16s ease-in-out infinite alternate;
+}
+.intro-glow-b {
+  width: clamp(150px, 22vw, 320px);
+  aspect-ratio: 1;
+  right: 24%;
+  top: 8%;
+  background: radial-gradient(circle, rgba(139,0,24,.09), rgba(255,101,0,.055) 44%, transparent 72%);
+  animation: intro-glow-float 21s ease-in-out infinite alternate-reverse;
+}
+.intro-ambient-grid {
+  position: absolute;
+  width: 54%;
+  height: 100%;
+  right: 0;
+  top: 0;
+  background: linear-gradient(135deg, transparent, rgba(139,0,24,.025));
+  clip-path: polygon(40% 0,100% 0,100% 100%,0 100%);
+}
+@keyframes intro-aura-rotate { to { rotate: 360deg; } }
+@keyframes intro-particle-drift { to { background-position: 58px -58px; } }
+@keyframes intro-glow-float {
+  0% { transform: translate3d(0,0,0) scale(.94); }
+  100% { transform: translate3d(-32px,-24px,0) scale(1.08); }
+}
+
+/* Section 4 — animated circuit / data-network atmosphere in the brand colors. */
+.process-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #fff;
+}
+.process-tech-bg {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 86% 38%, rgba(255,101,0,.09), transparent 42%),
+    radial-gradient(ellipse at 70% 78%, rgba(139,0,24,.055), transparent 48%);
+}
+.process-tech-bg:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(139,0,24,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,0,24,.055) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(90deg, transparent 16%, #000 100%);
+  animation: tech-grid-drift 22s linear infinite;
+}
+.process-tech-bg:after {
+  content: "";
+  position: absolute;
+  width: min(64vw, 850px);
+  aspect-ratio: 1;
+  right: -17%;
+  top: -20%;
+  border-radius: 50%;
+  border: 1px solid rgba(255,101,0,.23);
+  box-shadow: 0 0 0 28px rgba(139,0,24,.018), 0 0 0 76px rgba(255,101,0,.025), inset 0 0 70px rgba(139,0,24,.025);
+  animation: tech-orbit-spin 48s linear infinite;
+}
+.process-tech-grid {
+  position: absolute;
+  width: 55%;
+  height: 100%;
+  right: 0;
+  top: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,101,0,.035));
+}
+.process-tech-orbit {
+  position: absolute;
+  right: 7%;
+  top: 13%;
+  width: min(45vw, 600px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(139,0,24,.12);
+  border-radius: 50%;
+  transform: rotateX(64deg) rotate(-22deg);
+  box-shadow: 0 0 0 20px rgba(255,101,0,.018), 0 0 0 44px rgba(139,0,24,.014);
+}
+.process-tech-orbit-b {
+  right: 18%;
+  top: 25%;
+  width: min(27vw, 360px);
+  border-color: rgba(255,101,0,.25);
+  transform: rotateX(64deg) rotate(35deg);
+  animation: tech-orbit-spin 30s linear infinite reverse;
+}
+.process-tech-circuit {
+  position: absolute;
+  right: -2%;
+  top: 0;
+  width: min(74%, 1000px);
+  height: 100%;
+  opacity: .5;
+  overflow: visible;
+}
+.tech-trace {
+  stroke: #8b0018;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 5 11;
+  opacity: .62;
+  animation: tech-circuit-flow 18s linear infinite;
+}
+.tech-trace-b { stroke: #ff6500; animation-duration: 22s; animation-direction: reverse; }
+.tech-trace-c { stroke: #ff6500; animation-duration: 26s; opacity: .52; }
+.tech-trace-d { stroke: #8b0018; animation-duration: 20s; opacity: .45; }
+.tech-node {
+  fill: #ff6500;
+  stroke: #fff;
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: tech-node-pulse 3.2s ease-in-out infinite;
+}
+.tech-node-delay { animation-delay: 1.3s; fill: #8b0018; }
+.process-card {
+  background: rgba(255,255,255,.84);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.process-card:hover { background: rgba(255,250,247,.94); }
+@keyframes tech-circuit-flow { to { stroke-dashoffset: -160; } }
+@keyframes tech-node-pulse {
+  0%, 100% { opacity: .72; transform: scale(.82); }
+  50% { opacity: 1; transform: scale(1.28); }
+}
+@keyframes tech-grid-drift { to { background-position: 48px 48px; } }
+@keyframes tech-orbit-spin { to { rotate: 360deg; } }
+
+@media (max-width: 760px) {
+  .intro-ambient-bg:before { width: 110vw; right: -50%; top: -18%; filter: blur(30px); }
+  .intro-ambient-bg:after { opacity: .12; }
+  .process-tech-bg:before { background-size: 34px 34px; opacity: .7; }
+  .process-tech-circuit { right: -46%; width: 130%; opacity: .32; }
+  .process-tech-orbit { right: -25%; top: 12%; width: 80vw; }
+  .process-tech-orbit-b { right: -4%; top: 28%; width: 48vw; }
+  .process-card { background: rgba(255,255,255,.9); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro-ambient-bg:before, .intro-ambient-bg:after, .intro-glow,
+  .process-tech-bg:before, .process-tech-bg:after, .process-tech-orbit-b,
+  .tech-trace, .tech-node { animation: none !important; }
+}
