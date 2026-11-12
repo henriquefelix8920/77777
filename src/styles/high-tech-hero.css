@@ -869,3 +869,39 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-shader-background { opacity: .5; }
 }
+
+
+/* Hero: cinematic animated 3D orbital wallpaper across the full section. */
+.hero-shader-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 1;
+  pointer-events: none;
+  background: #020611;
+}
+.hero-shader-background .animated-wallpaper {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: .88;
+}
+.hero-shader-background .hero-shader-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(2, 6, 17, .72) 0%, rgba(2, 6, 17, .22) 54%, rgba(2, 6, 17, .34) 100%),
+    linear-gradient(0deg, rgba(2, 6, 17, .42), transparent 38%, rgba(2, 6, 17, .12));
+}
+@media (max-width: 800px) {
+  .hero-shader-background .animated-wallpaper { opacity: .78; }
+  .hero-shader-background .hero-shader-vignette {
+    background:
+      linear-gradient(90deg, rgba(2, 6, 17, .58), rgba(2, 6, 17, .24)),
+      linear-gradient(0deg, rgba(2, 6, 17, .48), transparent 54%, rgba(2, 6, 17, .18));
+  }
+}
