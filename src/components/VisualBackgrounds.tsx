@@ -267,5 +267,17 @@ export function HeroShaderBackground() {
 }
 
 export function WireframeBackground() {
-  return <AnimatedWallpaper variant="fog" className="section-fog-wallpaper" />;
+  return (
+    <div className="section-depth-wallpaper" aria-hidden="true">
+      <div className="section-depth-floor" />
+      <div className="section-depth-halo section-depth-halo--left" />
+      <div className="section-depth-halo section-depth-halo--right" />
+      <div className="section-depth-orbit section-depth-orbit--back" />
+      <div className="section-depth-orbit section-depth-orbit--middle" />
+      <div className="section-depth-orbit section-depth-orbit--front" />
+      <div className="section-depth-ribbon section-depth-ribbon--blue" />
+      <div className="section-depth-ribbon section-depth-ribbon--silver" />
+      <div className="section-depth-ribbon section-depth-ribbon--amber" />
+    </div>
+  );
 }
