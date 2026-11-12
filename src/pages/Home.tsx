@@ -151,7 +151,7 @@ export default function HomePage() {
 
   return <SiteFrame>
     <section id="inicio" className="hero hero-prisma">
-      <div className="hero-scroll-video" aria-hidden="true"><video src="/club-videos/video1.mp4" autoPlay muted loop playsInline preload="auto" /></div>
+      <Film src={5} className="hero-film-bg" priority />
       <div className="hero-inner">
         <p className="eyebrow"><span className="eyebrow-line" /> TECNOLOGIA COM INTENÇÃO</p>
         <h1 className="hero-title title-motion-split" data-title-motion aria-label="Seu negócio tem desafios. Eu construo caminhos.">
@@ -172,7 +172,11 @@ export default function HomePage() {
     </section>
 
     <section className="intro-section section-wrap" id="abordagem">
-      <Film src={3} className="intro-film" />
+      <div className="intro-ambient-bg" aria-hidden="true">
+        <span className="intro-glow intro-glow-a" />
+        <span className="intro-glow intro-glow-b" />
+        <span className="intro-ambient-grid" />
+      </div>
       <span className="floating-word intro-float" aria-hidden="true">ENTENDER</span>
       <div className="section-index reveal-left">A ABORDAGEM</div>
       <div className="intro-copy">
@@ -218,7 +222,22 @@ export default function HomePage() {
     </section>
 
     <section className="process-section" id="processo">
-      <Film src={5} className="process-film" />
+      <div className="process-tech-bg" aria-hidden="true">
+        <span className="process-tech-grid" />
+        <span className="process-tech-orbit process-tech-orbit-a" />
+        <span className="process-tech-orbit process-tech-orbit-b" />
+        <svg className="process-tech-circuit" viewBox="0 0 900 620" fill="none" preserveAspectRatio="xMidYMid slice">
+          <path className="tech-trace tech-trace-a" d="M900 90H760V170H620V245H500V320H360" />
+          <path className="tech-trace tech-trace-b" d="M900 410H790V350H700V285H590V210H470V145H380" />
+          <path className="tech-trace tech-trace-c" d="M750 620V520H650V455H540V390H430" />
+          <path className="tech-trace tech-trace-d" d="M900 545H830V485H760V430H680" />
+          <circle className="tech-node" cx="760" cy="170" r="6" />
+          <circle className="tech-node tech-node-delay" cx="500" cy="320" r="5" />
+          <circle className="tech-node" cx="700" cy="285" r="6" />
+          <circle className="tech-node tech-node-delay" cx="540" cy="390" r="5" />
+          <circle className="tech-node" cx="760" cy="430" r="5" />
+        </svg>
+      </div>
       <div className="process-wrap">
         <div className="section-index reveal-right">DO PROBLEMA À SOLUÇÃO</div>
         <div className="process-heading">
