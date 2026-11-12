@@ -715,3 +715,128 @@
   .hightech-orbit-two { width: 104vw; height: 42vw; }
   .hightech-horizon { width: 130vw; height: 90vw; opacity: .64; }
 }
+
+
+/* Explicit animated background layers, deliberately stronger than the former ring effect. */
+.hightech-hero {
+  position: relative;
+  background: #030711 !important;
+}
+.hightech-world {
+  z-index: 0;
+  opacity: 1;
+}
+.hightech-horizon {
+  display: none !important;
+}
+.hightech-aurora-cloud {
+  position: absolute;
+  display: block;
+  z-index: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+}
+.hightech-aurora-cloud-a {
+  width: min(68vw, 940px);
+  height: min(48vw, 620px);
+  left: 28%;
+  top: 0;
+  opacity: .82;
+  filter: blur(42px);
+  background: radial-gradient(ellipse at center, rgba(34, 109, 255, .56) 0%, rgba(39, 150, 255, .24) 34%, rgba(48, 230, 226, .12) 52%, transparent 74%);
+  animation: hero-cloud-a 12s ease-in-out infinite alternate;
+}
+.hightech-aurora-cloud-b {
+  width: min(56vw, 760px);
+  height: min(42vw, 540px);
+  right: -12%;
+  top: 24%;
+  opacity: .72;
+  filter: blur(34px);
+  background: radial-gradient(ellipse at center, rgba(0, 220, 226, .42) 0%, rgba(41, 111, 255, .22) 42%, transparent 74%);
+  animation: hero-cloud-b 15s ease-in-out infinite alternate;
+}
+.hightech-aurora-cloud-c {
+  width: min(48vw, 650px);
+  height: min(34vw, 450px);
+  left: 8%;
+  bottom: -18%;
+  opacity: .58;
+  filter: blur(40px);
+  background: radial-gradient(ellipse at center, rgba(105, 69, 255, .32) 0%, rgba(23, 107, 255, .17) 48%, transparent 75%);
+  animation: hero-cloud-c 17s ease-in-out infinite alternate;
+}
+.hightech-world-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: .55;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(162, 231, 255, .95) 1px, transparent 1.7px),
+    radial-gradient(circle, rgba(91, 205, 255, .62) .8px, transparent 1.6px);
+  background-size: 73px 73px, 119px 119px;
+  background-position: 0 0, 28px 44px;
+  mask-image: radial-gradient(ellipse at 68% 48%, #000 4%, rgba(0,0,0,.9) 46%, transparent 84%);
+  animation: hero-particle-flow 22s linear infinite;
+}
+.hightech-energy-sweep {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  left: -25%;
+  top: 51%;
+  width: 150%;
+  height: 2px;
+  opacity: .7;
+  pointer-events: none;
+  transform: rotate(-17deg);
+  background: linear-gradient(90deg, transparent 0%, rgba(58, 124, 255, .08) 28%, rgba(91, 241, 245, .85) 50%, rgba(98, 123, 255, .22) 63%, transparent 100%);
+  box-shadow: 0 0 18px rgba(68, 211, 255, .42), 0 0 54px rgba(67, 104, 255, .2);
+  animation: hero-energy-travel 8s ease-in-out infinite;
+}
+.hightech-grid {
+  z-index: 0;
+  opacity: .24;
+}
+.hightech-orbit-one,
+.hightech-orbit-two {
+  z-index: 1;
+}
+.hightech-scanline {
+  z-index: 1;
+}
+@keyframes hero-cloud-a {
+  from { transform: translate3d(-7%, -3%, 0) scale(.88) rotate(-8deg); opacity: .58; }
+  to { transform: translate3d(8%, 7%, 0) scale(1.12) rotate(9deg); opacity: .95; }
+}
+@keyframes hero-cloud-b {
+  from { transform: translate3d(8%, -8%, 0) scale(.9); opacity: .48; }
+  to { transform: translate3d(-10%, 9%, 0) scale(1.14); opacity: .88; }
+}
+@keyframes hero-cloud-c {
+  from { transform: translate3d(-4%, 7%, 0) scale(.92); opacity: .36; }
+  to { transform: translate3d(8%, -8%, 0) scale(1.15); opacity: .72; }
+}
+@keyframes hero-particle-flow {
+  from { background-position: 0 0, 28px 44px; }
+  to { background-position: 146px 73px, -91px 163px; }
+}
+@keyframes hero-energy-travel {
+  0%, 100% { transform: translate3d(-12%, 24px, 0) rotate(-17deg); opacity: .12; }
+  45%, 65% { transform: translate3d(12%, -18px, 0) rotate(-17deg); opacity: .8; }
+}
+@media (max-width: 800px) {
+  .hightech-aurora-cloud-a { width: 112vw; height: 92vw; left: 4%; top: 8%; filter: blur(35px); opacity: .65; }
+  .hightech-aurora-cloud-b { width: 96vw; height: 78vw; right: -34%; top: 34%; filter: blur(32px); opacity: .58; }
+  .hightech-aurora-cloud-c { width: 88vw; height: 64vw; left: -22%; bottom: 2%; opacity: .42; }
+  .hightech-world-particles { opacity: .34; }
+  .hightech-energy-sweep { top: 38%; opacity: .48; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hightech-aurora-cloud,
+  .hightech-world-particles,
+  .hightech-energy-sweep { animation: none !important; }
+}
