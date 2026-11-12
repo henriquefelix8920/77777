@@ -61,3 +61,137 @@
  .tile-arrow{right:18px;bottom:17px}
 }
 @media(prefers-reduced-motion:reduce){.capability-tile,.tile-arrow,.capability-tile:before{transition:none}}
+
+/* Equal editorial grid: four cards, one rhythm, no oversized tile. */
+.capability-bento {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: none;
+  grid-auto-rows: minmax(350px, 1fr);
+  align-items: stretch;
+  gap: 16px;
+}
+.capability-tile,
+.capability-tile-1 {
+  grid-column: auto;
+  grid-row: auto;
+  min-height: 350px;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(130px, 1fr) auto;
+  align-content: stretch;
+  align-items: center;
+  gap: 12px;
+  padding: clamp(24px, 3vw, 38px);
+}
+.capability-tile .tile-meta,
+.capability-tile-1 .tile-meta { grid-column: 1; grid-row: 1; align-self: start; }
+.capability-tile .tile-visual,
+.capability-tile-1 .tile-visual {
+  grid-column: 1;
+  grid-row: 2;
+  width: 100%;
+  min-height: 150px;
+  max-width: 340px;
+  justify-self: center;
+  align-self: center;
+}
+.capability-tile .tile-copy,
+.capability-tile-1 .tile-copy {
+  grid-column: 1;
+  grid-row: 3;
+  align-self: end;
+  max-width: 520px;
+  padding-right: 22px;
+}
+.capability-tile .tile-copy h3 { max-width: 16ch; }
+.capability-tile .tile-arrow { right: 24px; bottom: 24px; }
+.capability-tile-1 .tile-visual-systems { min-height: 160px; }
+@media (min-width: 1100px) {
+  .capability-bento { grid-auto-rows: minmax(370px, 1fr); }
+  .capability-tile { min-height: 370px; }
+}
+@media (max-width: 760px) {
+  .capability-bento { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: minmax(320px, 1fr); gap: 12px; }
+  .capability-tile, .capability-tile-1 {
+    grid-column: auto; grid-row: auto; min-height: 320px; padding: 22px 20px 28px;
+    grid-template-rows: auto minmax(115px, 1fr) auto;
+  }
+  .capability-tile .tile-meta, .capability-tile-1 .tile-meta { grid-column: 1; grid-row: 1; }
+  .capability-tile .tile-visual, .capability-tile-1 .tile-visual { grid-column: 1; grid-row: 2; min-height: 120px; }
+  .capability-tile .tile-copy, .capability-tile-1 .tile-copy { grid-column: 1; grid-row: 3; }
+  .tile-meta { flex-wrap: wrap; font-size: 7px; }
+}
+@media (max-width: 540px) {
+  .capability-bento { grid-template-columns: minmax(0, 1fr); grid-auto-rows: auto; gap: 12px; }
+  .capability-tile, .capability-tile-1 {
+    min-height: 0; height: auto; padding: 22px 20px 58px;
+    grid-template-rows: auto 132px auto; gap: 10px;
+  }
+  .capability-tile .tile-visual, .capability-tile-1 .tile-visual { min-height: 132px; }
+  .capability-tile .tile-copy h3, .capability-tile-1 .tile-copy h3 { font-size: clamp(25px, 7vw, 30px); }
+  .tile-meta { font-size: 8px; }
+}
+
+/* 21st.dev Shiny Button direction — rotating brand border and restrained shimmer. */
+.shiny-cta {
+  --shine-angle: 0deg;
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  overflow: hidden;
+  padding: 0 24px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background:
+    linear-gradient(#8b0018, #8b0018) padding-box,
+    conic-gradient(from var(--shine-angle), #ff6500, #fff 16%, #8b0018 32%, #ff6500 52%, #fff 68%, #8b0018 84%, #ff6500) border-box;
+  color: #fff;
+  cursor: pointer;
+  font: 600 11px/1 "DM Sans", sans-serif;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 26px rgba(65,0,12,.18);
+  transition: transform .25s ease, box-shadow .25s ease;
+  animation: shiny-cta-rotate 7s linear infinite;
+}
+.shiny-cta:before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(110deg, rgba(255,255,255,0) 25%, rgba(255,255,255,.2) 48%, rgba(255,255,255,0) 68%);
+  background-size: 220% 100%;
+  animation: shiny-cta-sweep 4.5s ease-in-out infinite;
+}
+.shiny-cta:after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: inherit;
+  border: 1px dotted rgba(255,255,255,.23);
+  pointer-events: none;
+}
+.shiny-cta:hover { transform: translateY(-3px); box-shadow: 0 12px 34px rgba(65,0,12,.28), 0 0 24px rgba(255,101,0,.22); }
+.shiny-cta:active { transform: translateY(0) scale(.98); }
+.shiny-cta-label, .shiny-cta-arrow { position: relative; z-index: 1; }
+.shiny-cta-arrow { color: #ff8a45; font-size: 17px; transition: transform .25s ease, color .25s ease; }
+.shiny-cta:hover .shiny-cta-arrow { color: #fff; transform: translate(3px,-3px); }
+@keyframes shiny-cta-rotate { to { --shine-angle: 360deg; } }
+@property --shine-angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@keyframes shiny-cta-sweep {
+  0%, 35% { background-position: 120% 0; }
+  70%, 100% { background-position: -120% 0; }
+}
+@media (max-width: 540px) {
+  .shiny-cta { min-height: 50px; gap: 14px; padding-inline: 19px; font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shiny-cta, .shiny-cta:before { animation: none !important; }
+  .shiny-cta { --shine-angle: 35deg; }
+}
