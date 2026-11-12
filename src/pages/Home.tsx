@@ -78,7 +78,6 @@ export default function HomePage() {
         <span className="hero-frame-label">01 — IDEIAS EM MOVIMENTO</span>
         <span className="hero-frame-index">VR<span>.</span></span>
       </div>
-      <span className="hero-side-label" aria-hidden="true">PENSAR / CONSTRUIR / EVOLUIR</span>
     </section>
 
     <section className="intro-section section-wrap" id="abordagem">
