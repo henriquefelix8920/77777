@@ -283,3 +283,97 @@
   .whatsapp-float, .whatsapp-float-pulse { animation: none !important; }
   .whatsapp-float { transition: none; }
 }
+
+
+/* Five different 21st.dev-inspired motion treatments for the main section headings. */
+.title-motion-split .split-word {
+  display: inline-block;
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+.hero-prisma .hero-title.title-motion-split .sumi-title,
+.hero-prisma .hero-title.title-motion-split .curtain-title {
+  animation: none !important;
+  clip-path: none !important;
+  filter: none !important;
+  transform: none !important;
+}
+.hero-prisma .hero-title.title-motion-split .sumi-title:after { content: none !important; }
+.title-motion-split.is-visible .split-word {
+  animation: title-word-lift .82s cubic-bezier(.2,.85,.25,1) both;
+}
+@keyframes title-word-lift {
+  0% { opacity: 0; transform: translate3d(0,.58em,0); filter: blur(7px); }
+  72% { opacity: 1; transform: translate3d(0,-.045em,0); filter: blur(0); }
+  100% { opacity: 1; transform: translate3d(0,0,0); filter: blur(0); }
+}
+
+/* Split Reveal Text: each line opens outward from its center. */
+.title-motion-center .center-line {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  clip-path: inset(0 0 0 0);
+}
+.title-motion-center.is-visible .center-line {
+  animation: title-center-open .9s cubic-bezier(.76,0,.18,1) both;
+}
+.title-motion-center.is-visible .center-line:nth-child(2) { animation-delay: .13s; }
+.title-motion-center.is-visible .center-line:nth-child(3) { animation-delay: .26s; }
+@keyframes title-center-open {
+  from { clip-path: inset(0 50% 0 50%); opacity: .35; filter: blur(5px); transform: scaleX(.985); }
+  to { clip-path: inset(0 0 0 0); opacity: 1; filter: blur(0); transform: scaleX(1); }
+}
+
+/* Scramble Text: decoded character stream, with the site orange as its accent. */
+.title-motion-scramble .scramble-text {
+  display: inline;
+  font-variant-ligatures: none;
+  text-shadow: 0 0 18px rgba(255,101,0,.14);
+}
+.title-motion-scramble em .scramble-text { color: #ff8a45; }
+
+/* Text Motion: elastic word-by-word entrance, staggered across the two lines. */
+.title-motion-words .motion-word-line { display: inline-block; white-space: nowrap; }
+.title-motion-words .motion-word { display: inline-block; transform-origin: 50% 100%; }
+.title-motion-words.is-visible .motion-word {
+  animation: title-word-spring .72s cubic-bezier(.18,.9,.25,1.25) both;
+}
+@keyframes title-word-spring {
+  0% { opacity: 0; transform: translate3d(0,.55em,0) rotate(8deg) scale(.76); filter: blur(4px); }
+  68% { opacity: 1; transform: translate3d(0,-.07em,0) rotate(-2deg) scale(1.08); filter: blur(0); }
+  100% { opacity: 1; transform: translate3d(0,0,0) rotate(0) scale(1); filter: blur(0); }
+}
+
+/* Bloom Text: letters expand, rotate and settle in sequence. */
+.title-motion-bloom .bloom-line { display: inline; }
+.title-motion-bloom .bloom-char {
+  display: inline-block;
+  transform-origin: 50% 75%;
+}
+.title-motion-bloom.is-visible .bloom-char {
+  animation: title-letter-bloom .72s cubic-bezier(.2,.8,.25,1.1) both;
+}
+@keyframes title-letter-bloom {
+  0% { opacity: 0; transform: translateY(.22em) rotate(-18deg) scale(.68); filter: blur(4px); }
+  58% { opacity: 1; transform: translateY(-.07em) rotate(7deg) scale(1.13); filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) rotate(0) scale(1); filter: none; }
+}
+
+@media (max-width: 540px) {
+  .title-motion-center .center-line { width: auto; }
+  .title-motion-words .motion-word-line { white-space: normal; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .title-motion-split .split-word,
+  .title-motion-center .center-line,
+  .title-motion-words .motion-word,
+  .title-motion-bloom .bloom-char {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
+}
