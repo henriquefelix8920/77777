@@ -886,3 +886,154 @@
     transition: none;
   }
 }
+
+
+/* Section 02 layout correction:
+   videos live in the former left-side visual position, not across the wallpaper. */
+.site-shell .intro-story-section .intro-story-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr) !important;
+  align-items: start;
+  gap: clamp(36px, 7vw, 112px);
+  width: 100%;
+  margin-top: clamp(38px, 6vw, 82px);
+}
+.site-shell .intro-story-section .intro-story-visual.approach-video-visual {
+  display: block !important;
+  position: sticky;
+  top: 14vh;
+  align-self: start;
+  min-width: 0;
+  padding: 0;
+  z-index: 1;
+}
+.site-shell .intro-story-section .approach-video-stage {
+  position: relative;
+  width: 100%;
+  min-height: clamp(390px, 47vw, 620px);
+  aspect-ratio: .88;
+  overflow: visible;
+  isolation: isolate;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.site-shell .intro-story-section .approach-video-stage::before {
+  content: "";
+  position: absolute;
+  inset: 12% -8% 8%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 48% 47%, rgba(162, 12, 38, .2), transparent 66%),
+    radial-gradient(ellipse at 61% 72%, rgba(255, 100, 35, .12), transparent 62%);
+}
+.site-shell .intro-story-section .approach-video-atmosphere {
+  position: absolute;
+  inset: -9% -12%;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+.site-shell .intro-story-section .approach-video-atmosphere video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  filter: grayscale(.22) sepia(.82) saturate(2.25) hue-rotate(326deg) contrast(1.12) brightness(.86);
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(ellipse 64% 58% at 50% 49%, #000 34%, rgba(0,0,0,.88) 58%, transparent 100%);
+  mask-image: radial-gradient(ellipse 64% 58% at 50% 49%, #000 34%, rgba(0,0,0,.88) 58%, transparent 100%);
+  transition: opacity .38s ease;
+}
+.site-shell .intro-story-section .approach-video-atmosphere video.is-visible {
+  opacity: .42;
+}
+.site-shell .intro-story-section .approach-video-colorwash {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 62% 56% at 50% 48%, rgba(146, 7, 32, .12), transparent 78%),
+    linear-gradient(115deg, rgba(88, 0, 22, .08), transparent 52%, rgba(127, 25, 5, .08));
+  -webkit-mask-image: radial-gradient(ellipse 64% 58% at 50% 49%, #000 28%, rgba(0,0,0,.72) 57%, transparent 100%);
+  mask-image: radial-gradient(ellipse 64% 58% at 50% 49%, #000 28%, rgba(0,0,0,.72) 57%, transparent 100%);
+}
+.site-shell .intro-story-section .approach-video-edge-glow {
+  position: absolute;
+  inset: 8% -4% 4%;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 54% 48% at 51% 48%, transparent 55%, rgba(255, 102, 40, .07) 72%, transparent 100%);
+}
+.site-shell .intro-story-section .approach-video-mark {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: 8%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  pointer-events: none;
+  text-shadow: 0 2px 14px rgba(0,0,0,.8);
+}
+.site-shell .intro-story-section .approach-video-mark span {
+  color: rgba(255, 245, 240, .8);
+  font: 600 8px/1.4 "DM Sans", sans-serif;
+  letter-spacing: .2em;
+}
+.site-shell .intro-story-section .approach-video-mark i {
+  color: #ff8b36;
+  font: 600 7px/1.4 "DM Sans", sans-serif;
+  letter-spacing: .17em;
+  font-style: normal;
+}
+.site-shell .intro-story-section .approach-video-visual .story-visual-caption {
+  margin: -1px 0 0 4%;
+  color: #ff8b36;
+  font: 600 8px/1.7 "DM Sans", sans-serif;
+  letter-spacing: .16em;
+}
+.site-shell .intro-story-section .intro-story-copy {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  min-width: 0;
+}
+@media (max-width: 800px) {
+  .site-shell .intro-story-section .intro-story-layout {
+    grid-template-columns: 1fr !important;
+    gap: 28px;
+    margin-top: 32px;
+  }
+  .site-shell .intro-story-section .intro-story-visual.approach-video-visual {
+    position: relative;
+    top: auto;
+    order: 0;
+    width: 100%;
+    max-width: 620px;
+    margin-inline: auto;
+  }
+  .site-shell .intro-story-section .approach-video-stage {
+    min-height: 0;
+    aspect-ratio: 1.12;
+  }
+  .site-shell .intro-story-section .approach-video-atmosphere video.is-visible {
+    opacity: .34;
+  }
+  .site-shell .intro-story-section .intro-story-copy {
+    order: 1;
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-shell .intro-story-section .approach-video-atmosphere video {
+    transition: none;
+  }
+}
