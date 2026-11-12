@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { waLink } from "../config";
 import "../styles/capability-bento.css";
+import "../styles/text-motion-system.css";
 import { LiquidMetalButton } from "../components/ui/liquid-metal-button";
 import SiteFrame from "../components/SiteFrame";
 import PortfolioShowcase from "../components/PortfolioShowcase";
@@ -48,20 +49,50 @@ export default function HomePage() {
   const contact = waLink("Olá! Conheci seu trabalho pelo site e quero conversar sobre um problema ou projeto da minha empresa.");
 
   useEffect(() => {
-    const motionTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-title-motion]"));
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
-      motionTargets.forEach((target) => target.classList.add("is-visible"));
+    const customHeadlines = Array.from(document.querySelectorAll<HTMLElement>("[data-title-motion]"));
+    const textSelector = [
+      ".site-shell h1, .site-shell h2, .site-shell h3, .site-shell p, .site-shell a, .site-shell button",
+      ".site-shell .eyebrow, .site-shell .section-index, .site-shell .kicker",
+      ".site-shell .hero-signature > span, .site-shell .approach-stamp span",
+      ".site-shell .tile-meta > span, .site-shell .process-card-top > span",
+      ".site-shell .portfolio-topline > span, .site-shell .portfolio-project-meta > span",
+      ".site-shell .portfolio-private-label > span, .site-shell .portfolio-footnote > span",
+      ".site-shell .portfolio-project-category, .site-shell .portfolio-preview-caption",
+      ".site-shell .portfolio-browser-bar > span:not(.browser-dots)",
+      ".site-shell .portfolio-preview-fallback > span, .site-shell .portfolio-preview-fallback > strong, .site-shell .portfolio-preview-fallback > i",
+      ".whatsapp-float-tooltip",
+    ].join(",");
+    const textTargets = Array.from(document.querySelectorAll<HTMLElement>(textSelector)).filter((target) =>
+      Boolean(target.textContent?.trim()) &&
+      !target.closest('[aria-hidden="true"]') &&
+      !target.matches("[data-title-motion]") &&
+      !target.closest("[data-title-motion]")
+    );
+
+    textTargets.forEach((target, index) => {
+      target.classList.add("text-motion-target", `text-motion-v${index % 20}`);
+      target.style.setProperty("--text-motion-delay", `${(index % 4) * 45}ms`);
+    });
+
+    const allTargets = [...customHeadlines, ...textTargets];
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      customHeadlines.forEach((target) => target.classList.add("is-visible"));
+      textTargets.forEach((target) => target.classList.add("text-motion-visible"));
       return;
     }
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        }
+        if (!entry.isIntersecting) return;
+        const target = entry.target as HTMLElement;
+        target.classList.add(target.classList.contains("text-motion-target") ? "text-motion-visible" : "is-visible");
+        observer.unobserve(target);
       });
-    }, { threshold: 0.22, rootMargin: "0px 0px -5% 0px" });
-    motionTargets.forEach((target) => observer.observe(target));
+    }, { threshold: 0.14, rootMargin: "0px 0px -5% 0px" });
+
+    allTargets.forEach((target) => observer.observe(target));
     return () => observer.disconnect();
   }, []);
 
