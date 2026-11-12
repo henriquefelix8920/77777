@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-type WallpaperVariant = "wireframe" | "mystery";
+type WallpaperVariant = "wireframe" | "fog";
 
 const VERTEX_SHADER = [
   "attribute vec2 a_position;",
@@ -11,97 +11,67 @@ const VERTEX_SHADER = [
   "}",
 ].join("\n");
 
-const MYSTERY_FRAGMENT_SHADER = [
+const FOG_FRAGMENT_SHADER = [
   "precision highp float;",
   "varying vec2 v_uv;",
   "uniform vec2 u_resolution;",
   "uniform float u_time;",
-  "mat3 rotX(float a) { float c=cos(a), s=sin(a); return mat3(1.,0.,0.,0.,c,s,0.,-s,c); }",
-  "mat3 rotY(float a) { float c=cos(a), s=sin(a); return mat3(c,0.,-s,0.,1.,0.,s,0.,c); }",
-  "mat3 rotZ(float a) { float c=cos(a), s=sin(a); return mat3(c,s,0.,-s,c,0.,0.,0.,1.); }",
-  "float sdTorus(vec3 p, vec2 t) { return length(vec2(length(p.xz)-t.x,p.y))-t.y; }",
-  "float sdOctahedron(vec3 p, float s) {",
-  "  p=abs(p);",
-  "  float m=p.x+p.y+p.z-s;",
-  "  vec3 q;",
-  "  if(3.0*p.x<m) q=p.xyz;",
-  "  else if(3.0*p.y<m) q=p.yzx;",
-  "  else if(3.0*p.z<m) q=p.zxy;",
-  "  else return m*0.57735027;",
-  "  float k=clamp(0.5*(q.z-q.y+s),0.0,s);",
-  "  return length(vec3(q.x,q.y-s+k,q.z-k));",
+  "float hash21(vec2 p) { p=fract(p*vec2(127.1,311.7)); p+=dot(p,p+34.7); return fract(p.x*p.y); }",
+  "float noise(vec2 p) {",
+  "  vec2 i=floor(p);",
+  "  vec2 f=fract(p);",
+  "  f=f*f*(3.0-2.0*f);",
+  "  float a=hash21(i);",
+  "  float b=hash21(i+vec2(1.0,0.0));",
+  "  float c=hash21(i+vec2(0.0,1.0));",
+  "  float d=hash21(i+vec2(1.0,1.0));",
+  "  return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);",
   "}",
-  "float coreDistance(vec3 p) {",
-  "  float t=u_time;",
-  "  vec3 q=p-vec3(0.68,0.02,0.0);",
-  "  q=rotY(t*0.13)*rotX(0.24+sin(t*0.19)*0.08)*rotZ(0.18)*q;",
-  "  float crystal=sdOctahedron(q,0.98);",
-  "  vec3 shardA=rotY(-t*0.17)*rotX(0.45)*(p-vec3(-1.36,-0.62,-0.55));",
-  "  vec3 shardB=rotZ(t*0.12)*rotY(0.6)*(p-vec3(1.88,0.82,-1.15));",
-  "  return min(crystal,min(sdOctahedron(shardA,0.34),sdOctahedron(shardB,0.24)));",
+  "float fbm(vec2 p) {",
+  "  float value=0.0;",
+  "  float amplitude=0.56;",
+  "  mat2 turn=mat2(1.62,1.18,-1.18,1.62);",
+  "  for(int i=0;i<3;i++) {",
+  "    value+=noise(p)*amplitude;",
+  "    p=turn*p+vec2(17.3,9.2);",
+  "    amplitude*=0.48;",
+  "  }",
+  "  return value;",
   "}",
-  "float ringDistance(vec3 p) {",
-  "  vec3 q=p-vec3(0.68,0.02,0.0);",
-  "  q=rotY(u_time*0.12)*rotX(0.78+sin(u_time*0.13)*0.08)*q;",
-  "  float ringA=sdTorus(q,vec2(1.48,0.018));",
-  "  vec3 r=p-vec3(0.68,0.02,0.0);",
-  "  r=rotZ(0.72)*rotX(1.18)*rotY(-u_time*0.15)*r;",
-  "  float ringB=sdTorus(r,vec2(1.22,0.012));",
-  "  return min(ringA,ringB);",
-  "}",
-  "float scene(vec3 p) { return min(coreDistance(p),ringDistance(p)); }",
-  "float hash21(vec2 p) { p=fract(p*vec2(123.34,456.21)); p+=dot(p,p+45.32); return fract(p.x*p.y); }",
   "void main() {",
   "  vec2 uv=v_uv*2.0-1.0;",
   "  uv.x*=u_resolution.x/u_resolution.y;",
   "  float t=u_time;",
-  "  vec3 ro=vec3(0.0,0.0,5.3);",
-  "  vec3 rd=normalize(vec3(uv.x,uv.y,-1.72));",
-  "  float travel=0.0;",
-  "  float hit=0.0;",
-  "  vec3 p=ro;",
-  "  for(int i=0;i<68;i++) {",
-  "    p=ro+rd*travel;",
-  "    float d=scene(p);",
-  "    if(d<0.0028) { hit=1.0; break; }",
-  "    travel+=max(d*0.82,0.009);",
-  "    if(travel>11.0) break;",
+  "  vec3 color=vec3(0.003,0.004,0.012);",
+  "  float horizon=exp(-abs(uv.y+0.16+0.045*sin(uv.x*2.0+t*0.045))*3.4);",
+  "  color+=vec3(0.012,0.017,0.035)*horizon;",
+  "  float accumulated=0.0;",
+  "  vec3 fogLight=vec3(0.105,0.13,0.19);",
+  "  for(int i=0;i<13;i++) {",
+  "    float depth=0.7+float(i)*0.39;",
+  "    vec3 ray=vec3(uv.x*0.58,uv.y*0.5,1.0);",
+  "    vec3 p=ray*depth;",
+  "    vec2 field=vec2(p.x*0.48+p.y*0.16,p.z*0.24-p.y*0.1);",
+  "    vec2 drift=vec2(t*0.012*(0.55+depth*0.035),-t*0.009);",
+  "    float broad=fbm(field*1.45+drift);",
+  "    float detail=fbm(field*2.6+drift*1.7+vec2(3.7,-1.9));",
+  "    float shape=mix(broad,detail,0.28);",
+  "    float bank=exp(-pow((p.y-(0.12*sin(p.x*0.32+t*0.055)+0.08*cos(p.z*0.18-t*0.04))),2.0)*0.34);",
+  "    float density=smoothstep(0.31,0.76,shape)*bank;",
+  "    density*=0.045*(0.68+0.32*sin(depth*0.38+t*0.025));",
+  "    float beamAxis=uv.x-0.24*sin(t*0.035)-0.12;",
+  "    float beam=exp(-beamAxis*beamAxis*15.0)*exp(-pow(uv.y+0.04,2.0)*1.4);",
+  "    vec3 layer=mix(vec3(0.018,0.022,0.038),fogLight,0.34+0.4*beam);",
+  "    float contribution=density*(1.0-accumulated);",
+  "    color+=layer*contribution;",
+  "    color+=vec3(0.075,0.09,0.13)*contribution*beam*0.8;",
+  "    accumulated+=contribution;",
   "  }",
-  "  float mistWave=sin(uv.x*2.7+t*0.09+sin(uv.y*3.1-t*0.07))*0.5+0.5;",
-  "  float mist=exp(-abs(uv.y-0.12*sin(uv.x*2.0+t*0.08))*4.2);",
-  "  vec3 color=vec3(0.0025,0.003,0.012);",
-  "  color+=vec3(0.012,0.008,0.042)*mist*(0.45+mistWave*0.6);",
-  "  color+=vec3(0.008,0.022,0.052)*exp(-length(uv-vec2(-0.48,0.18))*2.4);",
-  "  color+=vec3(0.018,0.006,0.034)*exp(-length(uv-vec2(0.58,-0.2))*2.1);",
-  "  vec2 dustCell=floor(v_uv*u_resolution/vec2(8.0));",
-  "  float dust=step(0.9978,hash21(dustCell));",
-  "  float dustPulse=0.35+0.65*sin(t*0.7+hash21(dustCell)*6.2831);",
-  "  color+=vec3(0.23,0.29,0.62)*dust*dustPulse;",
-  "  if(hit>0.5) {",
-  "    vec2 e=vec2(0.0025,0.0);",
-  "    vec3 n=normalize(vec3(scene(p+e.xyy)-scene(p-e.xyy),scene(p+e.yxy)-scene(p-e.yxy),scene(p+e.yyx)-scene(p-e.yyx)));",
-  "    float coreMask=step(coreDistance(p),ringDistance(p));",
-  "    vec3 lightDir=normalize(vec3(-0.52,0.68,0.74));",
-  "    float diffuse=max(dot(n,lightDir),0.0);",
-  "    float fresnel=pow(1.0-max(dot(n,-rd),0.0),2.65);",
-  "    float specular=pow(max(dot(reflect(rd,n),lightDir),0.0),54.0);",
-  "    float facet=0.5+0.5*sin(p.x*3.3+p.y*4.1-p.z*2.7);",
-  "    vec3 obsidian=mix(vec3(0.004,0.006,0.016),vec3(0.014,0.009,0.03),facet);",
-  "    vec3 crystal=obsidian*(0.34+diffuse*0.52);",
-  "    crystal+=vec3(0.075,0.045,0.19)*fresnel*1.35;",
-  "    crystal+=vec3(0.025,0.14,0.29)*specular*1.3;",
-  "    float seam=pow(max(0.0,sin(p.y*15.0+p.x*5.0+t*0.22)),22.0);",
-  "    crystal+=vec3(0.12,0.22,0.48)*seam*0.16;",
-  "    vec3 ring=vec3(0.018,0.12,0.24)*(0.28+diffuse*0.6);",
-  "    ring+=vec3(0.14,0.07,0.34)*fresnel*1.8;",
-  "    ring+=vec3(0.08,0.33,0.52)*specular*1.4;",
-  "    vec3 surface=mix(ring,crystal,coreMask);",
-  "    color=mix(color,surface,0.985);",
-  "  }",
-  "  float aura=exp(-length(uv-vec2(0.18,0.02))*2.15);",
-  "  color+=vec3(0.012,0.018,0.07)*aura;",
-  "  float vignette=1.0-smoothstep(0.48,1.62,length(uv));",
-  "  color*=0.62+0.38*vignette;",
+  "  float foreground=fbm(uv*2.3+vec2(t*0.009,-t*0.006));",
+  "  float softVeil=smoothstep(0.36,0.78,foreground)*exp(-pow(uv.y+0.26,2.0)*1.15);",
+  "  color+=vec3(0.018,0.023,0.038)*softVeil*0.36;",
+  "  float vignette=1.0-smoothstep(0.48,1.58,length(uv));",
+  "  color*=0.63+0.37*vignette;",
   "  gl_FragColor=vec4(color,1.0);",
   "}",
 ].join("\n");
@@ -196,7 +166,7 @@ function AnimatedWallpaper({ variant, className = "" }: { variant: WallpaperVari
     const vertexShader = compileShader(gl.VERTEX_SHADER, VERTEX_SHADER);
     const fragmentShader = compileShader(
       gl.FRAGMENT_SHADER,
-      variant === "mystery" ? MYSTERY_FRAGMENT_SHADER : WIREFRAME_FRAGMENT_SHADER,
+      variant === "fog" ? FOG_FRAGMENT_SHADER : WIREFRAME_FRAGMENT_SHADER,
     );
     if (!vertexShader || !fragmentShader) return;
 
@@ -241,9 +211,14 @@ function AnimatedWallpaper({ variant, className = "" }: { variant: WallpaperVari
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
 
+    const frameInterval = variant === "fog" ? 1000 / 30 : 1000 / 45;
+    let lastRenderedFrame = 0;
     const tick = (timestamp: number) => {
       animationFrame = 0;
-      draw(timestamp);
+      if (timestamp - lastRenderedFrame >= frameInterval) {
+        draw(timestamp);
+        lastRenderedFrame = timestamp;
+      }
       if (visible && !reduceMotion) animationFrame = window.requestAnimationFrame(tick);
     };
 
@@ -306,5 +281,5 @@ export function HeroShaderBackground() {
 }
 
 export function WireframeBackground() {
-  return <AnimatedWallpaper variant="mystery" className="section-mystery-wallpaper" />;
+  return <AnimatedWallpaper variant="fog" className="section-fog-wallpaper" />;
 }
