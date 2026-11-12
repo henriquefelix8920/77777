@@ -10,6 +10,7 @@ import { WireframeBackground } from "../components/VisualBackgrounds";
 import ApproachVideoBackdrop from "../components/ApproachVideoBackdrop";
 import PortfolioShowcase from "../components/PortfolioShowcase";
 import Capabilities3D from "../components/Capabilities3D";
+import ProcessJourney3D from "../components/ProcessJourney3D";
 
 const processSteps = [
   { number: "01", title: "Entender", text: "Conversamos sobre a empresa, a rotina e o que precisa mudar.", note: "DIAGNÓSTICO" },
@@ -153,34 +154,7 @@ export default function HomePage() {
 
     <Capabilities3D />
 
-    <section className="process-section" id="processo">
-      <div className="process-motion-grid-bg" aria-hidden="true">
-        <span className="process-grid-glow" />
-        <span className="process-grid-orbit" />
-        <span className="process-grid-scan" />
-        <span className="process-grid-pulse" />
-      </div>
-      <div className="process-wrap">
-        <div className="section-index reveal-right">DO PROBLEMA À SOLUÇÃO</div>
-        <div className="process-heading">
-          <p className="kicker reveal-left">TRABALHO DO COMEÇO AO USO.</p>
-          <h2 className="title-motion-words" data-title-motion aria-label="Não entrego só um arquivo.">
-            <MotionWords text="Não entrego só" />
-            <br />
-            <em><MotionWords text="um arquivo." delay={290} /></em>
-          </h2>
-          <p className="process-intro">Um caminho claro, construído junto com você — e pensado para funcionar na rotina real da empresa.</p>
-        </div>
-        <div className="process-bento">
-          {processSteps.map((step, i) => <article className="process-card" key={step.number}>
-            <div className="process-card-top"><span>{step.number} / 04</span><span>{step.note}</span></div>
-            <span className="process-card-mark" aria-hidden="true">0{i + 1}</span>
-            <div className="process-card-copy"><h3>{step.title}</h3><p>{step.text}</p></div>
-            <span className="process-card-line" aria-hidden="true" />
-          </article>)}
-        </div>
-      </div>
-    </section>
+    <ProcessJourney3D />
 
     <PortfolioShowcase />
 
