@@ -65,3 +65,68 @@
 .closing-floating{right:2%;top:7%;font-size:clamp(34px,10vw,58px)}
 }
 @media(prefers-reduced-motion:reduce){.motion-left,.motion-right,.motion-up{animation:none!important;opacity:1!important;translate:none!important}}
+
+
+/* Sections reveal their copy only as the section approaches the center of the viewport. */
+.reveal-left,.reveal-right,.reveal-up{opacity:1;will-change:transform,opacity}
+@supports (animation-timeline:view()){
+  .reveal-left{animation:section-enter-left linear both;animation-timeline:view(block);animation-range:entry 62% cover 48%}
+  .reveal-right{animation:section-enter-right linear both;animation-timeline:view(block);animation-range:entry 62% cover 48%}
+  .reveal-up{animation:section-enter-up linear both;animation-timeline:view(block);animation-range:entry 62% cover 45%}
+}
+@keyframes section-enter-left{from{opacity:0;transform:translate3d(-115px,12px,0) rotate(-1.5deg)}to{opacity:1;transform:translate3d(0,0,0) rotate(0)}}
+@keyframes section-enter-right{from{opacity:0;transform:translate3d(115px,12px,0) rotate(1.5deg)}to{opacity:1;transform:translate3d(0,0,0) rotate(0)}}
+@keyframes section-enter-up{from{opacity:0;transform:translate3d(0,95px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+
+/* Large moving-image compositions, intentionally changing corner/side per section. */
+.film-object{z-index:0;border:0!important;box-shadow:none!important;overflow:hidden;pointer-events:none;isolation:isolate}
+.film-object video{width:100%;height:100%;object-fit:cover;filter:saturate(1.3) contrast(1.12);mix-blend-mode:screen}
+.film-tint{position:absolute;inset:0;background:linear-gradient(130deg,rgba(139,0,24,.76),rgba(255,101,0,.52) 52%,rgba(139,0,24,.58));mix-blend-mode:color;opacity:.9}
+.film-object:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,#8b0018 0%,transparent 48%,#ff6500 100%);mix-blend-mode:soft-light;opacity:.82}
+.hero-film-bg{right:-2%;top:-8%;width:56%;height:105%;opacity:.72;clip-path:polygon(18% 0,100% 0,100% 100%,0 86%);mask-image:linear-gradient(90deg,transparent 0%,#000 17%,#000 88%,transparent 100%)}
+.hero-film-orbit{left:35%;bottom:-25%;width:30%;height:54%;opacity:.48;mask-image:radial-gradient(ellipse,#000 35%,transparent 76%)}
+.hero-inner{z-index:3}
+.hero-floating-title{animation:float-title 7s ease-in-out infinite alternate}
+@keyframes float-title{from{translate:0 -9px;rotate:-2deg}to{translate:0 12px;rotate:2deg}}
+.intro-section{position:relative;isolation:isolate;min-height:700px;overflow:hidden}
+.intro-copy,.intro-section>.section-index,.approach-stamp{position:relative;z-index:3}
+.intro-film{right:-5%;top:-4%;bottom:auto;width:51%;height:108%;opacity:.62;clip-path:polygon(18% 0,100% 0,100% 100%,0 84%);mask-image:linear-gradient(90deg,transparent 0%,#000 20%,#000 80%,transparent 100%)}
+.intro-float{right:8%;top:12%;z-index:2;font-size:clamp(50px,9vw,128px);opacity:.2;animation:float-title 8s ease-in-out infinite alternate-reverse}
+.work-section{isolation:isolate;overflow:hidden}
+.work-section>.section-wrap{position:relative;z-index:3}
+.work-film{left:-8%;right:auto;top:-7%;width:61%;height:110%;opacity:.58;clip-path:polygon(0 0,88% 0,100% 85%,8% 100%);mask-image:linear-gradient(90deg,#000 0%,#000 65%,transparent 100%)}
+.work-float{right:4%;top:21%;font-size:clamp(48px,8vw,115px);opacity:.18;animation:float-title 9s ease-in-out infinite alternate}
+.process-section{isolation:isolate;overflow:hidden;min-height:760px}
+.process-content,.process-section>.section-index{position:relative;z-index:3}
+.process-film{right:-8%;left:auto;top:-7%;width:56%;height:112%;opacity:.65;clip-path:polygon(18% 0,100% 10%,100% 100%,0 88%);mask-image:linear-gradient(90deg,transparent 0%,#000 18%,#000 88%,transparent 100%)}
+.process-float{right:3%;bottom:8%;z-index:2;font-size:clamp(48px,8vw,112px);opacity:.16;animation:float-title 7.5s ease-in-out infinite alternate-reverse}
+.closing-section{isolation:isolate;overflow:hidden}
+.closing-film{left:-6%;right:auto;top:-12%;bottom:auto;width:65%;height:130%;opacity:.56;clip-path:polygon(0 0,88% 12%,100% 100%,0 100%);mask-image:linear-gradient(45deg,#000 25%,#000 68%,transparent 100%)}
+.closing-content{z-index:3}
+.closing-floating{animation:float-title 8s ease-in-out infinite alternate}
+.capability{position:relative;z-index:3}
+@media(max-width:760px){
+  .hero-film-bg{right:-18%;top:auto;bottom:-5%;width:110%;height:64%;opacity:.72;mask-image:linear-gradient(180deg,transparent 0%,#000 16%,#000 88%,transparent 100%)}
+  .hero-film-orbit{left:-12%;bottom:15%;width:58%;height:34%}
+  .hero-floating-title{right:5%;bottom:4%;font-size:clamp(38px,11vw,64px)}
+  .intro-section{min-height:690px;padding-bottom:125px}
+  .intro-film{right:-27%;top:20%;width:100%;height:82%;opacity:.46;clip-path:polygon(22% 0,100% 0,100% 100%,0 90%);mask-image:linear-gradient(180deg,transparent 0%,#000 14%,#000 83%,transparent 100%)}
+  .intro-float{right:-4%;top:8%;font-size:clamp(45px,13vw,80px)}
+  .work-film{left:-30%;top:12%;width:118%;height:84%;opacity:.48;clip-path:polygon(0 0,100% 9%,88% 100%,0 90%);mask-image:linear-gradient(180deg,transparent 0%,#000 12%,#000 90%,transparent 100%)}
+  .work-float{right:-10%;top:13%;font-size:clamp(42px,12vw,76px)}
+  .process-section{min-height:760px;padding-bottom:140px}
+  .process-film{right:-30%;top:19%;width:110%;height:80%;opacity:.48;clip-path:polygon(18% 0,100% 8%,100% 100%,0 92%);mask-image:linear-gradient(180deg,transparent 0%,#000 14%,#000 88%,transparent 100%)}
+  .process-float{right:-8%;bottom:4%;font-size:clamp(42px,12vw,75px)}
+  .closing-film{left:-28%;top:2%;width:120%;height:102%;opacity:.48;mask-image:linear-gradient(180deg,#000 0%,#000 78%,transparent 100%)}
+  .closing-floating{right:1%;top:5%;font-size:clamp(34px,10vw,60px)}
+  .capability{background:rgba(139,0,24,.68)}
+  @supports (animation-timeline:view()){
+    .reveal-left{animation-range:entry 65% cover 45%}
+    .reveal-right{animation-range:entry 65% cover 45%}
+    .reveal-up{animation-range:entry 65% cover 42%}
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .reveal-left,.reveal-right,.reveal-up{animation:none!important;opacity:1!important;transform:none!important}
+  .hero-floating-title,.intro-float,.work-float,.process-float,.closing-floating{animation:none!important}
+}
