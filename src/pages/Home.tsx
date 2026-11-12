@@ -89,7 +89,7 @@ function BloomLine({ text }: { text: string }) {
 }
 
 function LeadWords({ text }: { text: string }) {
-  const words = text.split(/\\s+/);
+  const words = text.split(/\s+/);
   return <span className="hero-lead-words" aria-hidden="true">
     {words.map((word, index) => <span className="hero-lead-word" key={`${word}-${index}`} style={{ animationDelay: `${index * 20}ms` }}>{word}</span>)}
   </span>;
