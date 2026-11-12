@@ -1745,6 +1745,7 @@ body, p, a, button, .tile-meta, .process-card-top {
       rgba(139,0,24,.07) 25px,
       transparent 26px 43px);
   transform: rotate(-9deg) scale(1.04);
+  filter: none !important;
   animation: intro-topography-flow 44s ease-in-out infinite alternate;
 }
 .intro-ambient-bg:after {
@@ -1936,7 +1937,7 @@ body, p, a, button, .tile-meta, .process-card-top {
   box-shadow: 0 0 0 40px rgba(255,255,255,.025), 0 0 0 84px rgba(139,0,24,.025);
   animation: closing-orbit-turn 50s linear infinite;
 }
-.closing-content, .closing-floating, .closing-mark { position: relative; z-index: 2; }
+.closing-content, .closing-floating, .closing-mark { z-index: 2; }
 @keyframes closing-beam-travel-a { to { transform: rotate(24deg) translate3d(58px,0,0); opacity: .66; } }
 @keyframes closing-beam-travel-b { to { transform: rotate(24deg) translate3d(-46px,0,0); opacity: .22; } }
 @keyframes closing-orbit-turn { to { transform: rotate(360deg); } }
@@ -1975,4 +1976,10 @@ body, p, a, button, .tile-meta, .process-card-top {
     animation: none !important;
     transition: none !important;
   }
+}
+
+/* Keep the light process cards crisp: no backdrop blur/compositing. */
+.process-section .process-card {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
