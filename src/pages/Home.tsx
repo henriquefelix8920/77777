@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { waLink } from "../config";
 import "../styles/capability-bento.css";
@@ -21,97 +21,57 @@ const capabilities = [
 
 function Film({ src, className = "", priority = false }: { src: number; className?: string; priority?: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reducedMotion) return;
+    if (!video || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    if (connection?.saveData) return;
+
     const activate = () => {
-      if (!video.src) {
+      if (!video.getAttribute("src")) {
         video.src = video.dataset.src || "";
         video.load();
       }
-      const play = video.play();
-      if (play) play.catch(() => {});
+      const playback = video.play();
+      if (playback) playback.catch(() => {});
     };
-    if (priority) {
-      activate();
-      return;
-    }
+    const release = () => {
+      video.pause();
+      if (video.hasAttribute("src")) {
+        video.removeAttribute("src");
+        video.load();
+      }
+    };
+
     if (!("IntersectionObserver" in window)) {
       activate();
-      return;
+      return () => release();
     }
+
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) activate();
-      else video.pause();
-    }, { rootMargin: "240px 0px" });
+      else release();
+    }, { rootMargin: priority ? "100px 0px" : "72px 0px", threshold: 0.01 });
+
     observer.observe(video);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      release();
+    };
   }, [priority]);
+
   return <div className={`film-object ${className}`} aria-hidden="true">
     <video
       ref={videoRef}
-      {...(priority ? { src: `/club-videos/video${src}.mp4` } : { "data-src": `/club-videos/video${src}.mp4` })}
-      autoPlay muted loop playsInline preload={priority ? "auto" : "none"} tabIndex={-1}
+      data-src={`/club-videos/video${src}.mp4`}
+      muted loop playsInline preload="none" tabIndex={-1}
     />
     <span className="film-tint" />
   </div>;
 }
 
-/* 21st.dev-inspired: per-word stagger, center split, scramble, spring words and bloom letters. */
-function ScrambleText({ text }: { text: string }) {
-  const [displayText, setDisplayText] = useState(text);
-  const elementRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    const element = elementRef.current;
-    if (!element || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789@#$%";
-    const characters = Array.from(text);
-    let timer: number | undefined;
-    let observer: IntersectionObserver | undefined;
-
-    const start = () => {
-      if (timer !== undefined) return;
-      let progress = 0;
-      timer = window.setInterval(() => {
-        const next = characters.map((character, index) => {
-          if (character === " " || index < progress) return character;
-          return alphabet[Math.floor(Math.random() * alphabet.length)];
-        }).join("");
-        setDisplayText(next);
-        progress += 0.72;
-        if (progress >= characters.length) {
-          if (timer !== undefined) window.clearInterval(timer);
-          timer = undefined;
-          setDisplayText(text);
-        }
-      }, 32);
-    };
-
-    if (!("IntersectionObserver" in window)) {
-      start();
-    } else {
-      observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) {
-          start();
-          observer?.disconnect();
-        }
-      }, { threshold: 0.35 });
-      observer.observe(element);
-    }
-
-    return () => {
-      observer?.disconnect();
-      if (timer !== undefined) window.clearInterval(timer);
-    };
-  }, [text]);
-
-  return <span ref={elementRef} className="scramble-text" aria-hidden="true">{displayText}</span>;
-}
-
+/* Motion treatments for the section headlines. */
 function MotionWords({ text, delay = 0 }: { text: string; delay?: number }) {
   return <span className="motion-word-line" aria-hidden="true">
     {text.split(" ").map((word, index) => (
@@ -154,9 +114,9 @@ export default function HomePage() {
       <Film src={5} className="hero-film-bg" priority />
       <div className="hero-inner">
         <p className="eyebrow"><span className="eyebrow-line" /> TECNOLOGIA COM INTENÇÃO</p>
-        <h1 className="hero-title title-motion-split" data-title-motion aria-label="Seu negócio tem desafios. Eu construo caminhos.">
-          <span className="sumi-title" aria-hidden="true">{["Seu", "negócio", "tem", "desafios."].map((word, index) => <span className="split-word" key={word} style={{ animationDelay: `${index * 75}ms` }}>{word}</span>)}</span>
-          <span className="curtain-title" aria-hidden="true">{["Eu", "construo", "caminhos."].map((word, index) => <span className="split-word" key={word} style={{ animationDelay: `${240 + index * 75}ms` }}>{word}</span>)}</span>
+        <h1 className="hero-title title-motion-kinetic" data-title-motion aria-label="Seu negócio tem desafios. Eu construo caminhos.">
+          <span className="hero-line hero-line-light" aria-hidden="true">{["Seu", "negócio", "tem", "desafios."].map((word, index) => <span className="hero-word" key={word} style={{ animationDelay: `${index * 90}ms` }}>{word}</span>)}</span>
+          <span className="hero-line hero-line-orange" aria-hidden="true">{["Eu", "construo", "caminhos."].map((word, index) => <span className="hero-word" key={word} style={{ animationDelay: `${360 + index * 100}ms` }}>{word}</span>)}</span>
         </h1>
         <p className="hero-lead">Entendo como sua empresa funciona, encontro o que pode melhorar e desenvolvo tecnologia para resolver — do primeiro diagnóstico à implementação.</p>
         <div className="hero-actions">
@@ -172,11 +132,7 @@ export default function HomePage() {
     </section>
 
     <section className="intro-section section-wrap" id="abordagem">
-      <div className="intro-ambient-bg" aria-hidden="true">
-        <span className="intro-glow intro-glow-a" />
-        <span className="intro-glow intro-glow-b" />
-        <span className="intro-ambient-grid" />
-      </div>
+      <Film src={4} className="intro-film" />
       <span className="floating-word intro-float" aria-hidden="true">ENTENDER</span>
       <div className="section-index reveal-left">A ABORDAGEM</div>
       <div className="intro-copy">
@@ -193,21 +149,24 @@ export default function HomePage() {
     </section>
 
     <section className="work-section" id="trabalho">
-      <Film src={4} className="work-film" />
+      <div className="work-animated-grid-bg" aria-hidden="true">
+        <span className="work-grid-glow work-grid-glow-a" />
+        <span className="work-grid-glow work-grid-glow-b" />
+        <span className="work-grid-scan" />
+      </div>
       <span className="floating-word work-float" aria-hidden="true">POSSIBILIDADES</span>
       <div className="section-wrap">
         <div className="section-index reveal-right">O QUE POSSO FAZER</div>
         <div className="section-heading">
           <p className="kicker reveal-left">A FERRAMENTA VEM DEPOIS DO PROBLEMA.</p>
-          <h2 className="title-motion-scramble" data-title-motion aria-label="Uma solução certa para cada desafio.">
-            <span aria-hidden="true"><ScrambleText text="Uma solução certa" /></span>
-            <br />
-            <em aria-hidden="true"><ScrambleText text="para cada desafio." /></em>
+          <h2 className="title-motion-digital" data-title-motion aria-label="Uma solução certa para cada desafio.">
+            <span className="digital-title-line" aria-hidden="true">Uma solução certa</span>
+            <em className="digital-title-line" aria-hidden="true">para cada desafio.</em>
           </h2>
         </div>
         <div className="capability-bento">
           {capabilities.map((item, i) => <article className={`capability-tile capability-tile-${i + 1} reveal-${i % 2 ? "right" : "left"}`} key={item.title}>
-            <div className="tile-meta"><span>{item.number} / 04</span><span>{item.tag}</span></div>
+            <div className="tile-meta"><span>{item.tag}</span></div>
             <div className={`tile-visual tile-visual-${item.visual}`} aria-hidden="true">
               {item.visual === "systems" && <><span className="system-window"><i/><i/><i/><b/><b/><b/><b/></span><span className="system-orbit system-orbit-a"/><span className="system-orbit system-orbit-b"/></>}
               {item.visual === "automation" && <><span className="flow-node flow-node-a"/><span className="flow-line"/><span className="flow-node flow-node-b"/><span className="flow-line flow-line-two"/><span className="flow-node flow-node-c"/></>}
@@ -222,21 +181,16 @@ export default function HomePage() {
     </section>
 
     <section className="process-section" id="processo">
-      <div className="process-tech-bg" aria-hidden="true">
-        <span className="process-tech-grid" />
-        <span className="process-tech-orbit process-tech-orbit-a" />
-        <span className="process-tech-orbit process-tech-orbit-b" />
-        <svg className="process-tech-circuit" viewBox="0 0 900 620" fill="none" preserveAspectRatio="xMidYMid slice">
-          <path className="tech-trace tech-trace-a" d="M900 90H760V170H620V245H500V320H360" />
-          <path className="tech-trace tech-trace-b" d="M900 410H790V350H700V285H590V210H470V145H380" />
-          <path className="tech-trace tech-trace-c" d="M750 620V520H650V455H540V390H430" />
-          <path className="tech-trace tech-trace-d" d="M900 545H830V485H760V430H680" />
-          <circle className="tech-node" cx="760" cy="170" r="6" />
-          <circle className="tech-node tech-node-delay" cx="500" cy="320" r="5" />
-          <circle className="tech-node" cx="700" cy="285" r="6" />
-          <circle className="tech-node tech-node-delay" cx="540" cy="390" r="5" />
-          <circle className="tech-node" cx="760" cy="430" r="5" />
-        </svg>
+      <div className="process-energy-bg" aria-hidden="true">
+        <span className="energy-matrix" />
+        <span className="energy-ring energy-ring-one" />
+        <span className="energy-ring energy-ring-two" />
+        <span className="energy-beam energy-beam-one" />
+        <span className="energy-beam energy-beam-two" />
+        <span className="energy-beam energy-beam-three" />
+        <span className="energy-node energy-node-one" />
+        <span className="energy-node energy-node-two" />
+        <span className="energy-node energy-node-three" />
       </div>
       <div className="process-wrap">
         <div className="section-index reveal-right">DO PROBLEMA À SOLUÇÃO</div>
