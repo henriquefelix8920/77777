@@ -88,13 +88,20 @@ function BloomLine({ text }: { text: string }) {
   </span>;
 }
 
+function LeadWords({ text }: { text: string }) {
+  const words = text.split(/\\s+/);
+  return <span className="hero-lead-words" aria-hidden="true">
+    {words.map((word, index) => <span className="hero-lead-word" key={`${word}-${index}`} style={{ animationDelay: `${index * 20}ms` }}>{word}</span>)}
+  </span>;
+}
+
 export default function HomePage() {
   const contact = waLink("Olá! Conheci seu trabalho pelo site e quero conversar sobre um problema ou projeto da minha empresa.");
 
   useEffect(() => {
-    const headings = Array.from(document.querySelectorAll<HTMLElement>("[data-title-motion]"));
+    const motionTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-title-motion]"));
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
-      headings.forEach((heading) => heading.classList.add("is-visible"));
+      motionTargets.forEach((target) => target.classList.add("is-visible"));
       return;
     }
     const observer = new IntersectionObserver((entries) => {
@@ -105,7 +112,7 @@ export default function HomePage() {
         }
       });
     }, { threshold: 0.22, rootMargin: "0px 0px -5% 0px" });
-    headings.forEach((heading) => observer.observe(heading));
+    motionTargets.forEach((target) => observer.observe(target));
     return () => observer.disconnect();
   }, []);
 
@@ -118,7 +125,9 @@ export default function HomePage() {
           <span className="hero-line hero-line-light" aria-hidden="true">{["Seu", "negócio", "tem", "desafios."].map((word, index) => <span className="hero-word" key={word} style={{ animationDelay: `${index * 90}ms` }}>{word}</span>)}</span>
           <span className="hero-line hero-line-orange" aria-hidden="true">{["Eu", "construo", "caminhos."].map((word, index) => <span className="hero-word" key={word} style={{ animationDelay: `${360 + index * 100}ms` }}>{word}</span>)}</span>
         </h1>
-        <p className="hero-lead">Entendo como sua empresa funciona, encontro o que pode melhorar e desenvolvo tecnologia para resolver — do primeiro diagnóstico à implementação.</p>
+        <p className="hero-lead hero-lead-motion" data-title-motion aria-label="Entendo como sua empresa funciona, encontro o que pode melhorar e desenvolvo tecnologia para resolver — do primeiro diagnóstico à implementação.">
+          <LeadWords text="Entendo como sua empresa funciona, encontro o que pode melhorar e desenvolvo tecnologia para resolver — do primeiro diagnóstico à implementação." />
+        </p>
         <div className="hero-actions">
           <LiquidMetalButton label="Vamos conversar" onClick={() => window.open(contact, "_blank", "noopener,noreferrer")} />
           <a className="button button-quiet" href="#abordagem">Conheça meu jeito <ArrowDown size={16} /></a>
@@ -142,8 +151,8 @@ export default function HomePage() {
           <span className="center-line" aria-hidden="true">o que está <em>travando</em></span>
           <span className="center-line" aria-hidden="true">o seu negócio.</span>
         </h2>
-        <p className="body-copy reveal-right">Às vezes o problema é um processo manual. Às vezes, informação espalhada em cinco lugares. Em outras, falta uma ferramenta que simplesmente não existe.</p>
-        <p className="body-copy reveal-left">Antes de sugerir qualquer tecnologia, quero entender a operação, ouvir quem faz o trabalho e descobrir onde uma mudança pode fazer diferença de verdade.</p>
+        <p className="body-copy approach-copy-reveal approach-copy-reveal-one" data-title-motion aria-label="Às vezes o problema é um processo manual. Às vezes, informação espalhada em cinco lugares. Em outras, falta uma ferramenta que simplesmente não existe.">Às vezes o problema é um processo manual. Às vezes, informação espalhada em cinco lugares. Em outras, falta uma ferramenta que simplesmente não existe.</p>
+        <p className="body-copy approach-copy-reveal approach-copy-reveal-two" data-title-motion aria-label="Antes de sugerir qualquer tecnologia, quero entender a operação, ouvir quem faz o trabalho e descobrir onde uma mudança pode fazer diferença de verdade.">Antes de sugerir qualquer tecnologia, quero entender a operação, ouvir quem faz o trabalho e descobrir onde uma mudança pode fazer diferença de verdade.</p>
       </div>
       <div className="approach-stamp reveal-up"><span>PRIMEIRO<br/>ENTENDER</span></div>
     </section>
@@ -165,7 +174,7 @@ export default function HomePage() {
           </h2>
         </div>
         <div className="capability-bento">
-          {capabilities.map((item, i) => <article className={`capability-tile capability-tile-${i + 1} reveal-${i % 2 ? "right" : "left"}`} key={item.title}>
+          {capabilities.map((item, i) => <article className={`capability-tile capability-tile-${i + 1} reveal-up`} key={item.title}>
             <div className="tile-meta"><span>{item.tag}</span></div>
             <div className={`tile-visual tile-visual-${item.visual}`} aria-hidden="true">
               {item.visual === "systems" && <><span className="system-window"><i/><i/><i/><b/><b/><b/><b/></span><span className="system-orbit system-orbit-a"/><span className="system-orbit system-orbit-b"/></>}
@@ -181,16 +190,11 @@ export default function HomePage() {
     </section>
 
     <section className="process-section" id="processo">
-      <div className="process-energy-bg" aria-hidden="true">
-        <span className="energy-matrix" />
-        <span className="energy-ring energy-ring-one" />
-        <span className="energy-ring energy-ring-two" />
-        <span className="energy-beam energy-beam-one" />
-        <span className="energy-beam energy-beam-two" />
-        <span className="energy-beam energy-beam-three" />
-        <span className="energy-node energy-node-one" />
-        <span className="energy-node energy-node-two" />
-        <span className="energy-node energy-node-three" />
+      <div className="process-motion-grid-bg" aria-hidden="true">
+        <span className="process-grid-glow" />
+        <span className="process-grid-orbit" />
+        <span className="process-grid-scan" />
+        <span className="process-grid-pulse" />
       </div>
       <div className="process-wrap">
         <div className="section-index reveal-right">DO PROBLEMA À SOLUÇÃO</div>
