@@ -12,7 +12,7 @@ const VERTEX_SHADER = [
 ].join("\n");
 
 const FOG_FRAGMENT_SHADER = [
-  "precision highp float;",
+  "precision mediump float;",
   "varying vec2 v_uv;",
   "uniform vec2 u_resolution;",
   "uniform float u_time;",
@@ -28,50 +28,40 @@ const FOG_FRAGMENT_SHADER = [
   "  return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);",
   "}",
   "float fbm(vec2 p) {",
-  "  float value=0.0;",
-  "  float amplitude=0.56;",
-  "  mat2 turn=mat2(1.62,1.18,-1.18,1.62);",
-  "  for(int i=0;i<3;i++) {",
-  "    value+=noise(p)*amplitude;",
-  "    p=turn*p+vec2(17.3,9.2);",
-  "    amplitude*=0.48;",
-  "  }",
-  "  return value;",
+  "  float n=noise(p)*0.58;",
+  "  p=p*1.93+vec2(13.4,7.1);",
+  "  n+=noise(p)*0.28;",
+  "  p=p*1.91+vec2(5.2,17.8);",
+  "  n+=noise(p)*0.14;",
+  "  return n/1.0;",
   "}",
   "void main() {",
   "  vec2 uv=v_uv*2.0-1.0;",
   "  uv.x*=u_resolution.x/u_resolution.y;",
   "  float t=u_time;",
-  "  vec3 color=vec3(0.003,0.004,0.012);",
-  "  float horizon=exp(-abs(uv.y+0.16+0.045*sin(uv.x*2.0+t*0.045))*3.4);",
-  "  color+=vec3(0.012,0.017,0.035)*horizon;",
-  "  float accumulated=0.0;",
-  "  vec3 fogLight=vec3(0.105,0.13,0.19);",
-  "  for(int i=0;i<13;i++) {",
-  "    float depth=0.7+float(i)*0.39;",
-  "    vec3 ray=vec3(uv.x*0.58,uv.y*0.5,1.0);",
-  "    vec3 p=ray*depth;",
-  "    vec2 field=vec2(p.x*0.48+p.y*0.16,p.z*0.24-p.y*0.1);",
-  "    vec2 drift=vec2(t*0.012*(0.55+depth*0.035),-t*0.009);",
-  "    float broad=fbm(field*1.45+drift);",
-  "    float detail=fbm(field*2.6+drift*1.7+vec2(3.7,-1.9));",
-  "    float shape=mix(broad,detail,0.28);",
-  "    float bank=exp(-pow((p.y-(0.12*sin(p.x*0.32+t*0.055)+0.08*cos(p.z*0.18-t*0.04))),2.0)*0.34);",
-  "    float density=smoothstep(0.31,0.76,shape)*bank;",
-  "    density*=0.045*(0.68+0.32*sin(depth*0.38+t*0.025));",
-  "    float beamAxis=uv.x-0.24*sin(t*0.035)-0.12;",
-  "    float beam=exp(-beamAxis*beamAxis*15.0)*exp(-pow(uv.y+0.04,2.0)*1.4);",
-  "    vec3 layer=mix(vec3(0.018,0.022,0.038),fogLight,0.34+0.4*beam);",
-  "    float contribution=density*(1.0-accumulated);",
-  "    color+=layer*contribution;",
-  "    color+=vec3(0.075,0.09,0.13)*contribution*beam*0.8;",
-  "    accumulated+=contribution;",
-  "  }",
-  "  float foreground=fbm(uv*2.3+vec2(t*0.009,-t*0.006));",
-  "  float softVeil=smoothstep(0.36,0.78,foreground)*exp(-pow(uv.y+0.26,2.0)*1.15);",
-  "  color+=vec3(0.018,0.023,0.038)*softVeil*0.36;",
-  "  float vignette=1.0-smoothstep(0.48,1.58,length(uv));",
-  "  color*=0.63+0.37*vignette;",
+  "  vec2 driftA=vec2(t*0.022,-t*0.008);",
+  "  vec2 driftB=vec2(-t*0.031,t*0.012);",
+  "  float farNoise=fbm(vec2(uv.x*1.32,uv.y*1.75)+driftA+vec2(4.2,8.1));",
+  "  float midNoise=fbm(vec2(uv.x*2.3,uv.y*2.7)+driftB+vec2(9.4,2.6));",
+  "  float nearNoise=fbm(vec2(uv.x*3.55,uv.y*3.2)+driftA*1.7+vec2(17.1,5.3));",
+  "  float farBand=exp(-pow((uv.y-(0.18*sin(uv.x*0.82+t*0.035)-0.10)),2.0)*2.0);",
+  "  float midBand=exp(-pow((uv.y-(-0.08+0.20*sin(uv.x*1.15-t*0.042))),2.0)*3.0);",
+  "  float nearBand=exp(-pow((uv.y-(0.38+0.13*cos(uv.x*1.7+t*0.04))),2.0)*4.2);",
+  "  float farCloud=smoothstep(0.30,0.68,farNoise)*farBand;",
+  "  float midCloud=smoothstep(0.34,0.70,midNoise)*midBand;",
+  "  float nearCloud=smoothstep(0.37,0.72,nearNoise)*nearBand;",
+  "  float smoke=clamp(farCloud*0.82+midCloud*0.70+nearCloud*0.43,0.0,1.0);",
+  "  float wisps=pow(max(0.0,nearNoise-0.42),1.35)*nearBand;",
+  "  float lightAxis=uv.x+0.38-uv.y*0.42-0.10*sin(t*0.035);",
+  "  float softBeam=exp(-lightAxis*lightAxis*12.0)*exp(-pow(uv.y+0.02,2.0)*1.35);",
+  "  vec3 color=vec3(0.003,0.004,0.010);",
+  "  color+=vec3(0.078,0.091,0.118)*smoke;",
+  "  color+=vec3(0.032,0.046,0.068)*wisps*0.8;",
+  "  color+=vec3(0.043,0.057,0.083)*softBeam*smoke*0.72;",
+  "  float lowHaze=exp(-pow(uv.y+0.52,2.0)*1.8);",
+  "  color+=vec3(0.016,0.022,0.034)*lowHaze;",
+  "  float vignette=1.0-smoothstep(0.62,1.72,length(uv));",
+  "  color*=0.72+0.28*vignette;",
   "  gl_FragColor=vec4(color,1.0);",
   "}",
 ].join("\n");
@@ -211,7 +201,7 @@ function AnimatedWallpaper({ variant, className = "" }: { variant: WallpaperVari
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
 
-    const frameInterval = variant === "fog" ? 1000 / 30 : 1000 / 45;
+    const frameInterval = variant === "fog" ? 1000 / 24 : 1000 / 45;
     let lastRenderedFrame = 0;
     const tick = (timestamp: number) => {
       animationFrame = 0;
@@ -232,7 +222,10 @@ function AnimatedWallpaper({ variant, className = "" }: { variant: WallpaperVari
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.35);
+      const devicePixelRatio = window.devicePixelRatio || 1;
+      const pixelRatio = variant === "fog"
+        ? Math.min(devicePixelRatio * 0.48, 0.72)
+        : Math.min(devicePixelRatio, 1.35);
       const width = Math.max(1, Math.round(rect.width * pixelRatio));
       const height = Math.max(1, Math.round(rect.height * pixelRatio));
       if (canvas.width !== width || canvas.height !== height) {
