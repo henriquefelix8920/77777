@@ -155,8 +155,8 @@ export default function HomePage() {
       <div className="hero-inner">
         <p className="eyebrow"><span className="eyebrow-line" /> TECNOLOGIA COM INTENÇÃO</p>
         <h1 className="hero-title title-motion-split" data-title-motion aria-label="Seu negócio tem desafios. Eu construo caminhos.">
-          <span className="sumi-title" aria-hidden="true">{["Seu", "negócio", "tem", "desafios."].map((word, index) => <span className="split-word" key={word} style={{ animationDelay: `${index * 75}ms` }}>{word}{index < 3 ? "\u00a0" : ""}</span>)}</span>
-          <span className="curtain-title" aria-hidden="true">{["Eu", "construo", "caminhos."].map((word, index) => <span className="split-word" key={word} style={{ animationDelay: `${240 + index * 75}ms` }}>{word}{index < 2 ? "\u00a0" : ""}</span>)}</span>
+          <span className="sumi-title" aria-hidden="true">{["Seu", "negócio", "tem", "desafios."].map((word, index) => <span className="split-word" key={word} style={{ animationDelay: `${index * 75}ms` }}>{word}</span>)}</span>
+          <span className="curtain-title" aria-hidden="true">{["Eu", "construo", "caminhos."].map((word, index) => <span className="split-word" key={word} style={{ animationDelay: `${240 + index * 75}ms` }}>{word}</span>)}</span>
         </h1>
         <p className="hero-lead">Entendo como sua empresa funciona, encontro o que pode melhorar e desenvolvo tecnologia para resolver — do primeiro diagnóstico à implementação.</p>
         <div className="hero-actions">
