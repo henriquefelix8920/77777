@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { waLink } from "../config";
 import "../styles/capability-bento.css";
+import "../styles/approach-scroll-story.css";
 import "../styles/text-motion-system.css";
 import { LiquidMetalButton } from "../components/ui/liquid-metal-button";
 import SiteFrame from "../components/SiteFrame";
@@ -100,24 +101,55 @@ export default function HomePage() {
   return <SiteFrame>
     <HighTechHero contact={contact} />
 
-    <section className="intro-section section-wrap" id="abordagem">
-      <div className="intro-ambient-bg" aria-hidden="true">
+    <section className="intro-section intro-story-section" id="abordagem">
+      <div className="intro-ambient-bg intro-story-ambient" aria-hidden="true">
         <span className="intro-topography-lines" />
         <span className="intro-topography-glow" />
       </div>
-      <span className="floating-word intro-float" aria-hidden="true">ENTENDER</span>
-      <div className="section-index reveal-left">A ABORDAGEM</div>
-      <div className="intro-copy">
-        <p className="kicker reveal-right">NÃO COMEÇO PELO CÓDIGO.</p>
-        <h2 className="title-motion-center" data-title-motion aria-label="Começo entendendo o que está travando o seu negócio.">
-          <span className="center-line" aria-hidden="true">Começo entendendo</span>
-          <span className="center-line" aria-hidden="true">o que está <em>travando</em></span>
-          <span className="center-line" aria-hidden="true">o seu negócio.</span>
-        </h2>
-        <p className="body-copy approach-copy-reveal approach-copy-reveal-one" data-title-motion aria-label="Às vezes o problema é um processo manual. Às vezes, informação espalhada em cinco lugares. Em outras, falta uma ferramenta que simplesmente não existe.">Às vezes o problema é um processo manual. Às vezes, informação espalhada em cinco lugares. Em outras, falta uma ferramenta que simplesmente não existe.</p>
-        <p className="body-copy approach-copy-reveal approach-copy-reveal-two" data-title-motion aria-label="Antes de sugerir qualquer tecnologia, quero entender a operação, ouvir quem faz o trabalho e descobrir onde uma mudança pode fazer diferença de verdade.">Antes de sugerir qualquer tecnologia, quero entender a operação, ouvir quem faz o trabalho e descobrir onde uma mudança pode fazer diferença de verdade.</p>
+      <div className="section-wrap intro-story-wrap">
+        <div className="section-index reveal-left">A ABORDAGEM / 01—03</div>
+        <div className="intro-story-layout">
+          <div className="intro-story-visual">
+            <div className="story-visual-frame">
+              <div className="story-visual-top"><span>V/R — THINKING SYSTEMS</span><span>LIVE SIGNAL <i /></span></div>
+              <div className="story-orbit story-orbit-one" />
+              <div className="story-orbit story-orbit-two" />
+              <div className="story-orbit story-orbit-three" />
+              <div className="story-crosshair story-crosshair-x" />
+              <div className="story-crosshair story-crosshair-y" />
+              <div className="story-core"><span>IDEIA</span><b>→</b><strong>IMPACTO</strong></div>
+              <div className="story-visual-coordinates">23° 32' 11.4" S<br/>46° 38' 05.2" W</div>
+              <div className="story-visual-bottom"><span>PROBLEM / SOLUTION</span><span>01 — 03</span></div>
+            </div>
+            <p className="story-visual-caption">ANTES DA TECNOLOGIA, EXISTE UMA PERGUNTA.</p>
+          </div>
+          <div className="intro-story-copy">
+            <div className="intro-story-heading">
+              <p className="kicker reveal-right">NÃO COMEÇO PELO CÓDIGO.</p>
+              <h2 className="title-motion-center" data-title-motion aria-label="Começo entendendo o que está travando o seu negócio.">
+                <span className="center-line">Começo entendendo</span>
+                <span className="center-line">o que está <em>travando</em></span>
+                <span className="center-line">o seu negócio.</span>
+              </h2>
+            </div>
+            <article className="story-chapter">
+              <span className="story-chapter-index">01 / O SINAL</span>
+              <h3>O que está travando?</h3>
+              <p>Às vezes o problema é um processo manual. Às vezes, informação espalhada em cinco lugares. Em outras, falta uma ferramenta que simplesmente não existe.</p>
+            </article>
+            <article className="story-chapter">
+              <span className="story-chapter-index">02 / A INVESTIGAÇÃO</span>
+              <h3>Onde está o atrito?</h3>
+              <p>Eu escuto quem faz o trabalho, observo a operação e procuro entender onde o tempo se perde, onde as tarefas se repetem e o que impede o negócio de avançar.</p>
+            </article>
+            <article className="story-chapter">
+              <span className="story-chapter-index">03 / A DIREÇÃO</span>
+              <h3>O que faz sentido mudar?</h3>
+              <p>Só então escolhemos a tecnologia. A solução precisa caber na realidade da empresa, resolver o problema certo e tornar a rotina mais simples.</p>
+            </article>
+          </div>
+        </div>
       </div>
-      <div className="approach-stamp reveal-up"><span>PRIMEIRO<br/>ENTENDER</span></div>
     </section>
 
     <section className="work-section" id="trabalho">
