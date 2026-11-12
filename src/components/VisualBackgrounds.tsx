@@ -190,11 +190,11 @@ function AnimatedWallpaper({ variant, className = "" }: { variant: WallpaperVari
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.useProgram(program);
       gl.uniform2f(resolutionUniform, canvas.width, canvas.height);
-      gl.uniform1f(timeUniform, reduceMotion ? 0 : timestamp * 0.001);
+      gl.uniform1f(timeUniform, reduceMotion && variant !== "fog" ? 0 : timestamp * (reduceMotion ? 0.00042 : 0.001));
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
 
-    const frameInterval = variant === "fog" ? 1000 / 20 : 1000 / 45;
+    const frameInterval = variant === "fog" ? (reduceMotion ? 1000 / 12 : 1000 / 20) : 1000 / 45;
     let lastRenderedFrame = 0;
     const tick = (timestamp: number) => {
       animationFrame = 0;
@@ -202,11 +202,11 @@ function AnimatedWallpaper({ variant, className = "" }: { variant: WallpaperVari
         draw(timestamp);
         lastRenderedFrame = timestamp;
       }
-      if (visible && !reduceMotion) animationFrame = window.requestAnimationFrame(tick);
+      if (visible && (!reduceMotion || variant === "fog")) animationFrame = window.requestAnimationFrame(tick);
     };
 
     const start = () => {
-      if (reduceMotion) {
+      if (reduceMotion && variant !== "fog") {
         draw(0);
       } else if (visible && !animationFrame) {
         animationFrame = window.requestAnimationFrame(tick);
@@ -225,7 +225,7 @@ function AnimatedWallpaper({ variant, className = "" }: { variant: WallpaperVari
         canvas.width = width;
         canvas.height = height;
         gl.viewport(0, 0, width, height);
-        draw(reduceMotion ? 0 : lastTime);
+        draw(reduceMotion && variant !== "fog" ? 0 : lastTime);
       }
     };
 
