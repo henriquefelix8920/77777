@@ -262,3 +262,30 @@
 @media (prefers-reduced-motion: reduce) {
   .intro-story-section .intro-story-ambient::after { animation: none !important; }
 }
+
+
+/* Make section 02's dark treatment explicit on the section itself,
+   independent of ambient pseudo-layers and legacy global section rules. */
+.intro-story-section {
+  background:
+    radial-gradient(ellipse at 14% 22%, rgba(18, 47, 92, .34), transparent 39%),
+    radial-gradient(ellipse at 88% 72%, rgba(21, 39, 71, .26), transparent 38%),
+    linear-gradient(132deg, #020409 0%, #060a12 48%, #02040a 100%);
+  color: #f5f7fc;
+}
+.intro-story-section .intro-story-ambient {
+  z-index: 0;
+  opacity: .88;
+  background:
+    radial-gradient(ellipse at 18% 26%, rgba(22, 75, 160, .18), transparent 38%),
+    radial-gradient(ellipse at 83% 65%, rgba(20, 47, 93, .15), transparent 34%),
+    linear-gradient(130deg, rgba(2, 4, 9, .08), rgba(4, 8, 16, .12));
+}
+.intro-story-section > .intro-story-wrap {
+  position: relative;
+  z-index: 1;
+}
+.intro-story-section .intro-story-ambient::after {
+  opacity: .28;
+  background-size: 64px 64px;
+}
