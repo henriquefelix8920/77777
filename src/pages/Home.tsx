@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { waLink } from "../config";
 import "../styles/capability-bento.css";
 import { LiquidMetalButton } from "../components/ui/liquid-metal-button";
@@ -59,14 +59,105 @@ function Film({ src, className = "", priority = false }: { src: number; classNam
   </div>;
 }
 
+/* 21st.dev-inspired: per-word stagger, center split, scramble, spring words and bloom letters. */
+function ScrambleText({ text }: { text: string }) {
+  const [displayText, setDisplayText] = useState(text);
+  const elementRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const element = elementRef.current;
+    if (!element || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789@#$%";
+    const characters = Array.from(text);
+    let timer: number | undefined;
+    let observer: IntersectionObserver | undefined;
+
+    const start = () => {
+      if (timer !== undefined) return;
+      let progress = 0;
+      timer = window.setInterval(() => {
+        const next = characters.map((character, index) => {
+          if (character === " " || index < progress) return character;
+          return alphabet[Math.floor(Math.random() * alphabet.length)];
+        }).join("");
+        setDisplayText(next);
+        progress += 0.72;
+        if (progress >= characters.length) {
+          if (timer !== undefined) window.clearInterval(timer);
+          timer = undefined;
+          setDisplayText(text);
+        }
+      }, 32);
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      start();
+    } else {
+      observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          start();
+          observer?.disconnect();
+        }
+      }, { threshold: 0.35 });
+      observer.observe(element);
+    }
+
+    return () => {
+      observer?.disconnect();
+      if (timer !== undefined) window.clearInterval(timer);
+    };
+  }, [text]);
+
+  return <span ref={elementRef} className="scramble-text" aria-hidden="true">{displayText}</span>;
+}
+
+function MotionWords({ text, delay = 0 }: { text: string; delay?: number }) {
+  return <span className="motion-word-line" aria-hidden="true">
+    {text.split(" ").map((word, index) => (
+      <span className="motion-word" key={`${word}-${index}`} style={{ animationDelay: `${delay + index * 85}ms` }}>{word}{index < text.split(" ").length - 1 ? "\u00a0" : ""}</span>
+    ))}
+  </span>;
+}
+
+function BloomLine({ text }: { text: string }) {
+  return <span className="bloom-line" aria-hidden="true">
+    {Array.from(text).map((character, index) => character === " "
+      ? <span className="bloom-space" key={`space-${index}`}> </span>
+      : <span className="bloom-char" key={`char-${index}`} style={{ animationDelay: `${index * 28}ms` }}>{character}</span>)}
+  </span>;
+}
+
 export default function HomePage() {
   const contact = waLink("Olá! Conheci seu trabalho pelo site e quero conversar sobre um problema ou projeto da minha empresa.");
+
+  useEffect(() => {
+    const headings = Array.from(document.querySelectorAll<HTMLElement>("[data-title-motion]"));
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      headings.forEach((heading) => heading.classList.add("is-visible"));
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.22, rootMargin: "0px 0px -5% 0px" });
+    headings.forEach((heading) => observer.observe(heading));
+    return () => observer.disconnect();
+  }, []);
+
   return <SiteFrame>
     <section id="inicio" className="hero hero-prisma">
       <div className="hero-scroll-video" aria-hidden="true"><video src="/club-videos/video1.mp4" autoPlay muted loop playsInline preload="auto" /></div>
       <div className="hero-inner">
         <p className="eyebrow"><span className="eyebrow-line" /> TECNOLOGIA COM INTENÇÃO</p>
-        <h1 className="hero-title"><span className="sumi-title">Seu negócio tem desafios.</span><span className="curtain-title">Eu construo caminhos.</span></h1>
+        <h1 className="hero-title title-motion-split" data-title-motion aria-label="Seu negócio tem desafios. Eu construo caminhos.">
+          <span className="sumi-title" aria-hidden="true">{["Seu", "negócio", "tem", "desafios."].map((word, index) => <span className="split-word" key={word} style={{ animationDelay: `${index * 75}ms` }}>{word}{index < 3 ? "\u00a0" : ""}</span>)}</span>
+          <span className="curtain-title" aria-hidden="true">{["Eu", "construo", "caminhos."].map((word, index) => <span className="split-word" key={word} style={{ animationDelay: `${240 + index * 75}ms` }}>{word}{index < 2 ? "\u00a0" : ""}</span>)}</span>
+        </h1>
         <p className="hero-lead">Entendo como sua empresa funciona, encontro o que pode melhorar e desenvolvo tecnologia para resolver — do primeiro diagnóstico à implementação.</p>
         <div className="hero-actions">
           <LiquidMetalButton label="Vamos conversar" onClick={() => window.open(contact, "_blank", "noopener,noreferrer")} />
@@ -86,7 +177,11 @@ export default function HomePage() {
       <div className="section-index reveal-left">A ABORDAGEM</div>
       <div className="intro-copy">
         <p className="kicker reveal-right">NÃO COMEÇO PELO CÓDIGO.</p>
-        <h2 className="reveal-left">Começo entendendo<br/>o que está <em>travando</em><br/>o seu negócio.</h2>
+        <h2 className="title-motion-center" data-title-motion aria-label="Começo entendendo o que está travando o seu negócio.">
+          <span className="center-line" aria-hidden="true">Começo entendendo</span>
+          <span className="center-line" aria-hidden="true">o que está <em>travando</em></span>
+          <span className="center-line" aria-hidden="true">o seu negócio.</span>
+        </h2>
         <p className="body-copy reveal-right">Às vezes o problema é um processo manual. Às vezes, informação espalhada em cinco lugares. Em outras, falta uma ferramenta que simplesmente não existe.</p>
         <p className="body-copy reveal-left">Antes de sugerir qualquer tecnologia, quero entender a operação, ouvir quem faz o trabalho e descobrir onde uma mudança pode fazer diferença de verdade.</p>
       </div>
@@ -100,7 +195,11 @@ export default function HomePage() {
         <div className="section-index reveal-right">O QUE POSSO FAZER</div>
         <div className="section-heading">
           <p className="kicker reveal-left">A FERRAMENTA VEM DEPOIS DO PROBLEMA.</p>
-          <h2 className="reveal-right">Uma solução certa<br/><em>para cada desafio.</em></h2>
+          <h2 className="title-motion-scramble" data-title-motion aria-label="Uma solução certa para cada desafio.">
+            <span aria-hidden="true"><ScrambleText text="Uma solução certa" /></span>
+            <br />
+            <em aria-hidden="true"><ScrambleText text="para cada desafio." /></em>
+          </h2>
         </div>
         <div className="capability-bento">
           {capabilities.map((item, i) => <article className={`capability-tile capability-tile-${i + 1} reveal-${i % 2 ? "right" : "left"}`} key={item.title}>
@@ -124,7 +223,11 @@ export default function HomePage() {
         <div className="section-index reveal-right">DO PROBLEMA À SOLUÇÃO</div>
         <div className="process-heading">
           <p className="kicker reveal-left">TRABALHO DO COMEÇO AO USO.</p>
-          <h2 className="reveal-right">Não entrego só<br/><em>um arquivo.</em></h2>
+          <h2 className="title-motion-words" data-title-motion aria-label="Não entrego só um arquivo.">
+            <MotionWords text="Não entrego só" />
+            <br />
+            <em><MotionWords text="um arquivo." delay={290} /></em>
+          </h2>
           <p className="process-intro">Um caminho claro, construído junto com você — e pensado para funcionar na rotina real da empresa.</p>
         </div>
         <div className="process-bento">
@@ -143,7 +246,11 @@ export default function HomePage() {
       <span className="closing-floating" aria-hidden="true">VAMOS<br/>CONSTRUIR?</span>
       <div className="closing-content">
         <p className="kicker reveal-left">TEM ALGUMA COISA QUE PODERIA FUNCIONAR MELHOR?</p>
-        <h2 className="reveal-right">Vamos descobrir<br/><em>e construir.</em></h2>
+        <h2 className="title-motion-bloom" data-title-motion aria-label="Vamos descobrir e construir.">
+          <BloomLine text="Vamos descobrir" />
+          <br />
+          <em><BloomLine text="e construir." /></em>
+        </h2>
         <p className="reveal-left">Você não precisa chegar com a solução pronta. Me conte o que acontece hoje, onde está o problema e o que gostaria de mudar.</p>
         <LiquidMetalButton label="Me conte sobre seu negócio" onClick={() => window.open(contact, "_blank", "noopener,noreferrer")} />
       </div>
