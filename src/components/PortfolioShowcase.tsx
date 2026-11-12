@@ -1,7 +1,7 @@
 import { ArrowUpRight, LockKeyhole } from "lucide-react";
 import "../styles/portfolio-showcase.css";
 
-type PortfolioProject = {
+export type PortfolioProject = {
   number: string;
   name: string;
   category: string;
@@ -11,7 +11,7 @@ type PortfolioProject = {
   domain: string;
 };
 
-const projects: PortfolioProject[] = [
+export const portfolioProjects: PortfolioProject[] = [
   {
     number: "01",
     name: "Helena Vasconcelos",
@@ -59,7 +59,7 @@ const projects: PortfolioProject[] = [
   },
 ];
 
-function screenshotUrl(target: string) {
+export function screenshotUrl(target: string) {
   return `https://image.thum.io/get/width/900/crop/1000/noanimate/?url=${encodeURIComponent(target)}`;
 }
 
@@ -154,7 +154,7 @@ export default function PortfolioShowcase() {
         </div>
 
         <div className="portfolio-grid">
-          {projects.map((project) => (
+          {portfolioProjects.map((project) => (
             <article className="portfolio-project" key={project.number}>
               <SitePreview project={project} />
               <div className="portfolio-project-info">
