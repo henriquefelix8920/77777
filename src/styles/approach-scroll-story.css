@@ -626,3 +626,58 @@
     animation-iteration-count: infinite !important;
   }
 }
+
+
+/* Section 02 — luxury black-champagne gold atmosphere. */
+.site-shell .intro-story-section .section-depth-wallpaper {
+  background:
+    radial-gradient(ellipse at 50% 46%, rgba(190, 145, 78, .17), transparent 46%),
+    radial-gradient(ellipse at 12% 76%, rgba(120, 83, 42, .16), transparent 38%),
+    radial-gradient(ellipse at 88% 24%, rgba(210, 177, 119, .12), transparent 34%),
+    linear-gradient(135deg, #050403 0%, #100d09 48%, #030302 100%) !important;
+}
+.site-shell .intro-story-section .section-depth-floor {
+  opacity: .3;
+  background-image:
+    linear-gradient(rgba(190, 151, 94, .22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(190, 151, 94, .22) 1px, transparent 1px);
+  mask-image: linear-gradient(to top, #000 8%, rgba(0,0,0,.62) 48%, transparent 95%);
+}
+.site-shell .intro-story-section .section-depth-halo {
+  opacity: .5;
+  background: radial-gradient(circle, rgba(194, 151, 91, .22), rgba(111, 78, 42, .08) 38%, transparent 72%);
+}
+.site-shell .intro-story-section .section-depth-orbit--back {
+  border-color: rgba(169, 129, 76, .25);
+  box-shadow: 0 0 54px rgba(163, 119, 61, .13), inset 0 0 48px rgba(191, 148, 87, .08);
+  background: radial-gradient(ellipse, transparent 56%, rgba(151, 111, 63, .07) 64%, transparent 73%);
+}
+.site-shell .intro-story-section .section-depth-orbit--middle {
+  border-color: rgba(224, 190, 132, .46);
+  box-shadow: 0 0 30px rgba(194, 151, 91, .22), inset 0 0 42px rgba(192, 150, 91, .12);
+  background: radial-gradient(ellipse, transparent 55%, rgba(190, 145, 78, .12) 63%, transparent 71%);
+}
+.site-shell .intro-story-section .section-depth-orbit--front {
+  border-color: rgba(242, 222, 183, .3);
+  box-shadow: 0 0 36px rgba(204, 171, 119, .16), inset 0 0 48px rgba(198, 161, 103, .1);
+}
+.site-shell .intro-story-section .section-depth-ribbon--blue {
+  border-top-color: rgba(229, 190, 125, .82);
+  box-shadow: 0 -10px 28px -14px rgba(231, 190, 125, .95);
+}
+.site-shell .intro-story-section .section-depth-ribbon--silver {
+  border-bottom-color: rgba(246, 229, 197, .62);
+  box-shadow: 0 10px 28px -16px rgba(240, 217, 177, .9);
+}
+.site-shell .intro-story-section .section-depth-ribbon--amber {
+  border-top-color: rgba(166, 116, 55, .7);
+  box-shadow: 0 -8px 22px -14px rgba(219, 169, 99, .82);
+}
+.site-shell .intro-story-section .intro-story-ambient::after {
+  background:
+    linear-gradient(90deg, rgba(3, 3, 2, .42), rgba(3, 3, 2, .04) 48%, rgba(3, 3, 2, .38)),
+    linear-gradient(180deg, rgba(3, 3, 2, .24), transparent 28%, transparent 72%, rgba(3, 3, 2, .42));
+}
+@media (max-width: 800px) {
+  .site-shell .intro-story-section .section-depth-floor { opacity: .25; }
+}
