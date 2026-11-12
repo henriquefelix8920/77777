@@ -408,3 +408,44 @@
 @media (prefers-reduced-motion: reduce) {
   .site-shell .intro-story-section .section-fog-wallpaper { opacity: .72; }
 }
+
+
+/* Dark smoke wallpaper: visible layered fallback and lightweight motion. */
+.site-shell .intro-story-section .intro-story-ambient::before {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  z-index: 0;
+  display: block !important;
+  pointer-events: none;
+  opacity: .72;
+  background:
+    radial-gradient(ellipse 34% 38% at 18% 56%, rgba(92, 105, 126, .42), transparent 78%),
+    radial-gradient(ellipse 42% 32% at 76% 42%, rgba(65, 79, 103, .38), transparent 80%),
+    radial-gradient(ellipse 36% 28% at 52% 78%, rgba(100, 108, 126, .3), transparent 82%),
+    radial-gradient(ellipse 28% 24% at 88% 84%, rgba(53, 67, 88, .26), transparent 78%);
+  transform: translate3d(-2%, 0, 0) scale(1.04);
+  animation: section-fog-fallback-drift 34s ease-in-out infinite alternate;
+}
+.site-shell .intro-story-section .section-fog-wallpaper {
+  opacity: 1;
+}
+.site-shell .intro-story-section .intro-story-ambient::after {
+  background:
+    linear-gradient(90deg, rgba(2, 6, 15, .22) 0%, rgba(2, 6, 15, .06) 48%, rgba(2, 6, 15, .18) 100%),
+    linear-gradient(180deg, rgba(2, 6, 15, .08), transparent 26%, transparent 74%, rgba(2, 6, 15, .2));
+}
+@keyframes section-fog-fallback-drift {
+  0% { transform: translate3d(-2%, -1%, 0) scale(1.02); }
+  50% { transform: translate3d(1%, 1.5%, 0) scale(1.06); }
+  100% { transform: translate3d(2%, -1%, 0) scale(1.03); }
+}
+@media (max-width: 800px) {
+  .site-shell .intro-story-section .intro-story-ambient::before { opacity: .82; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-shell .intro-story-section .intro-story-ambient::before {
+    animation: none !important;
+    transform: none;
+  }
+}
