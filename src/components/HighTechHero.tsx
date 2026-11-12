@@ -137,6 +137,11 @@ export default function HighTechHero({ contact }: HighTechHeroProps) {
   return (
     <section id="inicio" className="hightech-hero">
       <div className="hightech-world" aria-hidden="true">
+        <span className="hightech-aurora-cloud hightech-aurora-cloud-a" />
+        <span className="hightech-aurora-cloud hightech-aurora-cloud-b" />
+        <span className="hightech-aurora-cloud hightech-aurora-cloud-c" />
+        <span className="hightech-energy-sweep" />
+        <span className="hightech-world-particles" />
         <span className="hightech-grid" />
         <span className="hightech-horizon" />
         <span className="hightech-orbit hightech-orbit-one" />
