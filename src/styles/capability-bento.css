@@ -1983,3 +1983,404 @@ body, p, a, button, .tile-meta, .process-card-top {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
 }
+
+
+/* 03 — Live capability bento: asymmetric service cards with lightweight CSS diagrams. */
+.work-section-capabilities {
+  padding-block: clamp(88px, 10vw, 142px);
+  color: #fff;
+  background: #8b0018;
+}
+.work-section-capabilities .capability-wrap { position: relative; z-index: 2; }
+.work-section-capabilities .capability-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(230px, .62fr);
+  align-items: end;
+  gap: clamp(28px, 6vw, 88px);
+  max-width: 1120px;
+  margin: clamp(38px, 5vw, 66px) 0 clamp(36px, 5vw, 62px);
+}
+.work-section-capabilities .capability-heading-main { min-width: 0; }
+.work-section-capabilities .capability-heading .kicker {
+  margin: 0 0 23px;
+  color: #ff9a5c;
+}
+.work-section-capabilities .capability-heading h2 {
+  margin: 0;
+  color: #fff;
+  font: 600 clamp(48px, 7.1vw, 96px)/.91 "Space Grotesk", sans-serif;
+  letter-spacing: -.085em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.work-section-capabilities .capability-heading h2 em {
+  color: #ff8a45;
+  font-style: normal;
+}
+.work-section-capabilities .capability-heading-aside {
+  padding: 0 0 8px clamp(18px, 2vw, 28px);
+  border-left: 1px solid rgba(255,255,255,.32);
+}
+.work-section-capabilities .capability-heading-aside > span {
+  color: #ff9a5c;
+  font-size: 9px;
+  letter-spacing: .2em;
+}
+.work-section-capabilities .capability-heading-aside p {
+  max-width: 330px;
+  margin: 16px 0 0;
+  color: rgba(255,255,255,.82);
+  font-size: clamp(13px, 1.15vw, 15px);
+  line-height: 1.85;
+}
+.work-section-capabilities .capability-live-bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: minmax(350px, auto);
+  gap: 16px;
+  align-items: stretch;
+}
+.work-section-capabilities .capability-live-tile {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(150px, 1fr) auto;
+  align-content: stretch;
+  gap: 10px;
+  min-width: 0;
+  min-height: 350px;
+  padding: clamp(23px, 2.8vw, 38px);
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: 2px;
+  color: #fff;
+  background:
+    radial-gradient(ellipse at 82% 18%, rgba(255,101,0,.19), transparent 42%),
+    linear-gradient(145deg, #370611 0%, #520817 54%, #30050e 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.055), 0 18px 42px rgba(24,0,7,.15);
+  transition: transform .38s cubic-bezier(.2,.8,.2,1), border-color .35s ease, box-shadow .35s ease;
+}
+.work-section-capabilities .capability-live-tile:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 66%;
+  aspect-ratio: 1;
+  right: -24%;
+  top: -43%;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 50%;
+  box-shadow: 0 0 0 28px rgba(255,101,0,.025), 0 0 0 60px rgba(255,255,255,.018);
+  transition: transform .6s ease, border-color .4s ease;
+}
+.work-section-capabilities .capability-live-tile:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: auto 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,101,0,.9), transparent);
+  opacity: .6;
+}
+.work-section-capabilities .capability-live-tile:nth-child(1),
+.work-section-capabilities .capability-live-tile:nth-child(4) { grid-column: span 7; }
+.work-section-capabilities .capability-live-tile:nth-child(2),
+.work-section-capabilities .capability-live-tile:nth-child(3) { grid-column: span 5; }
+.work-section-capabilities .capability-live-tile:nth-child(2),
+.work-section-capabilities .capability-live-tile:nth-child(3) {
+  background:
+    radial-gradient(ellipse at 50% 16%, rgba(255,101,0,.17), transparent 48%),
+    linear-gradient(145deg, #31050f, #480714 65%, #2b040c);
+}
+.work-section-capabilities .capability-live-tile .tile-meta {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  grid-column: 1;
+  grid-row: 1;
+  color: #ff9a5c;
+  font-size: 8px;
+  line-height: 1.5;
+  letter-spacing: .17em;
+}
+.work-section-capabilities .capability-live-tile .tile-meta span:first-child {
+  color: rgba(255,255,255,.84);
+  font-variant-numeric: tabular-nums;
+}
+.work-section-capabilities .capability-live-tile .capability-art {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-column: 1;
+  grid-row: 2;
+  place-items: center;
+  width: 100%;
+  max-width: 500px;
+  min-height: 155px;
+  justify-self: center;
+  align-self: stretch;
+  overflow: visible;
+  border: 0 !important;
+  background: transparent !important;
+  isolation: isolate;
+}
+.work-section-capabilities .capability-live-tile .capability-art:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 12% 8%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,101,0,.16), transparent 68%);
+  opacity: .8;
+}
+.work-section-capabilities .capability-live-tile .tile-copy {
+  position: relative;
+  z-index: 2;
+  grid-column: 1;
+  grid-row: 3;
+  align-self: end;
+  max-width: 540px;
+  padding: 0 42px 0 0;
+}
+.work-section-capabilities .capability-live-tile .tile-copy h3 {
+  margin: 0 0 10px;
+  color: #fff;
+  font: 600 clamp(25px, 2.55vw, 35px)/.99 "Space Grotesk", sans-serif;
+  letter-spacing: -.055em;
+  text-transform: uppercase;
+}
+.work-section-capabilities .capability-live-tile .tile-copy p {
+  max-width: 410px;
+  margin: 0;
+  color: rgba(255,255,255,.79);
+  font-size: 12px;
+  line-height: 1.78;
+}
+.work-section-capabilities .capability-live-tile .tile-arrow {
+  right: 22px;
+  bottom: 22px;
+  width: 35px;
+  height: 35px;
+  border-color: rgba(255,255,255,.4);
+  color: #ff9a5c;
+  background: rgba(139,0,24,.18);
+  transition: transform .3s ease, background .3s ease, color .3s ease;
+}
+.work-section-capabilities .capability-live-tile:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255,101,0,.9);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 22px 48px rgba(24,0,7,.24);
+}
+.work-section-capabilities .capability-live-tile:hover:before {
+  transform: scale(1.12);
+  border-color: rgba(255,101,0,.22);
+}
+.work-section-capabilities .capability-live-tile:hover .tile-arrow {
+  transform: rotate(45deg);
+  color: #fff;
+  background: #ff6500;
+}
+
+/* Systems dashboard — an interface that feels active without video or canvas. */
+.systems-ui {
+  position: relative;
+  width: min(82%, 390px);
+  min-width: 230px;
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,.38);
+  background: linear-gradient(145deg, rgba(255,255,255,.12), rgba(22,0,7,.52));
+  box-shadow: 18px 18px 42px rgba(0,0,0,.2);
+  transform: perspective(900px) rotateY(-9deg) rotateX(3deg);
+  animation: capability-dashboard-float 7s ease-in-out infinite;
+}
+.systems-ui-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 0 0 10px;
+  border-bottom: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.8);
+  font-size: 6px;
+  letter-spacing: .13em;
+}
+.systems-ui-bar span { display: inline-flex; align-items: center; gap: 6px; }
+.systems-ui-bar span i { width: 6px; height: 6px; border-radius: 50%; background: #ff6500; box-shadow: 0 0 10px rgba(255,101,0,.8); }
+.systems-ui-bar b { color: #ff9a5c; font-size: 6px; font-weight: 600; }
+.systems-ui-body { display: grid; grid-template-columns: 24px minmax(0,1fr); gap: 10px; padding-top: 10px; }
+.systems-ui-rail { display: flex; flex-direction: column; gap: 9px; padding: 4px 7px 0 2px; border-right: 1px solid rgba(255,255,255,.12); }
+.systems-ui-rail i { width: 9px; height: 9px; border: 1px solid rgba(255,255,255,.5); border-radius: 3px; }
+.systems-ui-rail i:first-child { border-color: #ff6500; background: rgba(255,101,0,.25); }
+.systems-ui-panel { min-width: 0; }
+.systems-ui-metric { display: flex; justify-content: space-between; align-items: baseline; color: rgba(255,255,255,.64); font-size: 6px; letter-spacing: .12em; }
+.systems-ui-metric strong { color: #fff; font: 600 18px "Space Grotesk",sans-serif; letter-spacing: -.06em; }
+.systems-ui-chart { display: flex; align-items: end; gap: 6px; height: 53px; padding: 8px 10px 0; margin-top: 7px; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.08); }
+.systems-ui-chart i { flex: 1; height: 35%; background: linear-gradient(0deg, #8b0018, #ff8a45); transform-origin: bottom; animation: capability-bars 2.6s ease-in-out infinite alternate; }
+.systems-ui-chart i:nth-child(2) { height: 63%; animation-delay: -.4s; }
+.systems-ui-chart i:nth-child(3) { height: 48%; animation-delay: -.8s; }
+.systems-ui-chart i:nth-child(4) { height: 84%; animation-delay: -1.2s; }
+.systems-ui-chart i:nth-child(5) { height: 57%; animation-delay: -1.6s; }
+.systems-ui-chart i:nth-child(6) { height: 76%; animation-delay: -2s; }
+.systems-ui-chart i:nth-child(7) { height: 91%; animation-delay: -2.4s; }
+.systems-ui-foot { display: flex; justify-content: space-between; margin-top: 8px; color: rgba(255,255,255,.52); font-size: 5px; letter-spacing: .15em; }
+
+/* Automation flow — a moving signal travels between real process nodes. */
+.automation-flow { position: relative; width: min(100%, 340px); height: 145px; }
+.automation-flow-line {
+  position: absolute;
+  left: 13%;
+  top: 46%;
+  width: 40%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,.12), #ff6500, rgba(255,255,255,.12));
+  transform: rotate(-15deg);
+  transform-origin: left;
+  background-size: 200% 100%;
+  animation: capability-signal 2.4s linear infinite;
+}
+.automation-flow-line-b { left: 52%; top: 35%; width: 39%; transform: rotate(19deg); animation-delay: -1.2s; }
+.automation-flow-node {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  color: rgba(255,255,255,.68);
+  font-size: 6px;
+  letter-spacing: .16em;
+}
+.automation-flow-node i {
+  display: block;
+  width: 31px;
+  height: 31px;
+  border: 1px solid #ff8a45;
+  border-radius: 9px;
+  background: linear-gradient(145deg, rgba(255,101,0,.5), rgba(139,0,24,.6));
+  box-shadow: 0 0 20px rgba(255,101,0,.16);
+}
+.automation-flow-node b { font-weight: 500; white-space: nowrap; }
+.automation-flow-node-a { left: 0; top: 48%; }
+.automation-flow-node-b { left: 42%; top: 8%; }
+.automation-flow-node-c { right: 0; top: 52%; }
+.automation-flow-node-b i { background: #ff6500; box-shadow: 0 0 24px rgba(255,101,0,.35); }
+.automation-flow-pulse {
+  position: absolute;
+  left: 16%;
+  top: 47%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 14px #ff6500;
+  animation: capability-pulse-path 3.6s ease-in-out infinite;
+}
+
+/* AI orbit — restrained rotating rings and a breathing core. */
+.ai-live-orbit { position: relative; display: grid; place-items: center; width: 180px; height: 155px; }
+.ai-live-ring { position: absolute; width: 122px; height: 122px; border: 1px solid rgba(255,138,69,.72); border-radius: 50%; transform: scaleY(.42) rotate(-28deg); }
+.ai-live-ring-a { animation: capability-orbit-a 18s linear infinite; }
+.ai-live-ring-b { width: 166px; height: 166px; border-color: rgba(255,255,255,.3); transform: scaleY(.36) rotate(32deg); animation: capability-orbit-b 24s linear infinite; }
+.ai-live-core {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 66px;
+  height: 66px;
+  border: 1px solid rgba(255,255,255,.72);
+  border-radius: 50%;
+  color: #fff;
+  background: radial-gradient(circle at 34% 22%, #ff9a5c, #8b0018 68%);
+  box-shadow: 0 0 36px rgba(255,101,0,.32);
+  font: 600 22px "Space Grotesk",sans-serif;
+  animation: capability-core-breathe 4s ease-in-out infinite alternate;
+}
+.ai-live-signal { position: absolute; z-index: 3; padding: 5px 7px; border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.8); background: rgba(44,4,13,.84); font-size: 5px; letter-spacing: .16em; }
+.ai-live-signal-a { top: 12px; right: -16px; }
+.ai-live-signal-b { bottom: 9px; left: -22px; }
+
+/* Web experience — miniature responsive interface, not a static icon. */
+.web-live-window {
+  width: min(83%, 400px);
+  padding: 9px;
+  border: 1px solid rgba(255,255,255,.42);
+  background: linear-gradient(145deg, rgba(255,255,255,.12), rgba(24,0,7,.62));
+  box-shadow: 15px 18px 38px rgba(0,0,0,.2);
+  transform: perspective(900px) rotateY(8deg) rotateX(2deg);
+  animation: capability-dashboard-float 8s ease-in-out infinite reverse;
+}
+.web-live-bar { display: flex; align-items: center; gap: 4px; padding: 1px 2px 8px; border-bottom: 1px solid rgba(255,255,255,.14); }
+.web-live-bar span { width: 5px; height: 5px; border-radius: 50%; background: #ff6500; }
+.web-live-bar i { margin-left: auto; color: rgba(255,255,255,.63); font-size: 5px; letter-spacing: .15em; font-style: normal; }
+.web-live-content { display: grid; grid-template-columns: 1fr .85fr; gap: 12px; align-items: center; min-height: 93px; padding: 12px 8px; }
+.web-live-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
+.web-live-copy b { display: block; width: 90%; height: 4px; background: rgba(255,255,255,.82); }
+.web-live-copy b:nth-child(2) { width: 68%; background: #ff8a45; }
+.web-live-copy b:nth-child(3) { width: 80%; height: 2px; background: rgba(255,255,255,.34); }
+.web-live-copy i { margin-top: 3px; padding: 4px 7px; color: #fff; background: #ff6500; font-size: 5px; font-style: normal; letter-spacing: .1em; }
+.web-live-image { position: relative; min-height: 67px; overflow: hidden; background: linear-gradient(135deg, rgba(255,101,0,.82), rgba(139,0,24,.2)), repeating-linear-gradient(135deg, transparent 0 8px, rgba(255,255,255,.13) 9px, transparent 10px); }
+.web-live-image span { position: absolute; inset: 15% 12% 22% 24%; border: 1px solid rgba(255,255,255,.65); transform: skewY(-12deg); }
+.web-live-image i { position: absolute; width: 24px; height: 24px; right: 9px; bottom: 7px; border: 1px solid rgba(255,255,255,.48); border-radius: 50%; }
+.web-live-footer { display: flex; gap: 5px; padding: 7px 2px 0; border-top: 1px solid rgba(255,255,255,.14); }
+.web-live-footer i { width: 20%; height: 3px; background: rgba(255,255,255,.38); }
+.web-live-cursor { position: absolute; right: 5%; bottom: 6%; color: #ff9a5c; font-size: 27px; text-shadow: 0 0 18px rgba(255,101,0,.55); animation: capability-cursor-drift 3.8s ease-in-out infinite; }
+
+/* All continuous movement is transform/opacity only; mobile gets simpler diagrams. */
+@keyframes capability-dashboard-float { 0%,100% { transform: perspective(900px) rotateY(-9deg) rotateX(3deg) translateY(0); } 50% { transform: perspective(900px) rotateY(-9deg) rotateX(3deg) translateY(-5px); } }
+@keyframes capability-bars { from { transform: scaleY(.72); opacity: .58; } to { transform: scaleY(1); opacity: 1; } }
+@keyframes capability-signal { to { background-position: -200% 0; } }
+@keyframes capability-pulse-path { 0% { left: 15%; opacity: 0; } 14% { opacity: 1; } 48% { left: 48%; opacity: 1; } 86% { left: 84%; opacity: 1; } 100% { left: 92%; opacity: 0; } }
+@keyframes capability-orbit-a { to { transform: scaleY(.42) rotate(332deg); } }
+@keyframes capability-orbit-b { to { transform: scaleY(.36) rotate(-328deg); } }
+@keyframes capability-core-breathe { to { box-shadow: 0 0 48px rgba(255,101,0,.48); transform: scale(1.045); } }
+@keyframes capability-cursor-drift { 50% { transform: translate3d(-7px,-6px,0); } }
+
+@media (hover:hover) and (min-width: 761px) {
+  .work-section-capabilities .capability-live-tile:hover { transform: translateY(-6px); }
+}
+@media (max-width: 900px) {
+  .work-section-capabilities .capability-heading { grid-template-columns: minmax(0,1fr) minmax(190px,.6fr); gap: 28px; }
+  .work-section-capabilities .capability-live-bento { grid-template-columns: repeat(6,minmax(0,1fr)); grid-auto-rows: minmax(330px,auto); gap: 12px; }
+  .work-section-capabilities .capability-live-tile:nth-child(1),
+  .work-section-capabilities .capability-live-tile:nth-child(4) { grid-column: span 6; }
+  .work-section-capabilities .capability-live-tile:nth-child(2),
+  .work-section-capabilities .capability-live-tile:nth-child(3) { grid-column: span 3; }
+  .work-section-capabilities .capability-live-tile { min-height: 330px; padding: 24px; }
+  .work-section-capabilities .capability-live-tile .tile-copy h3 { font-size: clamp(24px,3.2vw,31px); }
+}
+@media (max-width: 640px) {
+  .work-section-capabilities { padding-block: 78px 88px; }
+  .work-section-capabilities .capability-heading { display: block; margin: 32px 0 32px; }
+  .work-section-capabilities .capability-heading h2 { font-size: clamp(42px,10.5vw,68px); line-height: .95; }
+  .work-section-capabilities .capability-heading-aside { margin-top: 24px; padding: 0 0 0 15px; }
+  .work-section-capabilities .capability-heading-aside p { margin-top: 10px; font-size: 13px; }
+  .work-section-capabilities .capability-live-bento { grid-template-columns: minmax(0,1fr); grid-auto-rows: auto; gap: 12px; }
+  .work-section-capabilities .capability-live-tile:nth-child(n) { grid-column: 1; min-height: 310px; padding: 22px 20px 25px; }
+  .work-section-capabilities .capability-live-tile .capability-art { min-height: 140px; }
+  .work-section-capabilities .capability-live-tile .tile-copy { padding-right: 30px; }
+  .work-section-capabilities .capability-live-tile .tile-copy h3 { font-size: clamp(25px,7vw,31px); }
+  .work-section-capabilities .capability-live-tile .tile-copy p { font-size: 12px; line-height: 1.7; }
+  .systems-ui { width: min(84%, 340px); transform: none; animation: none; }
+  .web-live-window { width: min(84%, 340px); transform: none; animation: none; }
+  .automation-flow { width: min(94%, 330px); }
+  .ai-live-orbit { transform: scale(.88); }
+  .web-live-cursor { right: 3%; bottom: 4%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-section-capabilities .capability-live-tile,
+  .work-section-capabilities .capability-live-tile:before,
+  .systems-ui, .systems-ui-chart i,
+  .automation-flow-line, .automation-flow-pulse,
+  .ai-live-ring, .ai-live-core,
+  .web-live-window, .web-live-cursor {
+    animation: none !important;
+    transition: none !important;
+  }
+  .work-section-capabilities .capability-live-tile:hover { transform: none; }
+}
