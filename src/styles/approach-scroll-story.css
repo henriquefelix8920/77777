@@ -763,3 +763,126 @@
     animation: none !important;
   }
 }
+
+
+/* Section 02 — video atmosphere, no framed visual card. */
+.site-shell .intro-story-section {
+  background:
+    radial-gradient(ellipse at 18% 24%, rgba(112, 3, 24, .36), transparent 40%),
+    radial-gradient(ellipse at 84% 72%, rgba(179, 33, 18, .2), transparent 38%),
+    linear-gradient(132deg, #070104 0%, #160208 48%, #050103 100%) !important;
+  color: #fff8f5;
+}
+.site-shell .intro-story-section .intro-story-ambient {
+  background: #080105 !important;
+}
+.site-shell .intro-story-section .intro-story-ambient::after {
+  background:
+    linear-gradient(90deg, rgba(8, 1, 5, .26), rgba(8, 1, 5, .06) 48%, rgba(8, 1, 5, .24)),
+    linear-gradient(180deg, rgba(8, 1, 5, .14), transparent 28%, transparent 72%, rgba(8, 1, 5, .3));
+}
+.site-shell .intro-story-section .section-luxe-wallpaper {
+  background:
+    radial-gradient(ellipse 56% 40% at 52% 52%, rgba(157, 9, 34, .2), transparent 72%),
+    radial-gradient(ellipse 34% 30% at 17% 72%, rgba(109, 7, 25, .14), transparent 75%),
+    radial-gradient(ellipse 30% 26% at 86% 25%, rgba(255, 105, 31, .12), transparent 78%),
+    linear-gradient(128deg, #080105 0%, #1a050b 48%, #050103 100%);
+}
+.site-shell .intro-story-section .section-luxe-wallpaper::before {
+  background:
+    linear-gradient(180deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,.035) 23%,
+      rgba(255,113,78,.46) 34%,
+      rgba(101,3,23,.82) 40%,
+      rgba(255,242,235,.78) 46%,
+      rgba(188,25,34,.72) 53%,
+      rgba(38,3,12,.86) 61%,
+      rgba(255,118,35,.5) 69%,
+      rgba(255,255,255,0) 82%);
+  opacity: .66;
+}
+.site-shell .intro-story-section .approach-video-atmosphere {
+  position: absolute;
+  inset: -3% -2%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.site-shell .intro-story-section .approach-video-atmosphere video {
+  position: absolute;
+  inset: -5% 0;
+  width: 100%;
+  height: 110%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  filter: grayscale(1) sepia(1) saturate(3.1) hue-rotate(328deg) contrast(1.08) brightness(.72);
+  mix-blend-mode: screen;
+  mask-image: radial-gradient(ellipse at 52% 48%, #000 12%, rgba(0,0,0,.74) 52%, transparent 100%);
+  transition: opacity .42s ease;
+}
+.site-shell .intro-story-section .approach-video-atmosphere video.is-visible {
+  opacity: .2;
+}
+.site-shell .intro-story-section .approach-video-colorwash {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(115deg, rgba(88, 0, 22, .22), transparent 52%, rgba(127, 25, 5, .17)),
+    linear-gradient(0deg, rgba(8, 1, 5, .28), transparent 54%);
+}
+.site-shell .intro-story-section .intro-story-layout {
+  display: block;
+  width: 100%;
+  margin-top: clamp(38px, 6vw, 82px);
+}
+.site-shell .intro-story-section .intro-story-visual {
+  display: none !important;
+}
+.site-shell .intro-story-section .intro-story-copy {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 940px);
+  max-width: 940px;
+  margin-inline: auto;
+}
+.site-shell .intro-story-section .intro-story-heading {
+  min-height: 34vh;
+}
+.site-shell .intro-story-section .section-index {
+  color: rgba(255, 244, 239, .68);
+}
+.site-shell .intro-story-section .kicker,
+.site-shell .intro-story-section .story-chapter-index {
+  color: #ff8b36;
+}
+.site-shell .intro-story-section .title-motion-center {
+  color: #fff8f5;
+}
+.site-shell .intro-story-section .title-motion-center em {
+  color: #ff7528;
+}
+.site-shell .intro-story-section .story-chapter {
+  border-top-color: rgba(255, 91, 55, .26);
+}
+.site-shell .intro-story-section .story-chapter h3 {
+  color: #fffaf7;
+}
+.site-shell .intro-story-section .story-chapter p {
+  color: rgba(255, 242, 237, .82);
+}
+@media (max-width: 800px) {
+  .site-shell .intro-story-section .intro-story-copy {
+    width: 100%;
+  }
+  .site-shell .intro-story-section .approach-video-atmosphere video.is-visible {
+    opacity: .15;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-shell .intro-story-section .approach-video-atmosphere video {
+    transition: none;
+  }
+}
