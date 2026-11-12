@@ -130,3 +130,40 @@
   .reveal-left,.reveal-right,.reveal-up{animation:none!important;opacity:1!important;transform:none!important}
   .hero-floating-title,.intro-float,.work-float,.process-float,.closing-floating{animation:none!important}
 }
+
+
+/* One corner film per section: atmospheric footage, never a collage or full-width strip. */
+.film-object{position:absolute;z-index:1;overflow:hidden;border:0!important;box-shadow:none!important;pointer-events:none;isolation:isolate}
+.film-object video{display:block;width:100%;height:100%;object-fit:cover}
+.film-tint{position:absolute;inset:0;pointer-events:none;mix-blend-mode:color;opacity:.72}
+.film-object:after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;opacity:.65}
+.hero-film-bg{top:-4%;right:-3%;left:auto;bottom:auto;width:37%;height:66%;opacity:.7;clip-path:none;mask-image:radial-gradient(ellipse at 58% 42%,#000 34%,rgba(0,0,0,.8) 56%,transparent 100%)}
+.hero-film-bg video{mix-blend-mode:screen;filter:saturate(1.2) contrast(1.08)}
+.hero-film-bg .film-tint{background:linear-gradient(135deg,#8b0018,#ff6500)}
+.hero-film-bg:after{background:linear-gradient(135deg,#8b0018 0%,transparent 62%,#ff6500 100%)}
+.hero-film-orbit{display:none!important}
+
+.intro-film{top:auto;right:-3%;bottom:-7%;left:auto;width:34%;height:61%;opacity:.48;transform:none;clip-path:none;mask-image:radial-gradient(ellipse at 58% 55%,#000 30%,rgba(0,0,0,.72) 55%,transparent 100%)}
+.intro-film video,.process-film video{mix-blend-mode:multiply;filter:sepia(.25) saturate(1.35) contrast(1.08)}
+.intro-film .film-tint,.process-film .film-tint{background:linear-gradient(135deg,rgba(139,0,24,.9),rgba(255,101,0,.78))}
+.intro-film:after,.process-film:after{background:linear-gradient(135deg,#fff 0%,transparent 48%,#ff6500 100%)}
+
+.work-film{top:auto;right:-4%;bottom:-8%;left:auto;width:36%;height:65%;opacity:.48;transform:none;clip-path:none;mask-image:radial-gradient(ellipse at 55% 52%,#000 32%,rgba(0,0,0,.78) 56%,transparent 100%)}
+.work-film video{mix-blend-mode:screen}
+.work-film .film-tint{background:linear-gradient(135deg,#8b0018,#ff6500)}
+.work-film:after{background:linear-gradient(120deg,#8b0018 0%,transparent 55%,#ff6500 100%)}
+
+.process-film{top:-5%;right:-4%;bottom:auto;left:auto;width:34%;height:63%;opacity:.43;transform:none;clip-path:none;mask-image:radial-gradient(ellipse at 52% 45%,#000 30%,rgba(0,0,0,.72) 54%,transparent 100%)}
+.closing-film{top:auto;right:-4%;bottom:-12%;left:auto;width:37%;height:75%;opacity:.43;transform:none;clip-path:none;mask-image:radial-gradient(ellipse at 45% 55%,#000 30%,rgba(0,0,0,.75) 56%,transparent 100%)}
+.closing-film video{mix-blend-mode:screen;filter:saturate(1.15) contrast(1.1)}
+.closing-film .film-tint{background:linear-gradient(135deg,#8b0018,#ff6500)}
+.closing-film:after{background:linear-gradient(135deg,#ff6500 0%,transparent 58%,#8b0018 100%)}
+
+@media(max-width:760px){
+  .hero-film-bg{top:auto;right:-12%;bottom:1%;left:auto;width:68%;height:39%;opacity:.62;mask-image:radial-gradient(ellipse at 58% 52%,#000 30%,rgba(0,0,0,.75) 54%,transparent 100%)}
+  .intro-film{top:auto;right:-12%;bottom:0;left:auto;width:62%;height:40%;opacity:.36}
+  .work-film{top:auto;right:-12%;bottom:-2%;left:auto;width:66%;height:43%;opacity:.34}
+  .process-film{top:2%;right:-12%;bottom:auto;left:auto;width:62%;height:42%;opacity:.32}
+  .closing-film{top:auto;right:-12%;bottom:-3%;left:auto;width:66%;height:48%;opacity:.36}
+  .hero-film-orbit{display:none!important}
+}
