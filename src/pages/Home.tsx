@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { ArrowUpRight } from "lucide-react";
 import { waLink } from "../config";
 import "../styles/capability-bento.css";
 import "../styles/approach-scroll-story.css";
@@ -10,6 +9,7 @@ import HighTechHero from "../components/HighTechHero";
 import { WireframeBackground } from "../components/VisualBackgrounds";
 import ApproachVideoBackdrop from "../components/ApproachVideoBackdrop";
 import PortfolioShowcase from "../components/PortfolioShowcase";
+import Capabilities3D from "../components/Capabilities3D";
 
 const processSteps = [
   { number: "01", title: "Entender", text: "Conversamos sobre a empresa, a rotina e o que precisa mudar.", note: "DIAGNÓSTICO" },
@@ -151,88 +151,7 @@ export default function HomePage() {
       </div>
     </section>
 
-    <section className="work-section work-section-capabilities" id="trabalho">
-      <div className="work-animated-grid-bg" aria-hidden="true">
-        <span className="work-grid-glow work-grid-glow-a" />
-        <span className="work-grid-glow work-grid-glow-b" />
-        <span className="work-grid-scan" />
-      </div>
-      <span className="floating-word work-float" aria-hidden="true">POSSIBILIDADES</span>
-      <div className="section-wrap capability-wrap">
-        <div className="section-index reveal-right">O QUE POSSO FAZER / 01—04</div>
-        <div className="section-heading capability-heading">
-          <div className="capability-heading-main">
-            <p className="kicker reveal-left">A FERRAMENTA VEM DEPOIS DO PROBLEMA.</p>
-            <h2 className="title-motion-words capability-title-motion" data-title-motion aria-label="Uma solução certa para cada desafio.">
-              <MotionWords text="Uma solução certa" />
-              <br />
-              <em><MotionWords text="para cada desafio." delay={240} /></em>
-            </h2>
-          </div>
-          <div className="capability-heading-aside">
-            <span>CAPACIDADES / 04 FRENTES</span>
-            <p>Tecnologia aplicada ao que move o negócio: organizar, conectar, acelerar e criar novas possibilidades.</p>
-          </div>
-        </div>
-        <div className="capability-bento capability-live-bento">
-          {capabilities.map((item, i) => <article className={`capability-tile capability-live-tile capability-tile-${i + 1} reveal-up`} key={item.title}>
-            <div className="tile-meta"><span>{item.number} / 04</span><span>{item.tag}</span></div>
-            <div className={`tile-visual capability-art capability-art-${item.visual}`} aria-hidden="true">
-              {item.visual === "systems" && <>
-                <div className="systems-ui">
-                  <div className="systems-ui-bar"><span><i /> V/R — OPERAÇÃO</span><b>● ONLINE</b></div>
-                  <div className="systems-ui-body">
-                    <div className="systems-ui-rail"><i /><i /><i /><i /></div>
-                    <div className="systems-ui-panel">
-                      <div className="systems-ui-metric"><span>ROTINA ORGANIZADA</span><strong>92%</strong></div>
-                      <div className="systems-ui-chart"><i /><i /><i /><i /><i /><i /><i /></div>
-                      <div className="systems-ui-foot"><span>PROCESSOS</span><span>EM SINCRONIA</span></div>
-                    </div>
-                  </div>
-                </div>
-                <span className="systems-ui-orbit systems-ui-orbit-a" />
-                <span className="systems-ui-orbit systems-ui-orbit-b" />
-              </>}
-              {item.visual === "automation" && <>
-                <div className="automation-flow">
-                  <span className="automation-flow-line" />
-                  <span className="automation-flow-line automation-flow-line-b" />
-                  <span className="automation-flow-node automation-flow-node-a"><i /><b>ENTRADA</b></span>
-                  <span className="automation-flow-node automation-flow-node-b"><i /><b>PROCESSO</b></span>
-                  <span className="automation-flow-node automation-flow-node-c"><i /><b>RESULTADO</b></span>
-                  <span className="automation-flow-pulse" />
-                </div>
-              </>}
-              {item.visual === "ai" && <>
-                <div className="ai-live-orbit">
-                  <span className="ai-live-ring ai-live-ring-a" />
-                  <span className="ai-live-ring ai-live-ring-b" />
-                  <span className="ai-live-core">IA</span>
-                  <span className="ai-live-signal ai-live-signal-a">ANALISAR</span>
-                  <span className="ai-live-signal ai-live-signal-b">APRENDER</span>
-                </div>
-              </>}
-              {item.visual === "web" && <>
-                <div className="web-live-window">
-                  <div className="web-live-bar"><span /><span /><span /><i>EXPERIÊNCIA DIGITAL</i></div>
-                  <div className="web-live-content">
-                    <div className="web-live-copy"><b /><b /><b /><i>EXPLORAR ↗</i></div>
-                    <div className="web-live-image"><span /><i /><i /></div>
-                  </div>
-                  <div className="web-live-footer"><i /><i /><i /></div>
-                </div>
-                <span className="web-live-cursor">↗</span>
-              </>}
-            </div>
-            <div className="tile-copy">
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-            </div>
-            <span className="tile-arrow" aria-hidden="true"><ArrowUpRight size={19}/></span>
-          </article>)}
-        </div>
-      </div>
-    </section>
+    <Capabilities3D />
 
     <section className="process-section" id="processo">
       <div className="process-motion-grid-bg" aria-hidden="true">
