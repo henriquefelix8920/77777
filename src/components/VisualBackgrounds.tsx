@@ -55,9 +55,9 @@ const FOG_FRAGMENT_SHADER = [
   "  float lightAxis=uv.x+0.38-uv.y*0.42-0.10*sin(t*0.035);",
   "  float softBeam=exp(-lightAxis*lightAxis*12.0)*exp(-pow(uv.y+0.02,2.0)*1.35);",
   "  vec3 color=vec3(0.003,0.004,0.010);",
-  "  color+=vec3(0.078,0.091,0.118)*smoke;",
-  "  color+=vec3(0.032,0.046,0.068)*wisps*0.8;",
-  "  color+=vec3(0.043,0.057,0.083)*softBeam*smoke*0.72;",
+  "  color+=vec3(0.16,0.175,0.20)*smoke;",
+  "  color+=vec3(0.07,0.085,0.11)*wisps*0.9;",
+  "  color+=vec3(0.065,0.082,0.115)*softBeam*smoke*0.82;",
   "  float lowHaze=exp(-pow(uv.y+0.52,2.0)*1.8);",
   "  color+=vec3(0.016,0.022,0.034)*lowHaze;",
   "  float vignette=1.0-smoothstep(0.62,1.72,length(uv));",
@@ -132,7 +132,7 @@ function AnimatedWallpaper({ variant, className = "" }: { variant: WallpaperVari
     if (!canvas) return;
 
     const gl = canvas.getContext("webgl", {
-      alpha: false,
+      alpha: variant === "fog",
       antialias: false,
       depth: false,
       stencil: false,
