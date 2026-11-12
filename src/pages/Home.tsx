@@ -1,217 +1,106 @@
-import { Link } from "react-router-dom";
-import { ArrowDown, ArrowRight, Sparkles } from "lucide-react";
-import { SITE, waLink } from "../config";
+import { ArrowDown, ArrowRight, ArrowUpRight, Braces, Bot, Workflow, PanelsTopLeft, ScanSearch } from "lucide-react";
+import { waLink } from "../config";
 import SiteFrame from "../components/SiteFrame";
 
-const services = [
-  {
-    eyebrow: "APRENDER · 1:1 · ONLINE",
-    title: "Guitarra com direção. Música com intenção.",
-    text: "Aulas individuais de guitarra e violão, construídas ao redor do que você quer tocar. Técnica, ritmo, harmonia e repertório entram no plano para fazer sentido na sua música — não numa fórmula pronta.",
-    color: "cyan",
-    label: "Conhecer as aulas",
-    href: "/aulas-ao-vivo",
-  },
-  {
-    eyebrow: "ESTUDAR · IMPROVISAÇÃO · COMUNIDADE",
-    title: "Menos decorar. Mais ouvir, escolher e criar.",
-    text: "A Arte Suave da Improvisação aproxima conceitos musicais do instrumento. Um espaço para explorar ideias, experimentar frases e transformar escalas em linguagem própria — no seu tempo e junto com outros guitarristas.",
-    color: "magenta",
-    label: "Explorar o curso",
-    href: "/curso-improviso-na-pentatonica",
-  },
-  {
-    eyebrow: "CRIAR · PRESENÇA DIGITAL · WEB",
-    title: "Uma ideia boa merece um site à altura.",
-    text: "Crio sites autorais para artistas, profissionais e projetos com algo a dizer: identidade visual, mensagem clara e uma experiência que funciona de verdade no celular. Tecnologia a serviço da sua ideia — sem cara de template genérico.",
-    color: "violet",
-    label: "Conversar sobre meu site",
-    href: waLink(
-      "Olá, Valkyrja! Quero conversar sobre a criação de um site para meu projeto.",
-    ),
-    external: true,
-  },
+const capabilities = [
+  { number: "01", icon: PanelsTopLeft, title: "Sistemas e plataformas", text: "Ferramentas feitas para a rotina do seu negócio — não mais uma planilha improvisada." },
+  { number: "02", icon: Workflow, title: "Automação e integrações", text: "Menos tarefas repetidas. Mais tempo para o trabalho que realmente precisa de gente." },
+  { number: "03", icon: Bot, title: "Inteligência artificial", text: "IA aplicada a situações concretas: atendimento, análise, conteúdo e operações." },
+  { number: "04", icon: Braces, title: "Sites e experiências digitais", text: "Presença digital com personalidade, clareza e uma função que vai além de parecer bonita." },
 ];
 
+const videos = [1, 2, 3, 4, 5, 6];
+
 export default function HomePage() {
+  const contact = waLink("Olá! Conheci seu trabalho pelo site e quero conversar sobre um problema ou projeto da minha empresa.");
   return (
     <SiteFrame>
-      <section
-        id="inicio"
-        className="hero-section relative z-10 mx-auto flex min-h-[82svh] w-full max-w-6xl flex-col justify-center px-5 pb-20 pt-12 sm:min-h-[86svh] sm:px-8 sm:pt-16"
-      >
-        <div className="hero-copy" data-reveal>
-          <p className="eyebrow">
-            <span className="live-dot" aria-hidden="true" /> Valkyrja Reis{" "}
-            <span className="eyebrow-separator">/</span> {SITE.tagline}
-          </p>
-          <h1
-            className="hero-title neon-title"
-            data-parallax="0.95"
-            data-kinetic="title"
-          >
-            Música, tecnologia
-            <br />
-            <span className="hero-title-accent">e ideias em movimento.</span>
-          </h1>
-          <p className="hero-description">
-            Da primeira nota ao próximo projeto digital: ensino guitarra,
-            compartilho caminhos para improvisar e crio sites que dão forma a
-            boas ideias.
-          </p>
+      <section id="inicio" className="hero">
+        <div className="hero-grain" aria-hidden="true" />
+        <div className="hero-inner">
+          <p className="eyebrow"><span className="eyebrow-line" /> TECNOLOGIA COM INTENÇÃO <span className="eyebrow-index">VR — 001</span></p>
+          <h1>Seu negócio tem desafios.<br /><span>Eu construo caminhos.</span></h1>
+          <p className="hero-lead">Entendo como sua empresa funciona, encontro o que pode melhorar e desenvolvo soluções com tecnologia — do primeiro diagnóstico à implementação.</p>
           <div className="hero-actions">
-            <a
-              href="#universos"
-              className="primary-cta"
-              data-parallax="0.72"
-              data-kinetic="cta"
-            >
-              Encontre seu próximo passo <ArrowDown size={17} />
-            </a>
-            <a
-              href={waLink(
-                "Olá, Valkyrja! Quero conversar sobre aulas de guitarra, o curso ou um site para meu projeto.",
-              )}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-cta"
-              data-parallax="-0.62"
-              data-kinetic="cta"
-            >
-              Vamos conversar <ArrowRight size={16} />
-            </a>
+            <a className="button button-primary" href={contact} target="_blank" rel="noreferrer">Vamos conversar <ArrowUpRight size={17} /></a>
+            <a className="button button-quiet" href="#trabalho">Ver o que eu faço <ArrowDown size={16} /></a>
           </div>
-          <p className="hero-note">
-            <Sparkles size={14} /> Música, tecnologia e ideias — conectadas pela
-            vontade de criar.
-          </p>
+          <div className="hero-footnote"><span>01 / 04</span><span>IDEIA · ESTRATÉGIA · CONSTRUÇÃO</span></div>
         </div>
-        <a
-          href="#universos"
-          className="scroll-cue"
-          aria-label="Role para explorar"
-        >
-          <span>ROLE PARA EXPLORAR</span>
-          <span className="scroll-cue-line" />
-        </a>
+        <div className="hero-side-label" aria-hidden="true">PENSAR / CONSTRUIR / EVOLUIR</div>
       </section>
 
-      <section
-        id="universos"
-        className="offerings-section relative z-10 mx-auto w-full max-w-6xl px-5 pb-24 pt-12 sm:px-8 sm:pb-36"
-      >
-        <div className="section-intro" data-reveal>
-          <p className="section-kicker">TRÊS FORMAS DE TIRAR IDEIAS DO PAPEL</p>
-          <h2
-            className="section-title"
-            data-parallax="0.95"
-            data-kinetic="title"
-          >
-            Aprender. Criar. <span>Compartilhar.</span>
-          </h2>
-          <p className="section-lead">
-            O fio que conecta tudo é o mesmo: curiosidade, prática e intenção —
-            na música e além dela.
-          </p>
+      <section className="intro-section section-wrap" id="abordagem">
+        <div className="section-index">[ 01 — A ABORDAGEM ]</div>
+        <div className="intro-copy">
+          <p className="kicker">NÃO COMEÇO PELO CÓDIGO.</p>
+          <h2>Começo entendendo<br />o que está <em>travando</em><br />o seu negócio.</h2>
+          <p className="body-copy">Às vezes o problema é um processo manual. Às vezes, informação espalhada em cinco lugares. Em outras, falta uma ferramenta que simplesmente não existe.</p>
+          <p className="body-copy">Antes de sugerir qualquer tecnologia, quero entender a operação, ouvir quem faz o trabalho e descobrir onde uma mudança pode fazer diferença de verdade.</p>
         </div>
-        <div className="service-flow">
-          <svg
-            className="signal-route"
-            viewBox="0 0 1000 1000"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <defs>
-              <linearGradient id="signal-gradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#00f0ff" />
-                <stop offset="52%" stopColor="#39ff88" />
-                <stop offset="100%" stopColor="#b6a1ff" />
-              </linearGradient>
-            </defs>
-            <path
-              className="signal-route__track"
-              pathLength="1000"
-              d="M500 0 C340 72 340 125 500 167 C660 209 660 290 500 333 C340 376 340 457 500 500 C660 543 660 624 500 667 C340 710 340 791 500 833 C660 875 660 928 500 1000"
-            />
-            <path
-              className="signal-route__progress"
-              pathLength="1000"
-              d="M500 0 C340 72 340 125 500 167 C660 209 660 290 500 333 C340 376 340 457 500 500 C660 543 660 624 500 667 C340 710 340 791 500 833 C660 875 660 928 500 1000"
-            />
-          </svg>
-          <span className="signal-route__traveler" aria-hidden="true" />
-          {services.map((service, index) => {
-            const headingParallax = index === 1 ? "-0.95" : "0.95";
-            const actionParallax = index === 1 ? "0.7" : "-0.7";
-            return (
-              <article key={service.title} className="service-stop" data-reveal>
-                <div className="service-stop__copy">
-                  <p className={`service-eyebrow accent-${service.color}`}>
-                    <span>{service.eyebrow}</span>
-                  </p>
-                  <h3 data-parallax={headingParallax} data-kinetic="title">
-                    {service.title}
-                  </h3>
-                  <p className="service-description">{service.text}</p>
-                  {service.external ? (
-                    <a
-                      className={`service-link accent-${service.color}`}
-                      data-parallax={actionParallax}
-                      data-kinetic="cta"
-                      href={service.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {service.label}
-                    </a>
-                  ) : (
-                    <Link
-                      className={`service-link accent-${service.color}`}
-                      data-parallax={actionParallax}
-                      data-kinetic="cta"
-                      to={service.href}
-                    >
-                      {service.label}
-                    </Link>
-                  )}
-                </div>
-              </article>
-            );
-          })}
+        <div className="approach-stamp"><ScanSearch size={25} /><span>PRIMEIRO<br />ENTENDER</span></div>
+      </section>
+
+      <section className="work-section" id="trabalho">
+        <div className="section-wrap">
+          <div className="section-index">[ 02 — O QUE POSSO FAZER ]</div>
+          <div className="section-heading">
+            <p className="kicker">A FERRAMENTA VEM DEPOIS DO PROBLEMA.</p>
+            <h2>Uma solução certa<br /><em>para cada desafio.</em></h2>
+          </div>
+          <div className="capability-grid">
+            {capabilities.map((item) => {
+              const Icon = item.icon;
+              return <article className="capability" key={item.number}>
+                <div className="capability-top"><span>{item.number} / 04</span><Icon size={22} strokeWidth={1.5} /></div>
+                <h3>{item.title}</h3><p>{item.text}</p>
+                <span className="capability-rule" />
+              </article>;
+            })}
+          </div>
         </div>
       </section>
 
-      <section className="manifesto-section relative z-10" data-reveal>
-        <div className="manifesto-inner mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-          <div className="manifesto-copy">
-            <p className="section-kicker">MÚSICA · TECNOLOGIA · IDEIAS</p>
-            <h2 data-parallax="0.95" data-kinetic="title">
-              <span className="manifesto-word--curiosity">Curiosidade</span>{" "}
-              para começar.
-              <br />
-              <span className="manifesto-word--intention">
-                Intenção para chegar mais longe.
-              </span>
-            </h2>
-            <p>
-              Seja aprendendo uma música, encontrando sua voz na improvisação ou
-              construindo sua presença na internet: o melhor caminho é aquele
-              que faz sentido para você.
-            </p>
-            <a
-              href={waLink(
-                "Olá, Valkyrja! Quero conversar sobre meu próximo passo.",
-              )}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="primary-cta"
-              data-parallax="-0.72"
-              data-kinetic="cta"
-            >
-              Me conta o que você quer criar <ArrowRight size={17} />
-            </a>
+      <section className="process-section section-wrap">
+        <div className="section-index">[ 03 — COMO ACONTECE ]</div>
+        <div className="process-content">
+          <p className="kicker">DO PROBLEMA À SOLUÇÃO EM USO.</p>
+          <h2>Não entrego só<br /><em>um arquivo.</em></h2>
+          <div className="process-list">
+            <div><span>01</span><p><strong>Entender</strong> — conversamos sobre a empresa, a rotina e o que precisa mudar.</p></div>
+            <div><span>02</span><p><strong>Desenhar</strong> — defino com você o caminho mais simples e útil para resolver o problema.</p></div>
+            <div><span>03</span><p><strong>Construir</strong> — desenvolvo, testo e implemento a solução no contexto real do negócio.</p></div>
+            <div><span>04</span><p><strong>Acompanhar</strong> — ajustamos o que for necessário depois que a solução começa a ser usada.</p></div>
           </div>
         </div>
+      </section>
+
+      <section className="proof-section" id="experimentos">
+        <div className="section-wrap">
+          <div className="section-index">[ 04 — EXPERIMENTAÇÃO ]</div>
+          <div className="proof-heading">
+            <div><p className="kicker">TECNOLOGIA TAMBÉM É IMAGINAÇÃO.</p><h2>Eu gosto de descobrir<br /><em>até onde dá para ir.</em></h2></div>
+            <p className="body-copy">Experimentos com inteligência artificial, vídeo e criação digital. Aqui, usei IA para me colocar em cenas e contextos que não existiriam numa gravação convencional.</p>
+          </div>
+          <div className="film-grid">
+            {videos.map((video, index) => <figure className={index === 0 ? "film-frame film-frame-featured" : "film-frame"} key={video}>
+              <video src={`/club-videos/video${video}.mp4`} controls muted playsInline preload="metadata" aria-label={`Experimento audiovisual com inteligência artificial ${video}`} />
+              <figcaption><span>EXPERIMENTO IA</span><span>TAKE 0{video}</span></figcaption>
+            </figure>)}
+          </div>
+          <p className="film-note">Cenas criadas com IA. Uma demonstração de processo, repertório e curiosidade — não uma promessa de efeito mágico.</p>
+        </div>
+      </section>
+
+      <section className="closing-section">
+        <div className="closing-orbit" aria-hidden="true" />
+        <div className="closing-content">
+          <p className="kicker">TEM ALGUMA COISA QUE PODERIA FUNCIONAR MELHOR?</p>
+          <h2>Vamos descobrir<br /><em>e construir.</em></h2>
+          <p>Você não precisa chegar com a solução pronta. Me conte o que acontece hoje, onde está o problema e o que gostaria de mudar.</p>
+          <a className="button button-primary" href={contact} target="_blank" rel="noreferrer">Me conte sobre seu negócio <ArrowRight size={17} /></a>
+        </div>
+        <div className="closing-mark">VR<span>®</span></div>
       </section>
     </SiteFrame>
   );
