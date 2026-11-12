@@ -1,10 +1,11 @@
 import { useEffect } from "react";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { waLink } from "../config";
 import "../styles/capability-bento.css";
 import "../styles/text-motion-system.css";
 import { LiquidMetalButton } from "../components/ui/liquid-metal-button";
 import SiteFrame from "../components/SiteFrame";
+import HighTechHero from "../components/HighTechHero";
 import PortfolioShowcase from "../components/PortfolioShowcase";
 
 const processSteps = [
@@ -97,32 +98,7 @@ export default function HomePage() {
   }, []);
 
   return <SiteFrame>
-    <section id="inicio" className="hero hero-prisma">
-      <div className="hero-aurora-bg" aria-hidden="true">
-        <span className="hero-aurora-orbit hero-aurora-orbit-a" />
-        <span className="hero-aurora-orbit hero-aurora-orbit-b" />
-        <span className="hero-aurora-glow" />
-      </div>
-      <div className="hero-inner">
-        <p className="eyebrow"><span className="eyebrow-line" /> TECNOLOGIA COM INTENÇÃO</p>
-        <h1 className="hero-title title-motion-kinetic" data-title-motion aria-label="Seu negócio tem desafios. Eu construo caminhos.">
-          <span className="hero-line hero-line-light" aria-hidden="true">{["Seu", "negócio", "tem", "desafios."].map((word, index) => <span className="hero-word" key={word} style={{ animationDelay: `${index * 90}ms` }}>{word}</span>)}</span>
-          <span className="hero-line hero-line-orange" aria-hidden="true">{["Eu", "construo", "caminhos."].map((word, index) => <span className="hero-word" key={word} style={{ animationDelay: `${360 + index * 100}ms` }}>{word}</span>)}</span>
-        </h1>
-        <p className="hero-lead hero-lead-motion" data-title-motion aria-label="Entendo como sua empresa funciona, encontro o que pode melhorar e desenvolvo tecnologia para resolver — do primeiro diagnóstico à implementação.">
-          <LeadWords text="Entendo como sua empresa funciona, encontro o que pode melhorar e desenvolvo tecnologia para resolver — do primeiro diagnóstico à implementação." />
-        </p>
-        <div className="hero-actions">
-          <LiquidMetalButton label="Vamos conversar" onClick={() => window.open(contact, "_blank", "noopener,noreferrer")} />
-          <a className="button button-quiet" href="#abordagem">Conheça meu jeito <ArrowDown size={16} /></a>
-        </div>
-        <div className="hero-signature"><span>ESTRATÉGIA</span><i /> <span>TECNOLOGIA</span><i /> <span>RESULTADO</span></div>
-      </div>
-      <div className="hero-frame" aria-hidden="true">
-        <span className="hero-frame-label">01 — IDEIAS EM MOVIMENTO</span>
-        <span className="hero-frame-index">VR<span>.</span></span>
-      </div>
-    </section>
+    <HighTechHero contact={contact} />
 
     <section className="intro-section section-wrap" id="abordagem">
       <div className="intro-ambient-bg" aria-hidden="true">
