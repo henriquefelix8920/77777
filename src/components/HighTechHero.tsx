@@ -1,135 +1,52 @@
-import { useState } from "react";
-import { ArrowDown, ArrowUpRight, Check, Copy, Terminal, Zap } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowDown, ArrowUpRight, Zap } from "lucide-react";
 import "../styles/high-tech-hero.css";
 import { HeroShaderBackground } from "./VisualBackgrounds";
+import { portfolioProjects, screenshotUrl } from "./PortfolioShowcase";
 
 type HighTechHeroProps = {
   contact: string;
 };
 
-const codeTabs = [
-  {
-    id: "workflow",
-    label: "WORKFLOW",
-    language: "typescript",
-    lines: [
-      { text: "const processo = await negocio.receberPedido();", tone: "plain" },
-      { text: "", tone: "plain" },
-      { text: "const analise = await agente.executar({", tone: "plain" },
-      { text: '  objetivo: "resolver gargalo",', tone: "string" },
-      { text: "  contexto: processo,", tone: "plain" },
-      { text: "});", tone: "plain" },
-      { text: "", tone: "plain" },
-      { text: "return sistema.integrar(analise);", tone: "accent" },
-    ],
-  },
-  {
-    id: "integration",
-    label: "INTEGRAÇÃO",
-    language: "typescript",
-    lines: [
-      { text: "const canais = await conectar([", tone: "plain" },
-      { text: '  "site",', tone: "string" },
-      { text: '  "crm",', tone: "string" },
-      { text: '  "pagamentos",', tone: "string" },
-      { text: "]);", tone: "plain" },
-      { text: "", tone: "plain" },
-      { text: "await fluxo.sincronizar(canais);", tone: "accent" },
-      { text: "return { status: \"conectado\" };", tone: "plain" },
-    ],
-  },
-  {
-    id: "intelligence",
-    label: "INTELIGÊNCIA",
-    language: "python",
-    lines: [
-      { text: "def encontrar_oportunidade(dados):", tone: "plain" },
-      { text: "    contexto = organizar(dados)", tone: "plain" },
-      { text: "    sinais = analisar(contexto)", tone: "plain" },
-      { text: "", tone: "plain" },
-      { text: "    return priorizar(", tone: "accent" },
-      { text: "        sinais, impacto=True", tone: "string" },
-      { text: "    )", tone: "accent" },
-      { text: "# decisão baseada no contexto", tone: "muted" },
-    ],
-  },
-] as const;
+function PortfolioOrbit() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const project = portfolioProjects[activeIndex];
 
-function TerminalPreview() {
-  const [activeTab, setActiveTab] = useState<(typeof codeTabs)[number]["id"]>("workflow");
-  const [copied, setCopied] = useState(false);
-  const activeCode = codeTabs.find((tab) => tab.id === activeTab) ?? codeTabs[0];
-  const source = activeCode.lines.map((line) => line.text).join("\n");
-
-  const copyCode = async () => {
-    try {
-      await navigator.clipboard.writeText(source);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
-    } catch {
-      setCopied(false);
-    }
-  };
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % portfolioProjects.length);
+    }, 4300);
+    return () => window.clearInterval(interval);
+  }, []);
 
   return (
-    <div className="hightech-terminal" aria-label="Prévia interativa de código, demonstração visual">
-      <div className="terminal-topbar">
-        <div className="terminal-window-controls" aria-hidden="true">
-          <i /><i /><i />
+    <div className="hero-site-globe" aria-label="Prévia animada dos projetos do portfólio">
+      <span className="hero-site-orbit-ring hero-site-orbit-ring-a" aria-hidden="true" />
+      <span className="hero-site-orbit-ring hero-site-orbit-ring-b" aria-hidden="true" />
+      <span className="hero-site-orbit-core" aria-hidden="true"><i /></span>
+      <article className="hero-site-page" key={project.number}>
+        <div className="hero-site-browser">
+          <span className="hero-site-browser-dots"><i /><i /><i /></span>
+          <span>{project.domain}</span>
+          <b>LIVE SITE</b>
         </div>
-        <div className="terminal-window-name"><Terminal size={13} /> VALKYRJA / SYSTEM CONSOLE</div>
-        <span className="terminal-live"><i /> LIVE PREVIEW</span>
-      </div>
-
-      <div className="terminal-toolbar">
-        <div className="terminal-file"><span className="terminal-file-icon">⌘</span> solution.ts <span className="terminal-file-dot" /></div>
-        <span className="terminal-toolbar-index">01 — 03</span>
-      </div>
-
-      <div className="terminal-tabs" role="tablist" aria-label="Exemplos de código">
-        {codeTabs.map((tab) => (
-          <button
-            type="button"
-            role="tab"
-            aria-selected={activeTab === tab.id}
-            className={activeTab === tab.id ? "terminal-tab is-active" : "terminal-tab"}
-            key={tab.id}
-            onClick={() => { setActiveTab(tab.id); setCopied(false); }}
-          >
-            {tab.label}
-          </button>
-        ))}
-        <button type="button" className="terminal-copy" onClick={copyCode} aria-label="Copiar trecho de código">
-          {copied ? <Check size={14} /> : <Copy size={14} />}
-          <span>{copied ? "COPIADO" : "COPIAR"}</span>
-        </button>
-      </div>
-
-      <div className="terminal-code-area" role="tabpanel">
-        <div className="terminal-code-meta"><span>{activeCode.language}</span><span>EXEMPLO CONCEITUAL</span></div>
-        <pre className="terminal-code"><code key={activeTab}>
-          {activeCode.lines.map((line, index) => (
-            <span className="terminal-code-line" key={index}>
-              <i>{String(index + 1).padStart(2, "0")}</i>
-              <span className={`code-${line.tone}`}>{line.text || " "}</span>
-            </span>
-          ))}
-        </code></pre>
-      </div>
-
-      <div className="terminal-output">
-        <div className="terminal-output-heading"><span>EXECUTION LOG</span><span>SIMULAÇÃO</span></div>
-        <p><i className="log-ok" /> <span>mapeando processo</span><b>COMPLETE</b></p>
-        <p><i className="log-active" /> <span>conectando possibilidades</span><b>RUNNING</b></p>
-        <p><i className="log-idle" /> <span>preparando próxima etapa</span><b>QUEUED</b></p>
-      </div>
-
-      <div className="terminal-bottomline">
-        <span><i /> SYSTEM READY</span>
-        <span>INTERFACE CONCEITUAL <b>✳</b></span>
-      </div>
-      <span className="terminal-glow terminal-glow-a" aria-hidden="true" />
-      <span className="terminal-glow terminal-glow-b" aria-hidden="true" />
+        <div className="hero-site-viewport">
+          <img
+            src={screenshotUrl(project.url)}
+            alt={`Miniatura do site ${project.name}`}
+            loading="eager"
+            decoding="async"
+            onError={(event) => { event.currentTarget.style.opacity = "0"; }}
+          />
+          <div className="hero-site-fallback">
+            <span>EXPERIÊNCIA DIGITAL</span>
+            <strong>{project.name}</strong>
+            <i>ESTRATÉGIA · DESIGN · TECNOLOGIA</i>
+          </div>
+        </div>
+        <div className="hero-site-caption"><span>{project.number} / 05</span><strong>{project.name}</strong><i>PORTFÓLIO</i></div>
+      </article>
+      <span className="hero-site-globe-coordinate" aria-hidden="true">V/R — PROJECT ORBIT</span>
     </div>
   );
 }
@@ -168,8 +85,8 @@ export default function HighTechHero({ contact }: HighTechHeroProps) {
         </div>
 
         <div className="hightech-visual">
-          <div className="hightech-visual-label"><span>FIG. 01</span><span>INTELLIGENCE / INTERFACE</span></div>
-          <TerminalPreview />
+          <div className="hightech-visual-label"><span>FIG. 01</span><span>PORTFOLIO / LIVE ORBIT</span></div>
+          <PortfolioOrbit />
           <div className="hightech-float-tag hightech-float-tag-a"><span className="float-tag-icon"><Zap size={13} /></span><span><b>PROCESS ENGINE</b><small>FLOW OPTIMIZED</small></span><i /></div>
           <div className="hightech-float-tag hightech-float-tag-b"><span className="float-tag-icon float-tag-icon-blue">⌘</span><span><b>CONNECTED SYSTEMS</b><small>ONE CLEAR DIRECTION</small></span></div>
           <div className="hightech-visual-index">VR<span>_</span>001</div>
