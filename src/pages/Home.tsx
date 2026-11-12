@@ -106,12 +106,22 @@ export default function HomePage() {
     <section className="intro-section intro-story-section" id="abordagem">
       <div className="intro-ambient-bg intro-story-ambient" aria-hidden="true">
         <WireframeBackground />
-        <ApproachVideoBackdrop />
         <span className="intro-wallpaper-vignette" />
       </div>
       <div className="section-wrap intro-story-wrap">
         <div className="section-index reveal-left">A ABORDAGEM / 01—03</div>
         <div className="intro-story-layout">
+          <div className="intro-story-visual approach-video-visual">
+            <div className="approach-video-stage">
+              <ApproachVideoBackdrop />
+              <div className="approach-video-edge-glow" aria-hidden="true" />
+              <div className="approach-video-mark">
+                <span>V/R — MOVING PROJECTS</span>
+                <i>SELECTED WORK / 01—06</i>
+              </div>
+            </div>
+            <p className="story-visual-caption">IDEIAS EM MOVIMENTO. SOLUÇÕES EM CONSTRUÇÃO.</p>
+          </div>
           <div className="intro-story-copy">
             <div className="intro-story-heading">
               <p className="kicker reveal-right">NÃO COMEÇO PELO CÓDIGO.</p>
