@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ArrowUpRight, LockKeyhole } from "lucide-react";
 import "../styles/portfolio-showcase.css";
 
@@ -64,6 +65,12 @@ export function screenshotUrl(target: string) {
 }
 
 function SitePreview({ project }: { project: PortfolioProject }) {
+  const [loaded, setLoaded] = useState(0);
+  const [failed, setFailed] = useState(false);
+  const previewReady = loaded === 2 && !failed;
+
+  const markLoaded = () => setLoaded((count) => Math.min(2, count + 1));
+
   return (
     <div className="portfolio-preview">
       <div className="portfolio-browser-bar" aria-hidden="true">
@@ -77,13 +84,15 @@ function SitePreview({ project }: { project: PortfolioProject }) {
           <strong>{project.name}</strong>
           <i>DESIGN · ESTRATÉGIA · TECNOLOGIA</i>
         </div>
-        <div className="portfolio-preview-track">
+        <div className={`portfolio-preview-track${previewReady ? " is-ready" : ""}${failed ? " has-failed-image" : ""}`} aria-busy={!previewReady && !failed}>
           <img
             src={screenshotUrl(project.url)}
             alt={`Captura da página inicial de ${project.name}`}
-            loading="lazy"
+            fetchPriority="high"
+            loading="eager"
             decoding="async"
-            onError={(event) => { event.currentTarget.style.visibility = "hidden"; }}
+            onLoad={markLoaded}
+            onError={() => setFailed(true)}
           />
           <img
             src={screenshotUrl(project.middleUrl)}
