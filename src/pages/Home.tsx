@@ -140,22 +140,36 @@ export default function HomePage() {
 
     <PortfolioShowcase />
 
-    <section className="closing-section">
-      <div className="closing-beams-bg" aria-hidden="true">
-        <span className="closing-beam closing-beam-a" />
-        <span className="closing-beam closing-beam-b" />
-        <span className="closing-beam-orbit" />
+    <section className="closing-section closing-kinetic" id="vamos-construir">
+      <div className="closing-kinetic-universe" aria-hidden="true">
+        <div className="closing-kinetic-grid" />
+        <div className="closing-kinetic-orbit orbit-one"><i /><i /><i /></div>
+        <div className="closing-kinetic-orbit orbit-two"><i /><i /></div>
+        <div className="closing-kinetic-core"><span>IDEIA</span><b>+</b><span>IMPACTO</span></div>
+        <div className="closing-kinetic-rays" />
+        <span className="closing-kinetic-coordinate coordinate-a">19° 45' 12.0"S</span>
+        <span className="closing-kinetic-coordinate coordinate-b">PROCESSO // 001—∞</span>
       </div>
-      <span className="closing-floating" aria-hidden="true">VAMOS<br/>CONSTRUIR?</span>
-      <div className="closing-content">
-        <p className="kicker reveal-left">TEM ALGUMA COISA QUE PODERIA FUNCIONAR MELHOR?</p>
-        <h2 className="title-motion-bloom" data-title-motion aria-label="Vamos descobrir e construir.">
-          <BloomLine text="Vamos descobrir" />
-          <br />
-          <em><BloomLine text="e construir." /></em>
+      <div className="closing-kinetic-content">
+        <p className="kicker">TODA MUDANÇA COMEÇA COM UMA PERGUNTA</p>
+        <h2 className="closing-kinetic-title" data-title-motion aria-label="Vamos descobrir e construir.">
+          <span>Vamos</span>
+          <span className="kinetic-outline-word">descobrir</span>
+          <span className="kinetic-last-line"><em>e</em> construir<span className="kinetic-period">.</span></span>
         </h2>
-        <p className="reveal-left">Você não precisa chegar com a solução pronta. Me conte o que acontece hoje, onde está o problema e o que gostaria de mudar.</p>
+        <p className="closing-kinetic-lead">Você traz o desafio. A gente transforma em movimento.</p>
+        <div className="closing-kinetic-steps" aria-label="Da ideia ao resultado">
+          <span><b>01</b> IDEIA</span><i />
+          <span><b>02</b> DIREÇÃO</span><i />
+          <span><b>03</b> CONSTRUÇÃO</span><i />
+          <span><b>04</b> IMPACTO</span>
+        </div>
         <LiquidMetalButton label="Me conte sobre seu negócio" onClick={() => window.open(contact, "_blank", "noopener,noreferrer")} />
+      </div>
+      <div className="closing-kinetic-marquee" aria-hidden="true">
+        <div className="closing-kinetic-marquee-track">
+          {Array.from({length:4},(_,i)=><span key={i}>IDEIAS EM MOVIMENTO <b>✳</b> TECNOLOGIA COM PROPÓSITO <b>✳</b> VAMOS CONSTRUIR <b>✳</b>&nbsp;</span>)}
+        </div>
       </div>
       <div className="closing-mark">VR<span>®</span></div>
     </section>
