@@ -6,18 +6,10 @@ import "../styles/text-motion-system.css";
 import { LiquidMetalButton } from "../components/ui/liquid-metal-button";
 import SiteFrame from "../components/SiteFrame";
 import HighTechHero from "../components/HighTechHero";
-import { WireframeBackground } from "../components/VisualBackgrounds";
 import ApproachVideoBackdrop from "../components/ApproachVideoBackdrop";
 import PortfolioShowcase from "../components/PortfolioShowcase";
 import Capabilities3D from "../components/Capabilities3D";
 import ProcessJourney3D from "../components/ProcessJourney3D";
-
-const processSteps = [
-  { number: "01", title: "Entender", text: "Conversamos sobre a empresa, a rotina e o que precisa mudar.", note: "DIAGNÓSTICO" },
-  { number: "02", title: "Desenhar", text: "Defino com você o caminho mais simples e útil para resolver o problema.", note: "DIREÇÃO" },
-  { number: "03", title: "Construir", text: "Desenvolvo, testo e implemento a solução no contexto real do negócio.", note: "IMPLEMENTAÇÃO" },
-  { number: "04", title: "Acompanhar", text: "Ajustamos o que for necessário depois que a solução começa a ser usada.", note: "EVOLUÇÃO" },
-];
 
 const capabilities = [
   { number: "01", title: "Sistemas e plataformas", text: "Ferramentas feitas para a rotina do seu negócio — não mais uma planilha improvisada.", tag: "ESTRUTURA PARA CRESCER", visual: "systems" },
@@ -105,33 +97,23 @@ export default function HomePage() {
     <HighTechHero contact={contact} />
 
     <section className="intro-section intro-story-section" id="abordagem">
-      <div className="intro-ambient-bg intro-story-ambient" aria-hidden="true">
-        <WireframeBackground />
-        <span className="intro-wallpaper-vignette" />
+      <div className="approach-video-fullbleed" aria-hidden="true">
+        <ApproachVideoBackdrop />
+        <span className="approach-video-fullbleed-shade" />
       </div>
       <div className="section-wrap intro-story-wrap">
-        <div className="section-index reveal-left">A ABORDAGEM / 01—03</div>
-        <div className="intro-story-layout">
-          <div className="intro-story-visual approach-video-visual">
-            <div className="approach-video-stage">
-              <ApproachVideoBackdrop />
-              <div className="approach-video-edge-glow" aria-hidden="true" />
-              <div className="approach-video-mark">
-                <span>V/R — MOVING PROJECTS</span>
-                <i>SELECTED WORK / 01—06</i>
-              </div>
-            </div>
-            <p className="story-visual-caption">IDEIAS EM MOVIMENTO. SOLUÇÕES EM CONSTRUÇÃO.</p>
+        <div className="section-index">A ABORDAGEM / 01—03</div>
+        <div className="intro-story-copy">
+          <div className="intro-story-heading">
+            <p className="kicker">NÃO COMEÇO PELO CÓDIGO.</p>
+            <h2 className="title-motion-center" data-title-motion aria-label="Começo entendendo o que está travando o seu negócio.">
+              <span className="center-line">Começo entendendo</span>
+              <span className="center-line">o que está <em>travando</em></span>
+              <span className="center-line">o seu negócio.</span>
+            </h2>
+            <p className="approach-centered-lead">Toda solução começa quando a gente enxerga o problema de verdade.</p>
           </div>
-          <div className="intro-story-copy">
-            <div className="intro-story-heading">
-              <p className="kicker reveal-right">NÃO COMEÇO PELO CÓDIGO.</p>
-              <h2 className="title-motion-center" data-title-motion aria-label="Começo entendendo o que está travando o seu negócio.">
-                <span className="center-line">Começo entendendo</span>
-                <span className="center-line">o que está <em>travando</em></span>
-                <span className="center-line">o seu negócio.</span>
-              </h2>
-            </div>
+          <div className="story-chapters-centered">
             <article className="story-chapter">
               <span className="story-chapter-index">01 / O SINAL</span>
               <h3>O que está travando?</h3>
