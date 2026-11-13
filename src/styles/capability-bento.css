@@ -2384,3 +2384,120 @@ body, p, a, button, .tile-meta, .process-card-top {
   }
   .work-section-capabilities .capability-live-tile:hover { transform: none; }
 }
+
+
+/* FINAL SECTION — kinetic orbital launchpad: a new visual language. */
+.site-shell .closing-kinetic{
+  position:relative;isolation:isolate;display:grid;place-items:center;
+  min-height:100svh;padding:clamp(100px,12vw,160px) 24px 130px;
+  overflow:hidden;background:#080403;color:#fff;
+}
+.site-shell .closing-kinetic:before{
+  content:"";position:absolute;inset:0;z-index:-2;
+  background:radial-gradient(ellipse at 50% 44%,rgba(115,13,19,.32),transparent 46%),
+    radial-gradient(ellipse at 50% 100%,rgba(255,77,0,.12),transparent 42%),
+    linear-gradient(145deg,#080403,#130507 52%,#050303);
+}
+.site-shell .closing-kinetic-universe{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;perspective:1000px}
+.site-shell .closing-kinetic-grid{
+  position:absolute;inset:-35% -20% -10%;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:58px 58px;transform:perspective(500px) rotateX(62deg) scale(1.7);
+  transform-origin:50% 78%;opacity:.28;mask-image:linear-gradient(transparent,#000 28%,#000 75%,transparent);
+  animation:closing-grid-drift 18s linear infinite;
+}
+.site-shell .closing-kinetic-orbit{
+  position:absolute;left:50%;top:45%;border:1px solid rgba(255,116,65,.25);
+  border-radius:50%;transform-style:preserve-3d;will-change:transform;
+}
+.site-shell .closing-kinetic-orbit i{
+  position:absolute;width:9px;height:9px;border-radius:50%;background:#ff743c;
+  box-shadow:0 0 18px 5px rgba(255,87,34,.65);
+}
+.site-shell .closing-kinetic-orbit i:nth-child(1){left:12%;top:8%}
+.site-shell .closing-kinetic-orbit i:nth-child(2){right:9%;top:48%;width:5px;height:5px}
+.site-shell .closing-kinetic-orbit i:nth-child(3){left:52%;bottom:2%;width:6px;height:6px}
+.site-shell .orbit-one{width:min(78vw,920px);height:min(78vw,920px);margin:-min(39vw,460px) 0 0 min(-39vw,-460px);animation:closing-orbit-a 24s linear infinite}
+.site-shell .orbit-two{width:min(58vw,690px);height:min(58vw,690px);margin:-min(29vw,345px) 0 0 min(-29vw,-345px);border-color:rgba(255,255,255,.16);animation:closing-orbit-b 18s linear infinite reverse}
+.site-shell .orbit-two i{background:#fff;box-shadow:0 0 14px rgba(255,255,255,.7)}
+.site-shell .closing-kinetic-core{
+  position:absolute;left:50%;top:45%;transform:translate(-50%,-50%) rotate(-12deg);
+  display:flex;align-items:center;gap:10px;padding:13px 18px;border:1px solid rgba(255,255,255,.25);
+  background:rgba(12,5,5,.34);backdrop-filter:blur(8px);color:rgba(255,255,255,.65);
+  font:600 8px/1 "DM Sans",sans-serif;letter-spacing:.2em;white-space:nowrap;
+  animation:closing-core-float 5s ease-in-out infinite;
+}
+.site-shell .closing-kinetic-core b{color:#ff7137;font-size:17px}
+.site-shell .closing-kinetic-rays{
+  position:absolute;inset:0;opacity:.22;
+  background:repeating-conic-gradient(from 0deg at 50% 45%,transparent 0deg 9deg,rgba(255,95,42,.2) 9.2deg 9.35deg,transparent 9.5deg 18deg);
+  mask-image:radial-gradient(ellipse at 50% 45%,#000 0%,transparent 55%);
+  animation:closing-rays-spin 90s linear infinite;
+}
+.site-shell .closing-kinetic-coordinate{position:absolute;color:rgba(255,255,255,.36);font:500 8px/1.4 "DM Sans",sans-serif;letter-spacing:.2em}
+.site-shell .coordinate-a{left:5%;top:24%;writing-mode:vertical-rl}
+.site-shell .coordinate-b{right:5%;bottom:25%;writing-mode:vertical-rl}
+.site-shell .closing-kinetic-content{position:relative;z-index:2;width:min(100%,1000px);text-align:center}
+.site-shell .closing-kinetic-content>.kicker{color:#ff9a6a;letter-spacing:.24em;font-size:9px}
+.site-shell .closing-kinetic-title{
+  display:flex;flex-direction:column;align-items:center;gap:0;margin:28px 0 22px;
+  font:700 clamp(64px,11.8vw,156px)/.78 "Space Grotesk",sans-serif;
+  letter-spacing:-.095em;text-transform:uppercase;text-align:center;
+}
+.site-shell .closing-kinetic-title>span{display:block;overflow:hidden;padding:.09em .12em .16em}
+.site-shell .closing-kinetic-title>span:first-child{animation:closing-word-drop .9s cubic-bezier(.16,1,.3,1) both}
+.site-shell .closing-kinetic-title .kinetic-outline-word{
+  color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.78);
+  animation:closing-word-drop 1s .12s cubic-bezier(.16,1,.3,1) both;
+}
+.site-shell .closing-kinetic-title .kinetic-last-line{animation:closing-word-drop 1s .24s cubic-bezier(.16,1,.3,1) both}
+.site-shell .closing-kinetic-title em{color:#ff743c;font-style:normal}
+.site-shell .closing-kinetic-title .kinetic-period{color:#ff743c;text-shadow:0 0 34px rgba(255,87,34,.8)}
+.site-shell .closing-kinetic-lead{margin:30px auto 28px;max-width:44ch;color:rgba(255,255,255,.76);font-size:clamp(14px,1.4vw,17px);line-height:1.7}
+.site-shell .closing-kinetic-steps{
+  display:flex;align-items:center;justify-content:center;gap:clamp(9px,2vw,24px);
+  margin:0 auto 34px;color:rgba(255,255,255,.78);font:600 8px/1 "DM Sans",sans-serif;letter-spacing:.13em;
+}
+.site-shell .closing-kinetic-steps span{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.site-shell .closing-kinetic-steps b{color:#ff8652;font-size:9px}
+.site-shell .closing-kinetic-steps>i{width:clamp(12px,3vw,38px);height:1px;background:linear-gradient(90deg,rgba(255,115,60,.7),rgba(255,255,255,.15))}
+.site-shell .closing-kinetic-content .liquid-metal-button{margin-inline:auto}
+.site-shell .closing-kinetic-marquee{
+  position:absolute;left:0;right:0;bottom:0;overflow:hidden;border-top:1px solid rgba(255,255,255,.14);
+  border-bottom:1px solid rgba(255,255,255,.14);padding:17px 0;background:rgba(255,255,255,.025);
+}
+.site-shell .closing-kinetic-marquee-track{display:flex;width:max-content;animation:closing-marquee 32s linear infinite}
+.site-shell .closing-kinetic-marquee-track>span{
+  flex:none;color:rgba(255,255,255,.42);font:600 9px/1 "DM Sans",sans-serif;letter-spacing:.22em;white-space:nowrap
+}
+.site-shell .closing-kinetic-marquee-track b{padding:0 18px;color:#ff743c}
+.site-shell .closing-kinetic .closing-mark{z-index:3}
+@keyframes closing-orbit-a{from{transform:rotateX(66deg) rotateZ(0)}to{transform:rotateX(66deg) rotateZ(360deg)}}
+@keyframes closing-orbit-b{from{transform:rotateX(54deg) rotateY(18deg) rotateZ(0)}to{transform:rotateX(54deg) rotateY(18deg) rotateZ(360deg)}}
+@keyframes closing-rays-spin{to{transform:rotate(360deg)}}
+@keyframes closing-core-float{0%,100%{translate:0 0}50%{translate:0 -13px}}
+@keyframes closing-grid-drift{to{background-position:0 58px,58px 0}}
+@keyframes closing-word-drop{from{opacity:0;transform:translate3d(0,110%,0) rotateX(-55deg);filter:blur(10px)}to{opacity:1;transform:translate3d(0,0,0) rotateX(0);filter:blur(0)}}
+@keyframes closing-marquee{to{transform:translateX(-50%)}}
+@media(max-width:760px){
+ .site-shell .closing-kinetic{min-height:90svh;padding:90px 20px 116px}
+ .site-shell .closing-kinetic-title{font-size:clamp(52px,13.5vw,90px);letter-spacing:-.09em}
+ .site-shell .closing-kinetic-orbit.orbit-one{width:112vw;height:112vw;margin:-56vw 0 0 -56vw}
+ .site-shell .closing-kinetic-orbit.orbit-two{width:86vw;height:86vw;margin:-43vw 0 0 -43vw}
+ .site-shell .closing-kinetic-core{top:42%;font-size:7px}
+ .site-shell .closing-kinetic-coordinate{font-size:6px}
+ .site-shell .coordinate-a{left:4%;top:17%}
+ .site-shell .coordinate-b{right:4%;bottom:20%}
+ .site-shell .closing-kinetic-steps{gap:7px;flex-wrap:wrap;max-width:340px;margin-bottom:30px;font-size:7px}
+ .site-shell .closing-kinetic-steps>i{width:10px}
+ .site-shell .closing-kinetic-lead{margin:25px auto 22px;font-size:13px}
+}
+@media(max-width:420px){
+ .site-shell .closing-kinetic-title{font-size:clamp(44px,13vw,58px)}
+ .site-shell .closing-kinetic-content>.kicker{font-size:7px;letter-spacing:.16em}
+ .site-shell .closing-kinetic-steps{max-width:290px}
+}
+@media(prefers-reduced-motion:reduce){
+ .site-shell .closing-kinetic-grid,.site-shell .closing-kinetic-orbit,.site-shell .closing-kinetic-core,
+ .site-shell .closing-kinetic-rays,.site-shell .closing-kinetic-title>span,.site-shell .closing-kinetic-marquee-track{animation:none!important}
+}
