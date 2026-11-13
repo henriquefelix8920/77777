@@ -2501,3 +2501,93 @@ body, p, a, button, .tile-meta, .process-card-top {
  .site-shell .closing-kinetic-grid,.site-shell .closing-kinetic-orbit,.site-shell .closing-kinetic-core,
  .site-shell .closing-kinetic-rays,.site-shell .closing-kinetic-title>span,.site-shell .closing-kinetic-marquee-track{animation:none!important}
 }
+
+
+/* TYPE AS THE 3D HERO — typography itself moves in depth, not just the backdrop. */
+.site-shell .closing-kinetic-content{perspective:1200px;transform-style:preserve-3d}
+.site-shell .closing-kinetic-title{
+  perspective:1100px;transform-style:preserve-3d;
+  transform:rotateX(0deg);animation:closing-title-camera 8s ease-in-out infinite;
+}
+.site-shell .closing-kinetic-title .kinetic-3d-word{
+  position:relative;isolation:isolate;transform-style:preserve-3d;
+  text-shadow:0 1px 0 #d9d2cf,0 2px 0 #aaa09c,0 3px 0 #756b68,
+    0 4px 0 #554642,0 7px 0 rgba(0,0,0,.55),0 14px 28px rgba(0,0,0,.55);
+  animation:closing-type-3d 5.8s cubic-bezier(.45,0,.2,1) infinite;
+}
+.site-shell .closing-kinetic-title .kinetic-3d-word:after{
+  content:attr(data-depth);position:absolute;inset:0;z-index:-1;
+  color:rgba(255,91,43,.48);-webkit-text-stroke:0;
+  transform:translate3d(0,0,-18px) rotateX(0deg);
+  filter:blur(1px);text-shadow:0 0 32px rgba(255,74,24,.38);
+  pointer-events:none;
+}
+.site-shell .closing-kinetic-title .kinetic-outline-word{
+  text-shadow:0 1px 0 rgba(255,255,255,.7),0 3px 0 rgba(255,255,255,.28),
+    0 8px 24px rgba(255,92,44,.22);
+  -webkit-text-stroke:1.5px rgba(255,255,255,.9);
+}
+.site-shell .closing-kinetic-title .kinetic-last-line{
+  text-shadow:0 1px 0 #ffb18d,0 2px 0 #c94b25,0 3px 0 #8d2c17,
+    0 5px 0 #4d160d,0 9px 0 rgba(0,0,0,.5),0 18px 34px rgba(255,69,25,.24);
+}
+.site-shell .closing-kinetic-title .kinetic-last-line:after{color:rgba(255,89,48,.58)}
+.site-shell .closing-kinetic-content>.kicker{
+  display:inline-block;transform-style:preserve-3d;
+  animation:closing-kicker-3d 6s ease-in-out infinite;
+  text-shadow:0 2px 0 rgba(117,28,15,.9),0 8px 22px rgba(255,91,43,.3);
+}
+.site-shell .closing-kinetic-lead{
+  transform-style:preserve-3d;animation:closing-copy-3d 6.5s ease-in-out infinite;
+  text-shadow:0 2px 0 rgba(0,0,0,.8),0 8px 22px rgba(255,76,34,.2);
+}
+.site-shell .closing-kinetic-steps span{
+  transform-style:preserve-3d;animation:closing-step-3d 4.8s ease-in-out infinite;
+  text-shadow:0 2px 0 rgba(0,0,0,.9),0 5px 15px rgba(255,101,54,.3);
+}
+.site-shell .closing-kinetic-steps span:nth-of-type(2){animation-delay:.25s}
+.site-shell .closing-kinetic-steps span:nth-of-type(3){animation-delay:.5s}
+.site-shell .closing-kinetic-steps span:nth-of-type(4){animation-delay:.75s}
+.site-shell .closing-kinetic-content .liquid-metal-button{
+  transform:translateZ(28px);box-shadow:0 14px 0 #6c210d,0 20px 38px rgba(255,75,20,.35);
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.site-shell .closing-kinetic-content .liquid-metal-button:hover{
+  transform:translateY(-5px) translateZ(48px) rotateX(-7deg);
+  box-shadow:0 20px 0 #6c210d,0 30px 48px rgba(255,75,20,.48);
+}
+@keyframes closing-title-camera{
+  0%,100%{transform:rotateX(1deg) rotateY(-1deg)}
+  50%{transform:rotateX(-2deg) rotateY(1deg)}
+}
+@keyframes closing-type-3d{
+  0%,100%{transform:translate3d(0,0,0) rotateX(0deg) rotateY(0deg)}
+  24%{transform:translate3d(0,-7px,24px) rotateX(-5deg) rotateY(2deg)}
+  52%{transform:translate3d(0,2px,8px) rotateX(2deg) rotateY(-1deg)}
+  78%{transform:translate3d(0,-3px,18px) rotateX(-2deg) rotateY(1deg)}
+}
+@keyframes closing-kicker-3d{
+  0%,100%{transform:translateZ(0) rotateX(0)}
+  50%{transform:translateZ(18px) rotateX(-7deg)}
+}
+@keyframes closing-copy-3d{
+  0%,100%{transform:translate3d(0,0,0) rotateX(0)}
+  50%{transform:translate3d(0,-4px,14px) rotateX(-3deg)}
+}
+@keyframes closing-step-3d{
+  0%,100%{transform:translateZ(0) rotateY(0)}
+  50%{transform:translateZ(13px) rotateY(-8deg)}
+}
+@media(max-width:760px){
+ .site-shell .closing-kinetic-title{perspective:800px}
+ .site-shell .closing-kinetic-title .kinetic-3d-word{
+   text-shadow:0 1px 0 #b9aaa4,0 2px 0 #71615c,0 4px 0 rgba(0,0,0,.7),0 9px 18px rgba(0,0,0,.45);
+ }
+ .site-shell .closing-kinetic-title .kinetic-3d-word:after{transform:translate3d(0,0,-10px)}
+ .site-shell .closing-kinetic-content .liquid-metal-button{box-shadow:0 8px 0 #6c210d,0 13px 25px rgba(255,75,20,.3)}
+}
+@media(prefers-reduced-motion:reduce){
+ .site-shell .closing-kinetic-title,.site-shell .closing-kinetic-title .kinetic-3d-word,
+ .site-shell .closing-kinetic-content>.kicker,.site-shell .closing-kinetic-lead,
+ .site-shell .closing-kinetic-steps span{animation:none!important}
+}
