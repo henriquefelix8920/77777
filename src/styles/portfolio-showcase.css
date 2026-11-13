@@ -64,9 +64,10 @@
   animation: portfolio-page-scroll 11s cubic-bezier(.45,0,.55,1) infinite;
   opacity: 0;
   transform: translateY(0);
+  animation-play-state: paused;
   will-change: transform;
 }
-.portfolio-preview-track.is-ready { opacity: 1; animation-name: portfolio-page-scroll; }
+.portfolio-preview-track.is-ready { opacity: 1; animation-name: portfolio-page-scroll; animation-play-state: running; }
 .portfolio-preview-track.has-failed-image { opacity: 0; animation: none; }
 .portfolio-preview-track img { display: block; width: 100%; height: auto; flex: 0 0 auto; object-fit: cover; }
 .portfolio-preview-track img + img { flex-basis: auto; }
