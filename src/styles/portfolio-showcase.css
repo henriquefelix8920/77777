@@ -61,16 +61,21 @@
 .portfolio-preview-window { position: relative; height: clamp(250px, 31vw, 370px); overflow: hidden; background: linear-gradient(135deg, #f6f1ec, #d8c6c1); }
 .portfolio-preview-track {
   position: relative; width: 100%; display: flex; flex-direction: column;
-  animation: portfolio-page-scroll 19s cubic-bezier(.45,0,.55,1) infinite;
+  animation: portfolio-page-scroll 11s cubic-bezier(.45,0,.55,1) infinite;
+  opacity: 0;
+  transform: translateY(0);
   will-change: transform;
 }
+.portfolio-preview-track.is-ready { opacity: 1; animation-name: portfolio-page-scroll; }
+.portfolio-preview-track.has-failed-image { opacity: 0; animation: none; }
 .portfolio-preview-track img { display: block; width: 100%; height: auto; flex: 0 0 auto; object-fit: cover; }
-.portfolio-project:nth-child(2n) .portfolio-preview-track { animation-delay: -7s; }
-.portfolio-project:nth-child(3n) .portfolio-preview-track { animation-delay: -12s; }
+.portfolio-preview-track img + img { flex-basis: auto; }
+.portfolio-project:nth-child(2n) .portfolio-preview-track { animation-delay: -4s; }
+.portfolio-project:nth-child(3n) .portfolio-preview-track { animation-delay: -7s; }
 @keyframes portfolio-page-scroll {
-  0%, 9% { transform: translateY(0); }
-  42%, 58% { transform: translateY(-50%); }
-  91%, 100% { transform: translateY(0); }
+  0%, 7% { transform: translateY(0); }
+  34%, 62% { transform: translateY(-50%); }
+  89%, 100% { transform: translateY(0); }
 }
 .portfolio-preview-vignette {
   position: absolute; inset: auto 0 0; height: 76px; pointer-events: none;
@@ -82,13 +87,13 @@
 }
 .portfolio-preview-scroll span {
   display: block; width: 100%; height: 28%; background: #ff6500; border-radius: inherit;
-  animation: portfolio-scroll-indicator 19s ease-in-out infinite;
+  animation: portfolio-scroll-indicator 11s ease-in-out infinite;
 }
-.portfolio-project:nth-child(2n) .portfolio-preview-scroll span { animation-delay: -7s; }
-.portfolio-project:nth-child(3n) .portfolio-preview-scroll span { animation-delay: -12s; }
+.portfolio-project:nth-child(2n) .portfolio-preview-scroll span { animation-delay: -4s; }
+.portfolio-project:nth-child(3n) .portfolio-preview-scroll span { animation-delay: -7s; }
 @keyframes portfolio-scroll-indicator {
-  0%, 9%, 91%, 100% { transform: translateY(0); }
-  42%, 58% { transform: translateY(245%); }
+  0%, 7%, 89%, 100% { transform: translateY(0); }
+  34%, 62% { transform: translateY(245%); }
 }
 .portfolio-preview-caption {
   position: absolute; z-index: 2; left: 14px; bottom: 13px; color: #fff;
@@ -178,6 +183,8 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .portfolio-preview-track, .portfolio-preview-scroll span { animation: none !important; }
+  .portfolio-preview-track { opacity: 1; }
+  .portfolio-preview-track.has-failed-image { opacity: 0; }
   .portfolio-project:hover .portfolio-preview { transform: none; }
 }
 
