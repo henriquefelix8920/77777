@@ -153,11 +153,11 @@ export default function HomePage() {
       <div className="closing-kinetic-content">
         <p className="kicker">TODA MUDANÇA COMEÇA COM UMA PERGUNTA</p>
         <h2 className="closing-kinetic-title" data-title-motion aria-label="Vamos descobrir e construir.">
-          <span>Vamos</span>
-          <span className="kinetic-outline-word">descobrir</span>
-          <span className="kinetic-last-line"><em>e</em> construir<span className="kinetic-period">.</span></span>
+          <span className="kinetic-3d-word" data-depth="Vamos">Vamos</span>
+          <span className="kinetic-3d-word kinetic-outline-word" data-depth="descobrir">descobrir</span>
+          <span className="kinetic-3d-word kinetic-last-line" data-depth="e construir."><em>e</em> construir<span className="kinetic-period">.</span></span>
         </h2>
-        <p className="closing-kinetic-lead">Você traz o desafio. A gente transforma em movimento.</p>
+        <p className="closing-kinetic-lead" data-depth="Você traz o desafio. A gente transforma em movimento.">Você traz o desafio. A gente transforma em movimento.</p>
         <div className="closing-kinetic-steps" aria-label="Da ideia ao resultado">
           <span><b>01</b> IDEIA</span><i />
           <span><b>02</b> DIREÇÃO</span><i />
