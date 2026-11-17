@@ -230,3 +230,99 @@ body, .site-shell { background: var(--paper) !important; color: var(--ink) !impo
 .site-shell svg [stroke]:not([stroke="none"]) { stroke: currentColor !important; }
 .site-shell svg stop { stop-color: currentColor !important; }
 .site-shell *::selection { background: var(--accent) !important; color: var(--paper) !important; }
+
+
+/* AUDITORIA DE LAYOUT — fluxo previsível, sem cartões empilhados por sticky. */
+html, body, #root { width: 100%; min-width: 320px; }
+body { overflow-x: hidden; }
+.site-shell { width: 100%; min-width: 0; overflow-x: clip; }
+.site-shell > section { width: 100%; min-width: 0; position: relative; }
+.site-shell img, .site-shell video, .site-shell canvas, .site-shell svg { max-width: 100%; }
+
+/* O empilhamento sticky dos quatro painéis causava colisões e escondia conteúdo. */
+.site-shell .cap3d-panels {
+  display: block;
+  perspective: none;
+  padding: 0;
+}
+.site-shell .cap3d-panel {
+  position: relative !important;
+  top: auto !important;
+  width: 100%;
+  min-height: clamp(430px, 54vw, 560px);
+  height: auto;
+  margin: 0 0 clamp(22px, 3vw, 38px) !important;
+  transform: none;
+}
+.site-shell .cap3d-panel:last-child { margin-bottom: 0 !important; }
+.site-shell .cap3d-panel-copy { transform: none; }
+.site-shell .cap3d-geometry { min-width: 0; }
+
+/* Hero: o grid antigo exigia uma coluna de 460px mesmo quando não havia espaço. */
+@media (max-width: 1100px) {
+  .site-shell .hightech-hero { min-height: 0; }
+  .site-shell .hightech-hero-inner {
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: min(100%, 760px);
+    gap: clamp(28px, 5vw, 48px);
+  }
+  .site-shell .hightech-copy { width: 100%; max-width: 720px; }
+  .site-shell .hightech-visual { width: min(100%, 640px); margin-inline: auto; }
+}
+.site-shell .hightech-visual { min-width: 0; }
+.site-shell .hightech-float-tag {
+  position: relative !important;
+  inset: auto !important;
+  display: inline-flex;
+  vertical-align: top;
+  max-width: 100%;
+  margin: 14px 10px 0 0;
+  animation: none !important;
+}
+.site-shell .hightech-visual-index {
+  right: 0;
+  bottom: 0;
+}
+@media (max-width: 800px) {
+  .site-shell .cap3d-panel {
+    min-height: 0;
+    padding: 26px 22px 30px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(210px, auto) auto;
+    gap: 14px;
+  }
+  .site-shell .cap3d-geometry {
+    grid-row: 1;
+    min-height: 230px;
+    transform: scale(.78);
+  }
+  .site-shell .cap3d-panel-copy {
+    grid-row: 2;
+    padding: 0 0 34px;
+    max-width: 100%;
+  }
+  .site-shell .cap3d-panel-copy h3 { overflow-wrap: normal; }
+  .site-shell .cap3d-panel-copy p { max-width: 58ch; }
+  .site-shell .cap3d-panel-watermark { font-size: clamp(130px, 42vw, 220px); bottom: -5%; }
+}
+@media (max-width: 480px) {
+  .site-shell .hightech-hero { padding-inline: 20px; }
+  .site-shell .hightech-title { font-size: clamp(42px, 11vw, 54px); }
+  .site-shell .hightech-status { flex-wrap: wrap; }
+  .site-shell .hightech-float-tag { margin-top: 10px; }
+  .site-shell .cap3d-shell { width: calc(100% - 36px); }
+  .site-shell .cap3d-panel { padding: 22px 18px 26px; }
+  .site-shell .cap3d-geometry { min-height: 190px; transform: scale(.68); }
+  .site-shell .cap3d-panel-copy h3 { font-size: clamp(28px, 8vw, 38px); }
+  .site-shell .portfolio-topline,
+  .site-shell .portfolio-private-label { flex-wrap: wrap; }
+  .site-shell .portfolio-project-meta { flex-wrap: wrap; }
+  .site-shell .closing-kinetic-steps { flex-wrap: wrap; justify-content: center; }
+}
+.site-shell :is(.hightech-hero-inner, .hightech-copy, .hightech-visual, .cap3d-panel, .cap3d-panel-copy, .process-act-inner, .portfolio-project-info, .closing-kinetic-content) {
+  min-width: 0;
+}
+.site-shell :is(.hightech-lead, .cap3d-panel-copy p, .process-act-content p, .portfolio-project-info p, .closing-kinetic-lead) {
+  overflow-wrap: break-word;
+  word-break: normal;
+}
