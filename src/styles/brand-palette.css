@@ -1,6 +1,4 @@
-/* Sistema cromático global — proporção visual 60 / 30 / 10.
-   60% papel (#F8FAFC), 30% tinta (#111827), 10% azul (#2563EB).
-   Todas as superfícies, textos, estados e elementos decorativos usam somente esta paleta. */
+/* Identidade global 60/30/10 — sem neutralizar estilos locais ou motion. */
 :root {
   color-scheme: light;
   --paper: #F8FAFC;
@@ -16,313 +14,79 @@
   --cream: var(--paper);
   --sage: var(--paper);
   --rose: var(--accent);
-  --scene-bg: var(--paper);
-  --scene-ink: var(--ink);
+  --scene-bg: var(--ink);
+  --scene-ink: var(--paper);
   --scene-pop: var(--accent);
   --scene-paper: var(--paper);
   --line: rgba(var(--ink-rgb), .18);
-  background: var(--paper) !important;
-  color: var(--ink) !important;
-  animation: none !important;
 }
-html, body, #root { min-height: 100%; background: var(--paper) !important; color: var(--ink) !important; }
-body, .site-shell { background: var(--paper) !important; color: var(--ink) !important; }
+
+html, body, #root {
+  min-height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+}
+body { margin: 0; }
 * { box-sizing: border-box; }
-*::selection { background: var(--accent) !important; color: var(--paper) !important; }
-:focus-visible { outline: 2px solid var(--accent) !important; outline-offset: 4px; }
+::selection { background: var(--accent); color: var(--paper); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-/* Neutraliza paletas antigas, gradientes multicoloridos e cores embutidas nos efeitos. */
-.site-shell, .site-shell *,
-.site-shell *::before, .site-shell *::after {
-  --blood: var(--ink);
-  --orange: var(--accent);
-  --white: var(--paper);
-  --deep: var(--ink);
-  --cream: var(--paper);
-  --sage: var(--paper);
-  --rose: var(--accent);
-  --scene-bg: var(--paper);
-  --scene-ink: var(--ink);
-  --scene-pop: var(--accent);
-  --scene-paper: var(--paper);
-}
-.site-shell :is(.hightech-aurora-cloud, .hightech-world-particles, .hero-shader-background, .hero-shader-vignette, .hightech-energy-sweep, .cap3d-backdrop-glow, .cap3d-backdrop-grid, .portfolio-constellation-bg, .closing-kinetic-grid, .closing-kinetic-rays, .closing-kinetic-orbit, .process-kinetic-grain) {
-  background-color: transparent !important;
-  background-image: none !important;
-  box-shadow: none !important;
-}
-.site-shell :is(.hightech-world, .hero-shader-background, .cap3d-backdrop, .process-kinetic-atmosphere, .closing-kinetic-universe) {
-  background: var(--ink) !important;
-}
-.site-shell :is(.hero-shader-background canvas, .hero-scroll-video video, .film-object video, .approach-video-fullbleed video) {
-  filter: grayscale(1) contrast(1.12) !important;
-}
+/*
+ * Não aplicar reset universal de background, background-image, shadow,
+ * filter, transform, position ou animation dentro de .site-shell.
+ * As seções possuem fundos, camadas, profundidade e animações próprias.
+ */
 
-/* Distribuição das superfícies: papel como base, tinta nas áreas de contraste. */
-.site-shell :is(.intro-section, .intro-story-section, .approach-video-fullbleed, .process-section:not(.process-kinetic), .offerings-section, .lesson-offer, .manifesto-section, .portfolio-section, .portfolio-showcase, .site-footer) {
-  background-color: var(--paper) !important;
-  color: var(--ink) !important;
-}
-.site-shell :is(.hightech-hero, .hero, .hero-prisma, .work-section, .cap3d-section, .process-kinetic, .closing-section, .closing-kinetic) {
-  background-color: var(--ink) !important;
-  color: var(--paper) !important;
-}
-.site-shell :is(.cap3d-panel, .process-card, .capability, .story-chapter, .portfolio-private, .portfolio-preview-window, .lesson-portrait, .service-stop) {
-  background-color: var(--paper) !important;
-  color: var(--ink) !important;
-  border-color: rgba(var(--ink-rgb), .2) !important;
-}
-.site-shell :is(.cap3d-panel:nth-child(2n), .process-act:nth-child(2n)) {
-  background-color: rgba(var(--paper-rgb), .04) !important;
-}
-.site-shell :is(.portfolio-private-visual, .private-window, .private-window-top, .private-content, .portfolio-browser-bar, .portfolio-preview) {
-  background-color: var(--ink) !important;
-  color: var(--paper) !important;
-  border-color: rgba(var(--paper-rgb), .22) !important;
-}
-
-/* Texto: tinta nas superfícies claras; papel nas superfícies escuras. */
-.site-shell :is(.brand-mark, .brand-mark i, .site-header nav, .header-contact, .site-footer, .body-copy, .process-list p, .intro-copy h2, .process-content h2, .process-heading h2, .process-card-copy h3, .process-card-copy p, .cap3d-panel-copy h3, .cap3d-panel-copy p, .story-chapter h3, .story-chapter p, .portfolio-private-copy h3, .portfolio-private-copy > p, .service-description, .section-title, .lesson-price-title, .manifesto-copy) {
-  color: var(--ink) !important;
-}
-.site-shell :is(.hightech-hero, .hightech-hero *, .work-section, .work-section *, .process-kinetic, .process-kinetic *, .closing-section, .closing-section *) {
+/* Superfícies principais sem remover gradientes ou camadas locais. */
+.site-shell { background-color: var(--paper); color: var(--ink); }
+.site-shell .hightech-hero,
+.site-shell .cap3d-section,
+.site-shell .process-kinetic,
+.site-shell .closing-kinetic {
+  background-color: var(--ink);
   color: var(--paper);
 }
-.site-shell :is(.kicker, .section-index, .brand-mark span, .hero-title-accent, .hero h1 span, .hightech-title-mark, .hightech-title-accent, .cap3d-panel-detail, .cap3d-panel-top span:last-child, .process-kinetic-kicker, .process-act-verb, .process-act-content h4, .process-act-rule span, .portfolio-project-meta, .portfolio-project-category, .portfolio-preview-fallback span, .portfolio-preview-caption i, .service-eyebrow, .service-link, .section-kicker, .tile-meta, .process-list span) {
-  color: var(--accent) !important;
-}
-.site-shell :is(.hightech-hero .hightech-eyebrow, .hightech-hero .hightech-status, .hightech-hero .hightech-signature, .hightech-hero .hightech-bottom-meta, .hightech-hero .hightech-lead, .hightech-hero .hightech-title, .hightech-hero .hightech-visual-label, .hightech-hero .hightech-visual-index, .work-section .section-heading h2, .closing-section h2, .closing-section p, .process-kinetic-header h2, .process-act-content h3, .process-act-content p, .process-kinetic-footer) {
-  color: var(--paper) !important;
-}
-.site-shell :is(.hero-title-accent, .hightech-title-accent, .closing-content h2 em, .closing-kinetic-title em, .section-heading h2 em, .process-kinetic-header h2 em) { color: var(--accent) !important; }
-
-/* Azul reservado a CTAs, indicadores, links ativos e pequenos pontos de atenção. */
-.site-shell :is(.button-primary, .primary-cta, .hightech-primary-cta, .liquid-metal-button, .capability-rule, .process-card-line, .eyebrow-line, .cap3d-panel-edge, .cap3d-panel-arrow, .hightech-eyebrow-mark, .live-dot, .whatsapp-float) {
-  background: var(--accent) !important;
-  border-color: var(--accent) !important;
-  color: var(--paper) !important;
-}
-.site-shell :is(.button-quiet, .text-cta, .hightech-secondary-cta, .portfolio-project-link, .portfolio-private-link) {
-  color: var(--paper) !important;
-  border-color: var(--accent) !important;
-}
-.site-shell a:hover, .site-shell button:hover { text-decoration-color: var(--accent); }
-.site-shell :is(.cap3d-orbit, .cap3d-particle, .cap3d-backdrop-ring, .process-kinetic-sun, .process-act-rule, .hero-site-orbit-ring, .hero-frame, .portfolio-private-visual, .private-orbit) {
-  border-color: rgba(var(--accent-rgb), .48) !important;
-}
-.site-shell :is(.cap3d-object-face, .cap3d-object-core, .hero-site-orbit-core, .hero-site-page, .private-window, .private-window-top, .private-metrics i, .private-table span, .private-content-head b) {
-  background-color: var(--ink) !important;
-  color: var(--paper) !important;
-  border-color: rgba(var(--paper-rgb), .24) !important;
-}
-.site-shell :is(.cap3d-object-core, .hero-site-caption span, .hero-site-caption i, .hero-site-browser b, .portfolio-project-meta span:first-child, .portfolio-preview-caption i, .portfolio-project-link:hover) {
-  color: var(--accent) !important;
-}
-
-/* Remove fundos residuais multicoloridos, mantendo geometria e composição. */
-.site-shell :is(.portfolio-preview-fallback, .hero-site-fallback, .hero-site-viewport, .hero-site-browser, .portfolio-preview-vignette, .portfolio-private-visual, .private-window, .private-content-head span) {
-  background: var(--ink) !important;
-}
-.site-shell :is(.portfolio-preview-fallback, .hero-site-fallback, .portfolio-private-copy, .portfolio-project-info) { color: var(--paper) !important; }
-.site-shell :is(.portfolio-preview-track img, .hero-site-viewport img) { filter: grayscale(1) contrast(1.08) !important; }
-.site-shell :is(.cap3d-panel-watermark, .process-act-number, .hightech-title-mark) { color: rgba(var(--paper-rgb), .10) !important; }
-
-/* Proteções de layout: nada de largura intrínseca forçando colisões. */
-.site-shell :is(.hightech-hero-inner, .hightech-copy, .hightech-visual, .cap3d-shell, .cap3d-intro, .cap3d-panels, .cap3d-panel, .process-act-inner, .process-act-content, .intro-story-wrap, .intro-story-copy, .story-chapters-centered, .portfolio-grid, .portfolio-project, .portfolio-private, .closing-kinetic-content) {
-  min-width: 0;
-  max-width: 100%;
-}
-.site-shell :is(.hightech-title, .hightech-lead, .cap3d-panel-copy h3, .cap3d-panel-copy p, .process-act-content h3, .process-act-content h4, .process-act-content p, .story-chapter h3, .story-chapter p, .portfolio-project-info h3, .portfolio-project-info p) {
-  overflow-wrap: anywhere;
-}
-.site-shell .process-act-content { opacity: 1 !important; transform: none !important; }
-.site-shell .process-act { min-width: 0; }
-.site-shell .hightech-hero-inner { position: relative; z-index: 2; }
-.site-shell .hightech-copy { position: relative; z-index: 2; }
-.site-shell .hightech-visual { position: relative; z-index: 1; }
-.site-shell .whatsapp-float { z-index: 50; }
-@media (max-width: 800px) {
-  .site-shell .hightech-hero-inner { grid-template-columns: minmax(0, 1fr) !important; }
-  .site-shell .hightech-visual { width: min(100%, 520px); margin-inline: auto; }
-  .site-shell .cap3d-panels { grid-template-columns: minmax(0, 1fr) !important; }
-  .site-shell .process-act-content { padding-inline: 4px; }
-}
-@media (prefers-reduced-motion: no-preference) {
-  :root { animation: none !important; }
-}
-
-/* Hard guarantee: nenhum gradiente ou cor de outra identidade permanece no site. */
-.site-shell *, .site-shell *::before, .site-shell *::after,
-.whatsapp-float, .whatsapp-float::before, .whatsapp-float::after {
-  background-image: none !important;
-}
-.site-shell svg [fill]:not([fill="none"]) { fill: currentColor !important; }
-.site-shell svg [stroke]:not([stroke="none"]) { stroke: currentColor !important; }
-.site-shell svg stop { stop-color: currentColor !important; }
-.whatsapp-float, .whatsapp-float-tooltip {
-  background-color: var(--accent) !important;
-  color: var(--paper) !important;
-  border-color: var(--accent) !important;
-}
-.whatsapp-float-pulse { border-color: rgba(var(--accent-rgb), .55) !important; }
-.site-shell :is(.hightech-world, .hero-shader-background, .cap3d-backdrop, .process-kinetic-atmosphere, .closing-kinetic-universe, .portfolio-private-visual, .private-window, .portfolio-preview, .portfolio-browser-bar) {
-  background-color: var(--ink) !important;
-}
-.site-shell :is(.intro-section, .intro-story-section, .process-section:not(.process-kinetic), .offerings-section, .lesson-offer, .manifesto-section, .portfolio-section, .site-footer, .story-chapter, .cap3d-panel, .process-card, .capability) {
-  background-color: var(--paper) !important;
-}
-
-
-/* AUDITORIA FINAL 60/30/10 — neutraliza também regras legadas de maior especificidade. */
-.site-shell,
-.site-shell * ,
-.site-shell *::before,
-.site-shell *::after {
-  color: inherit !important;
-  background-color: transparent !important;
-  background-image: none !important;
-  border-color: rgba(17, 24, 39, .22) !important;
-  box-shadow: none !important;
-  text-shadow: none !important;
-  outline-color: var(--accent) !important;
-  -webkit-text-fill-color: currentColor !important;
-}
-.site-shell {
-  background: var(--paper) !important;
-  color: var(--ink) !important;
-}
-.site-shell :is(header, nav, footer, section, main, article, aside) {
-  background-color: var(--paper) !important;
-  color: var(--ink) !important;
-}
-.site-shell :is(.hightech-hero, .hero, .hero-prisma, .work-section, .cap3d-section, .process-kinetic, .closing-section, .closing-kinetic, .hightech-world, .hero-shader-background, .cap3d-backdrop, .process-kinetic-atmosphere, .closing-kinetic-universe) {
-  background-color: var(--ink) !important;
-  color: var(--paper) !important;
-}
-.site-shell :is(.cap3d-panel, .process-card, .capability, .story-chapter, .portfolio-private, .portfolio-preview-window, .lesson-portrait, .service-stop, .systems-ui, .terminal-window, .hero-site-browser, .private-window) {
-  background-color: var(--paper) !important;
-  color: var(--ink) !important;
-  border: 1px solid rgba(17, 24, 39, .22) !important;
-}
-.site-shell :is(.button-primary, .primary-cta, .hightech-primary-cta, .liquid-metal-button, .whatsapp-float, .service-link) {
-  background: var(--accent) !important;
-  background-color: var(--accent) !important;
-  color: var(--paper) !important;
-  border-color: var(--accent) !important;
-  -webkit-text-fill-color: var(--paper) !important;
-}
-.site-shell :is(.kicker, .section-index, .brand-mark span, .hero-title-accent, .hero h1 span, .hightech-title-mark, .hightech-title-accent, .cap3d-panel-detail, .cap3d-panel-top span:last-child, .process-kinetic-kicker, .process-act-verb, .process-act-rule span, .portfolio-project-meta, .portfolio-project-category, .service-eyebrow, .section-kicker, .tile-meta, .process-list span, .story-chapter-index, .story-visual-caption, .story-core b, .story-core strong) {
-  color: var(--accent) !important;
-  -webkit-text-fill-color: var(--accent) !important;
-}
-.site-shell :is(.hightech-hero, .hightech-hero *, .work-section, .work-section *, .process-kinetic, .process-kinetic *, .closing-section, .closing-section *, .closing-kinetic, .closing-kinetic *) {
-  color: var(--paper) !important;
-  -webkit-text-fill-color: currentColor !important;
-}
-.site-shell :is(.hightech-title-accent, .hero-title-accent, .closing-content h2 em, .closing-kinetic-title em, .section-heading h2 em, .process-kinetic-header h2 em, .hero-prisma .hero-title .curtain-title) {
-  color: var(--accent) !important;
-  -webkit-text-fill-color: var(--accent) !important;
-}
-.site-shell :is(img, video, canvas, iframe) {
-  filter: grayscale(1) !important;
-}
-.site-shell svg [fill]:not([fill="none"]) { fill: currentColor !important; }
-.site-shell svg [stroke]:not([stroke="none"]) { stroke: currentColor !important; }
-.site-shell svg stop { stop-color: currentColor !important; }
-.site-shell *::selection { background: var(--accent) !important; color: var(--paper) !important; }
-
-
-/* AUDITORIA DE LAYOUT — fluxo previsível, sem cartões empilhados por sticky. */
-html, body, #root { width: 100%; min-width: 320px; }
-body { overflow-x: hidden; }
-.site-shell { width: 100%; min-width: 0; overflow-x: clip; }
-.site-shell > section { width: 100%; min-width: 0; position: relative; }
-.site-shell img, .site-shell video, .site-shell canvas, .site-shell svg { max-width: 100%; }
-
-/* O empilhamento sticky dos quatro painéis causava colisões e escondia conteúdo. */
-.site-shell .cap3d-panels {
-  display: block;
-  perspective: none;
-  padding: 0;
-}
+.site-shell .intro-story-section { color: var(--paper); }
 .site-shell .cap3d-panel {
-  position: relative !important;
-  top: auto !important;
-  width: 100%;
-  min-height: clamp(430px, 54vw, 560px);
-  height: auto;
-  margin: 0 0 clamp(22px, 3vw, 38px) !important;
-  transform: none;
+  background-color: var(--ink);
+  color: var(--paper);
+  border-color: rgba(var(--paper-rgb), .2);
 }
-.site-shell .cap3d-panel:last-child { margin-bottom: 0 !important; }
-.site-shell .cap3d-panel-copy { transform: none; }
-.site-shell .cap3d-geometry { min-width: 0; }
 
-/* Hero: o grid antigo exigia uma coluna de 460px mesmo quando não havia espaço. */
-@media (max-width: 1100px) {
-  .site-shell .hightech-hero { min-height: 0; }
-  .site-shell .hightech-hero-inner {
-    grid-template-columns: minmax(0, 1fr) !important;
-    width: min(100%, 760px);
-    gap: clamp(28px, 5vw, 48px);
-  }
-  .site-shell .hightech-copy { width: 100%; max-width: 720px; }
-  .site-shell .hightech-visual { width: min(100%, 640px); margin-inline: auto; }
+/* Contraste tipográfico sem interferir em transforms, opacidades ou animações. */
+.site-shell .cap3d-intro h2,
+.site-shell .cap3d-panel-copy h3,
+.site-shell .process-kinetic-header h2,
+.site-shell .process-act-content h3,
+.site-shell .closing-kinetic-title { color: var(--paper); }
+.site-shell .cap3d-intro h2 em,
+.site-shell .process-kinetic-header h2 em,
+.site-shell .cap3d-panel-detail,
+.site-shell .process-act-verb,
+.site-shell .process-act-rule span,
+.site-shell .closing-kinetic-title em { color: var(--accent); }
+.site-shell .cap3d-panel-copy p,
+.site-shell .process-kinetic-intro,
+.site-shell .process-act-content p,
+.site-shell .closing-kinetic-lead { color: rgba(var(--paper-rgb), .72); }
+
+/* CTA e indicadores. */
+.site-shell .hightech-primary-cta,
+.site-shell .button-primary,
+.site-shell .liquid-metal-button,
+.site-shell .whatsapp-float {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: var(--paper);
 }
-.site-shell .hightech-visual { min-width: 0; }
-.site-shell .hightech-float-tag {
-  position: relative !important;
-  inset: auto !important;
-  display: inline-flex;
-  vertical-align: top;
-  max-width: 100%;
-  margin: 14px 10px 0 0;
-  animation: none !important;
-}
-.site-shell .hightech-visual-index {
-  right: 0;
-  bottom: 0;
-}
-@media (max-width: 800px) {
-  .site-shell .cap3d-panel {
-    min-height: 0;
-    padding: 26px 22px 30px;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(210px, auto) auto;
-    gap: 14px;
-  }
-  .site-shell .cap3d-geometry {
-    grid-row: 1;
-    min-height: 230px;
-    transform: scale(.78);
-  }
-  .site-shell .cap3d-panel-copy {
-    grid-row: 2;
-    padding: 0 0 34px;
-    max-width: 100%;
-  }
-  .site-shell .cap3d-panel-copy h3 { overflow-wrap: normal; }
-  .site-shell .cap3d-panel-copy p { max-width: 58ch; }
-  .site-shell .cap3d-panel-watermark { font-size: clamp(130px, 42vw, 220px); bottom: -5%; }
-}
-@media (max-width: 480px) {
-  .site-shell .hightech-hero { padding-inline: 20px; }
-  .site-shell .hightech-title { font-size: clamp(42px, 11vw, 54px); }
-  .site-shell .hightech-status { flex-wrap: wrap; }
-  .site-shell .hightech-float-tag { margin-top: 10px; }
-  .site-shell .cap3d-shell { width: calc(100% - 36px); }
-  .site-shell .cap3d-panel { padding: 22px 18px 26px; }
-  .site-shell .cap3d-geometry { min-height: 190px; transform: scale(.68); }
-  .site-shell .cap3d-panel-copy h3 { font-size: clamp(28px, 8vw, 38px); }
-  .site-shell .portfolio-topline,
-  .site-shell .portfolio-private-label { flex-wrap: wrap; }
-  .site-shell .portfolio-project-meta { flex-wrap: wrap; }
-  .site-shell .closing-kinetic-steps { flex-wrap: wrap; justify-content: center; }
-}
-.site-shell :is(.hightech-hero-inner, .hightech-copy, .hightech-visual, .cap3d-panel, .cap3d-panel-copy, .process-act-inner, .portfolio-project-info, .closing-kinetic-content) {
+
+/* Proteção de largura sem alterar fluxo, sticky ou composição das seções. */
+.site-shell img,
+.site-shell video,
+.site-shell canvas,
+.site-shell iframe { max-width: 100%; }
+.site-shell :is(.hightech-hero-inner, .hightech-copy, .hightech-visual,
+  .cap3d-shell, .cap3d-panel, .cap3d-panel-copy, .process-act-inner,
+  .process-act-content, .portfolio-project-info, .closing-kinetic-content) {
   min-width: 0;
-}
-.site-shell :is(.hightech-lead, .cap3d-panel-copy p, .process-act-content p, .portfolio-project-info p, .closing-kinetic-lead) {
-  overflow-wrap: break-word;
-  word-break: normal;
 }
