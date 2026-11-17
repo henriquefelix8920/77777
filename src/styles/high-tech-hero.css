@@ -1180,3 +1180,10 @@
   .hero-site-viewport img { animation: none !important; }
   .hero-site-page { opacity: 1; transform: translate(-50%, -50%); }
 }
+
+
+/* The hero preview is a live, scrollable viewport of the published project. */
+.hero-site-viewport { isolation: isolate; }
+.hero-site-live-frame { position: absolute; inset: 0; z-index: 1; display: block; width: 100%; height: 100%; border: 0; background: #F8FAFC; }
+.hero-site-page { animation: none !important; transform: translate(-50%, -50%); }
+.hero-site-viewport { cursor: auto; }

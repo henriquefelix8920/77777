@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowDown, ArrowUpRight, Zap } from "lucide-react";
 import "../styles/high-tech-hero.css";
 import { HeroShaderBackground } from "./VisualBackgrounds";
-import { portfolioProjects, screenshotUrl } from "./PortfolioShowcase";
+import { portfolioProjects } from "./PortfolioShowcase";
 
 type HighTechHeroProps = {
   contact: string;
@@ -15,7 +15,7 @@ function PortfolioOrbit() {
   useEffect(() => {
     const interval = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % portfolioProjects.length);
-    }, 4300);
+    }, 12000);
     return () => window.clearInterval(interval);
   }, []);
 
@@ -31,12 +31,12 @@ function PortfolioOrbit() {
           <b>LIVE SITE</b>
         </div>
         <div className="hero-site-viewport">
-          <img
-            src={screenshotUrl(project.url)}
-            alt={`Miniatura do site ${project.name}`}
+          <iframe
+            className="hero-site-live-frame"
+            src={project.url}
+            title={"Prévia ao vivo do site " + project.name}
             loading="eager"
-            decoding="async"
-            onError={(event) => { event.currentTarget.style.opacity = "0"; }}
+            referrerPolicy="strict-origin-when-cross-origin"
           />
           <div className="hero-site-fallback">
             <span>EXPERIÊNCIA DIGITAL</span>

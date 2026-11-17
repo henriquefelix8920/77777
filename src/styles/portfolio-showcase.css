@@ -202,3 +202,11 @@
 
 /* 21st.dev-inspired dot constellation layer for the portfolio section. */
 .portfolio-section > .portfolio-constellation-bg { display: block; }
+
+
+/* Live previews: render the published project itself, not captured screenshots. */
+.portfolio-preview-window { isolation: isolate; }
+.portfolio-live-frame { position: absolute; z-index: 1; inset: 0; display: block; width: 100%; height: 100%; border: 0; background: #F8FAFC; }
+.portfolio-preview-vignette { z-index: 2; pointer-events: none; }
+.portfolio-preview-caption { z-index: 3; pointer-events: none; }
+.browser-live { display: inline-flex; align-items: center; color: #2563EB; text-decoration: none; font-size: 7px; letter-spacing: .16em; }
