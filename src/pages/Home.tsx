@@ -3,6 +3,7 @@ import { waLink } from "../config";
 import "../styles/capability-bento.css";
 import "../styles/approach-scroll-story.css";
 import "../styles/text-motion-system.css";
+import "../styles/brand-palette.css";
 import { LiquidMetalButton } from "../components/ui/liquid-metal-button";
 import SiteFrame from "../components/SiteFrame";
 import HighTechHero from "../components/HighTechHero";
