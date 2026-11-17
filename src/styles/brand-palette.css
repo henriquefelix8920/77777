@@ -171,3 +171,62 @@ body, .site-shell { background: var(--paper) !important; color: var(--ink) !impo
 .site-shell :is(.intro-section, .intro-story-section, .process-section:not(.process-kinetic), .offerings-section, .lesson-offer, .manifesto-section, .portfolio-section, .site-footer, .story-chapter, .cap3d-panel, .process-card, .capability) {
   background-color: var(--paper) !important;
 }
+
+
+/* AUDITORIA FINAL 60/30/10 — neutraliza também regras legadas de maior especificidade. */
+.site-shell,
+.site-shell * ,
+.site-shell *::before,
+.site-shell *::after {
+  color: inherit !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: rgba(17, 24, 39, .22) !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  outline-color: var(--accent) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+.site-shell {
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+}
+.site-shell :is(header, nav, footer, section, main, article, aside) {
+  background-color: var(--paper) !important;
+  color: var(--ink) !important;
+}
+.site-shell :is(.hightech-hero, .hero, .hero-prisma, .work-section, .cap3d-section, .process-kinetic, .closing-section, .closing-kinetic, .hightech-world, .hero-shader-background, .cap3d-backdrop, .process-kinetic-atmosphere, .closing-kinetic-universe) {
+  background-color: var(--ink) !important;
+  color: var(--paper) !important;
+}
+.site-shell :is(.cap3d-panel, .process-card, .capability, .story-chapter, .portfolio-private, .portfolio-preview-window, .lesson-portrait, .service-stop, .systems-ui, .terminal-window, .hero-site-browser, .private-window) {
+  background-color: var(--paper) !important;
+  color: var(--ink) !important;
+  border: 1px solid rgba(17, 24, 39, .22) !important;
+}
+.site-shell :is(.button-primary, .primary-cta, .hightech-primary-cta, .liquid-metal-button, .whatsapp-float, .service-link) {
+  background: var(--accent) !important;
+  background-color: var(--accent) !important;
+  color: var(--paper) !important;
+  border-color: var(--accent) !important;
+  -webkit-text-fill-color: var(--paper) !important;
+}
+.site-shell :is(.kicker, .section-index, .brand-mark span, .hero-title-accent, .hero h1 span, .hightech-title-mark, .hightech-title-accent, .cap3d-panel-detail, .cap3d-panel-top span:last-child, .process-kinetic-kicker, .process-act-verb, .process-act-rule span, .portfolio-project-meta, .portfolio-project-category, .service-eyebrow, .section-kicker, .tile-meta, .process-list span, .story-chapter-index, .story-visual-caption, .story-core b, .story-core strong) {
+  color: var(--accent) !important;
+  -webkit-text-fill-color: var(--accent) !important;
+}
+.site-shell :is(.hightech-hero, .hightech-hero *, .work-section, .work-section *, .process-kinetic, .process-kinetic *, .closing-section, .closing-section *, .closing-kinetic, .closing-kinetic *) {
+  color: var(--paper) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+.site-shell :is(.hightech-title-accent, .hero-title-accent, .closing-content h2 em, .closing-kinetic-title em, .section-heading h2 em, .process-kinetic-header h2 em, .hero-prisma .hero-title .curtain-title) {
+  color: var(--accent) !important;
+  -webkit-text-fill-color: var(--accent) !important;
+}
+.site-shell :is(img, video, canvas, iframe) {
+  filter: grayscale(1) !important;
+}
+.site-shell svg [fill]:not([fill="none"]) { fill: currentColor !important; }
+.site-shell svg [stroke]:not([stroke="none"]) { stroke: currentColor !important; }
+.site-shell svg stop { stop-color: currentColor !important; }
+.site-shell *::selection { background: var(--accent) !important; color: var(--paper) !important; }
