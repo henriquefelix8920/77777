@@ -150,3 +150,24 @@ body, .site-shell { background: var(--paper) !important; color: var(--ink) !impo
 @media (prefers-reduced-motion: no-preference) {
   :root { animation: none !important; }
 }
+
+/* Hard guarantee: nenhum gradiente ou cor de outra identidade permanece no site. */
+.site-shell *, .site-shell *::before, .site-shell *::after,
+.whatsapp-float, .whatsapp-float::before, .whatsapp-float::after {
+  background-image: none !important;
+}
+.site-shell svg [fill]:not([fill="none"]) { fill: currentColor !important; }
+.site-shell svg [stroke]:not([stroke="none"]) { stroke: currentColor !important; }
+.site-shell svg stop { stop-color: currentColor !important; }
+.whatsapp-float, .whatsapp-float-tooltip {
+  background-color: var(--accent) !important;
+  color: var(--paper) !important;
+  border-color: var(--accent) !important;
+}
+.whatsapp-float-pulse { border-color: rgba(var(--accent-rgb), .55) !important; }
+.site-shell :is(.hightech-world, .hero-shader-background, .cap3d-backdrop, .process-kinetic-atmosphere, .closing-kinetic-universe, .portfolio-private-visual, .private-window, .portfolio-preview, .portfolio-browser-bar) {
+  background-color: var(--ink) !important;
+}
+.site-shell :is(.intro-section, .intro-story-section, .process-section:not(.process-kinetic), .offerings-section, .lesson-offer, .manifesto-section, .portfolio-section, .site-footer, .story-chapter, .cap3d-panel, .process-card, .capability) {
+  background-color: var(--paper) !important;
+}
