@@ -210,3 +210,7 @@
 .portfolio-preview-vignette { z-index: 2; pointer-events: none; }
 .portfolio-preview-caption { z-index: 3; pointer-events: none; }
 .browser-live { display: inline-flex; align-items: center; color: #2563EB; text-decoration: none; font-size: 7px; letter-spacing: .16em; }
+
+
+/* Auto-scroll runs inside the original site through its own opt-in message listener. */
+.portfolio-live-frame { pointer-events: none; }
