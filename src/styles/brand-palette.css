@@ -1,0 +1,84 @@
+/* Paleta institucional 60 / 30 / 10 */
+:root {
+  color-scheme: light;
+  --paper: #F8FAFC;
+  --ink: #111827;
+  --accent: #2563EB;
+  --blood: var(--ink);
+  --orange: var(--accent);
+  --white: var(--paper);
+  --deep: var(--ink);
+  --cream: var(--paper);
+  --sage: var(--paper);
+  --rose: var(--accent);
+  --scene-bg: var(--paper);
+  --scene-ink: var(--ink);
+  --scene-pop: var(--accent);
+  --scene-paper: var(--paper);
+  --line: rgba(17, 24, 39, .16);
+  animation: none !important;
+}
+html, body, #root, .site-shell {
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+}
+body, .site-shell, .site-header, .site-footer {
+  --blood: var(--ink);
+  --orange: var(--accent);
+  --white: var(--paper);
+}
+.site-header, .site-footer {
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+  border-color: rgba(17,24,39,.16) !important;
+}
+.brand-mark, .brand-mark i, .site-header nav, .header-contact,
+.site-footer, .body-copy, .process-list p, .intro-copy h2,
+.process-content h2, .section-heading h2, .process-heading h2,
+.process-card-copy h3, .process-card-copy p {
+  color: var(--ink);
+}
+.brand-mark span, .hero h1 span, .kicker, .section-index,
+.intro-copy h2 em, .section-heading h2 em, .process-content h2 em,
+.closing-content h2 em, .capability-top, .process-list span {
+  color: var(--accent) !important;
+}
+.hero, .hero-prisma, .work-section, .closing-section,
+.closing-kinetic, .capability-section, .process-dark-section {
+  background-color: var(--ink) !important;
+  color: var(--paper) !important;
+}
+.hero h1, .hero-lead, .hero .eyebrow, .hero-footnote,
+.section-heading h2, .work-section h2, .work-section h3,
+.work-section p, .closing-section h2, .closing-section p {
+  color: var(--paper);
+}
+.button-primary, .primary-cta, .liquid-metal-button,
+.capability-rule, .process-card-line, .eyebrow-line {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: var(--paper) !important;
+}
+.button-primary:hover, .primary-cta:hover {
+  background: var(--ink) !important;
+  border-color: var(--paper) !important;
+}
+.button-quiet, .text-cta { color: var(--paper); border-color: var(--paper); }
+.intro-section, .process-section, .offerings-section, .lesson-offer,
+.process-card, .capability-tile, .portfolio-section,
+.portfolio-showcase, .story-chapter, .manifesto-section {
+  background-color: var(--paper);
+  color: var(--ink);
+}
+.process-card, .capability-tile, .story-chapter {
+  border-color: rgba(17,24,39,.18) !important;
+}
+a:hover, .site-header nav a:hover, .header-contact:hover,
+.service-link, .service-eyebrow, .tile-meta, .portfolio-project-category {
+  color: var(--accent) !important;
+}
+::selection { background: var(--accent); color: var(--paper); }
+:focus-visible { outline-color: var(--accent) !important; }
+@media (prefers-reduced-motion: no-preference) {
+  :root { animation: none !important; }
+}
