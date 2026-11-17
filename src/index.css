@@ -528,7 +528,7 @@ body,.site-shell,.site-header,.site-footer,.intro-section,.process-section{backg
 .hero-prisma .hero-scroll-video video {
   object-position: 58% center;
   mix-blend-mode: screen;
-  filter: saturate(.82) contrast(1.12) brightness(.76);
+  filter: grayscale(1) sepia(1) hue-rotate(190deg) saturate(3) contrast(1.12) brightness(.76);
 }
 .hero-prisma .hero-scroll-video:after {
   background: linear-gradient(90deg, #111827 0%, rgba(17, 24, 39,.16) 45%, rgba(37, 99, 235,.16) 100%);
