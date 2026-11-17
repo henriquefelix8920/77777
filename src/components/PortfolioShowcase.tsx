@@ -79,6 +79,11 @@ function SitePreview({ project }: { project: PortfolioProject }) {
           title={"Prévia ao vivo do site " + project.name}
           loading="lazy"
           referrerPolicy="strict-origin-when-cross-origin"
+          scrolling="no"
+          onLoad={(event) => event.currentTarget.contentWindow?.postMessage(
+            { type: "portfolio-preview-scroll", action: "start", speed: 1800 },
+            "*"
+          )}
         />
         <div className="portfolio-preview-vignette" aria-hidden="true" />
         <span className="portfolio-preview-caption">SITE REAL · ROLE DENTRO DA PRÉVIA <i>↓</i></span>

@@ -1187,3 +1187,7 @@
 .hero-site-live-frame { position: absolute; inset: 0; z-index: 1; display: block; width: 100%; height: 100%; border: 0; background: #F8FAFC; }
 .hero-site-page { animation: none !important; transform: translate(-50%, -50%); }
 .hero-site-viewport { cursor: auto; }
+
+
+/* Auto-scroll runs inside the original site through its own opt-in message listener. */
+.hero-site-live-frame { pointer-events: none; }

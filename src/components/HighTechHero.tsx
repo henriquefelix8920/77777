@@ -15,7 +15,7 @@ function PortfolioOrbit() {
   useEffect(() => {
     const interval = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % portfolioProjects.length);
-    }, 12000);
+    }, 9000);
     return () => window.clearInterval(interval);
   }, []);
 
@@ -37,6 +37,11 @@ function PortfolioOrbit() {
             title={"Prévia ao vivo do site " + project.name}
             loading="eager"
             referrerPolicy="strict-origin-when-cross-origin"
+            scrolling="no"
+            onLoad={(event) => event.currentTarget.contentWindow?.postMessage(
+              { type: "portfolio-preview-scroll", action: "start", speed: 1800 },
+              "*"
+            )}
           />
           <div className="hero-site-fallback">
             <span>EXPERIÊNCIA DIGITAL</span>
