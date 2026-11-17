@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ArrowUpRight, LockKeyhole } from "lucide-react";
 import "../styles/portfolio-showcase.css";
 
@@ -60,53 +59,29 @@ export const portfolioProjects: PortfolioProject[] = [
   },
 ];
 
-export function screenshotUrl(target: string) {
-  return `https://image.thum.io/get/width/900/crop/1000/noanimate/?url=${encodeURIComponent(target)}`;
-}
-
 function SitePreview({ project }: { project: PortfolioProject }) {
-  const [loaded, setLoaded] = useState(0);
-  const [failed, setFailed] = useState(false);
-  const previewReady = loaded === 2 && !failed;
-
-  const markLoaded = () => setLoaded((count) => Math.min(2, count + 1));
-
   return (
     <div className="portfolio-preview">
-      <div className="portfolio-browser-bar" aria-hidden="true">
+      <div className="portfolio-browser-bar">
         <span className="browser-dots"><i /><i /><i /></span>
         <span className="browser-address">{project.domain}</span>
-        <span className="browser-live">PREVIEW</span>
+        <a className="browser-live" href={project.url} target="_blank" rel="noopener noreferrer">ABRIR ↗</a>
       </div>
       <div className="portfolio-preview-window">
         <div className="portfolio-preview-fallback" aria-hidden="true">
-          <span>EXPERIÊNCIA DIGITAL</span>
+          <span>CARREGANDO SITE REAL</span>
           <strong>{project.name}</strong>
-          <i>DESIGN · ESTRATÉGIA · TECNOLOGIA</i>
+          <i>CONTEÚDO PUBLICADO · ATUALIZADO AO VIVO</i>
         </div>
-        <div className={`portfolio-preview-track${previewReady ? " is-ready" : ""}${failed ? " has-failed-image" : ""}`} aria-busy={!previewReady && !failed}>
-          <img
-            src={screenshotUrl(project.url)}
-            alt={`Captura da página inicial de ${project.name}`}
-            fetchPriority="high"
-            loading="eager"
-            decoding="async"
-            onLoad={markLoaded}
-            onError={() => setFailed(true)}
-          />
-          <img
-            src={screenshotUrl(project.middleUrl)}
-            alt={`Captura de outra seção do site ${project.name}`}
-            loading="lazy"
-            decoding="async"
-            onError={(event) => { event.currentTarget.style.visibility = "hidden"; }}
-          />
-        </div>
+        <iframe
+          className="portfolio-live-frame"
+          src={project.url}
+          title={"Prévia ao vivo do site " + project.name}
+          loading="lazy"
+          referrerPolicy="strict-origin-when-cross-origin"
+        />
         <div className="portfolio-preview-vignette" aria-hidden="true" />
-        <div className="portfolio-preview-scroll" aria-hidden="true">
-          <span />
-        </div>
-        <span className="portfolio-preview-caption">ROLAGEM DO PROJETO <i>↓</i></span>
+        <span className="portfolio-preview-caption">SITE REAL · ROLE DENTRO DA PRÉVIA <i>↓</i></span>
       </div>
     </div>
   );
